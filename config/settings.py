@@ -83,7 +83,7 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': BASE_DIR / 'db.sqlite3',
+            'NAME': 'quran',
             'USER': 'zamoosh',
             'PASSWORD': '66569211',
             'HOST': 'localhost',
