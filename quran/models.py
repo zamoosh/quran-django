@@ -1,8 +1,8 @@
 from django.db import models
 
 
-class QuranText(models.Model):
-    ayah_id = models.AutoField(primary_key=True)  # is unique for every ayah
-    surah_id = models.IntegerField()
-    ayah = models.IntegerField()
+class Text(models.Model):
+    index = models.AutoField(primary_key=True)
+    sura = models.IntegerField()
+    aya = models.IntegerField()
     text = models.TextField()
