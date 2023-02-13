@@ -6,3 +6,4 @@ class Text(models.Model):
     sura = models.IntegerField()
     aya = models.IntegerField()
     text = models.TextField()
+    page_start = models.IntegerField(null=True)
