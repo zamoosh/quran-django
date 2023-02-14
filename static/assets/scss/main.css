@@ -425,6 +425,9 @@ footer .footer audio {
 .side-menu__tab-content__tab.active *:last-child {
   border-bottom: none;
 }
+.side-menu__tab-content__tab.active *.selected {
+  background-color: #8ec0bd;
+}
 
 body.dark {
   color: #e2f0f1;

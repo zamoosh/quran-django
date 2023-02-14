@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
             name='Text',
             fields=[
                 ('index', models.AutoField(primary_key=True, serialize=False)),
-                ('sura', models.IntegerField()),
+                ('sura_details.py', models.IntegerField()),
                 ('aya', models.IntegerField()),
                 ('text', models.TextField()),
             ],

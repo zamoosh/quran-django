@@ -96,6 +96,10 @@
                     &:last-child {
                         border-bottom: none;
                     }
+
+                    &.selected {
+                        background-color: #8ec0bd;
+                    }
                 }
             }
         }

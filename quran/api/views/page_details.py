@@ -1,8 +1,8 @@
 from .imports import *
 
 
-def juz_list(request):
-    juz: dict = Text.get_juz()
+def page_details(request, page_id):
+    print(page_id)
     context = {
         'juz': juz.keys(),
     }

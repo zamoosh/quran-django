@@ -1,5 +1,9 @@
 class Tab {
+    static main_content;
+    
+    
     constructor() {
+        Tab.main_content = document.querySelector(".main__content");
         this.tabButtons = document.querySelectorAll(".side-menu__btn-group button");
         this.tabPanels = {};
         this.tabButtons.forEach(btn => {
@@ -36,9 +40,10 @@ class Tab {
         //         }
         //     }
         // });
-        let sura = this.tabPanels["#sura"];
-        let juz = this.tabPanels["#juz"];
-        let page = this.tabPanels["#page"];
+        let obj = this;
+        let sura_tab = this.tabPanels["#sura"];
+        let juz_tab = this.tabPanels["#juz"];
+        let page_tab = this.tabPanels["#page"];
         
         $.ajax({
             method: "GET",
@@ -47,16 +52,20 @@ class Tab {
             cache: true,
             success: function (context) {
                 for (const s of context["sura_list"]) {
-                    let item = `<a href="javascript:void(0)" id="${s.sura}">${Tab.toEnglishNumber(String(s.sura))}. ${s.sura_name}</a>`;
-                    sura.innerHTML += item;
+                    let e = document.createElement("a");
+                    e.id = s.sura;
+                    e.href = "javascript:void(0)";
+                    e.innerHTML = Tab.toEnglishNumber(String(s.sura)) + ". " + s.sura_name;
+                    e.addEventListener("click", obj.sura.bind(e.id));
+                    sura_tab.appendChild(e);
                 }
-                for (const j of context['juz_list']) {
+                for (const j of context['sura_details.py']) {
                     let item = `<a href="javascript:void(0)" id="${j}">الجزء ${Tab.toEnglishNumber(j)}</a>`;
-                    juz.innerHTML += item;
+                    juz_tab.innerHTML += item;
                 }
                 for (const p of context['page_list']) {
                     let item = `<a href="javascript:void(0)" id="${p}">الصفحة ${Tab.toEnglishNumber(p)}</a>`;
-                    page.innerHTML += item;
+                    page_tab.innerHTML += item;
                 }
             },
             error: function () {
@@ -71,5 +80,36 @@ class Tab {
         for (let i = 0; i < 10; i++)
             cache = cache.replace(cache[i], ar[Number(cache[i])]);
         return cache;
+    }
+    
+    sura(e) {
+        let rows = document.querySelector("div#sura").querySelectorAll('a');
+        rows.forEach(row => {
+            row.classList.remove('selected');
+        });
+        let row = e.target;
+        row.classList.toggle('selected');
+        $.ajax({
+            method: "GET",
+            url: sura_details_url.replace('0', row.id),
+            data: {
+                'sura_id': row.id
+            },
+            cache: true,
+            success: function (context) {
+                Tab.update_content(context['sura'])
+            },
+            error: function () {
+                console.log('error');
+            }
+        });
+    }
+    
+    static update_content(content) {
+        let ayahs = '';
+        for (const aya of content) {
+            ayahs += `<p>${aya.text}</p>`;
+        }
+        Tab.main_content.innerHTML = ayahs;
     }
 }

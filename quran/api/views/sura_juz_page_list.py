@@ -6,7 +6,7 @@ def sura_juz_page_list(request):
     page: dict = Text.get_page()
     context = {
         'sura_list': list(Text.objects.filter().values('sura', 'sura_name').distinct().order_by('sura')),
-        'juz_list': list(juz.keys()),
+        'sura_details.py': list(juz.keys()),
         'page_list': list(page.keys()),
     }
     return JsonResponse(context)
