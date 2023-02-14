@@ -1,5 +1,5 @@
 from django.db import models
-import settings
+from django.conf import settings
 import os
 import json
 
@@ -7,9 +7,9 @@ import json
 class Text(models.Model):
     index = models.AutoField(primary_key=True)
     sura = models.IntegerField()
+    sura_name = models.CharField(max_length=100)
     aya = models.IntegerField()
     text = models.TextField()
-    page_start = models.IntegerField(null=True)
 
     @staticmethod
     def get_juz():
