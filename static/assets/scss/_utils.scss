@@ -21,6 +21,23 @@ $header-color-sepia: #fff7ea;
     cursor: pointer;
 }
 
+*::-webkit-scrollbar {
+  width: 0.4rem;
+  background-color: #ffffff;
+}
+
+*::-webkit-scrollbar-thumb,
+.side-menu__tab-content__tab::-webkit-scrollbar-thumb {
+  background-color: #000000;
+  border-radius: 8px;
+}
+
+*::-webkit-scrollbar-track,
+.side-menu__tab-content__tab::-webkit-scrollbar-track {
+  background-color: #E5E5E5;
+  border-radius: 8px;
+}
+
 .container,
 .container-fluid,
 .container-xxl,

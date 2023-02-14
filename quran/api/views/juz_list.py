@@ -2,7 +2,8 @@ from .imports import *
 
 
 def juz_list(request):
+    juz: dict = Text.get_juz()
     context = {
-        'surah': Text.objects.filter(index=1),
+        'juz': juz.keys(),
     }
     return JsonResponse(context)

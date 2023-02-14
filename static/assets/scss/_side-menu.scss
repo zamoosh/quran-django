@@ -82,6 +82,21 @@
             &.active {
                 display: block;
                 height: 100%;
+                
+                & * {
+                    height: 50px;
+                    font-weight: bold;
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    text-decoration: none;
+                    color: $text-light;
+                    border-bottom: 1px solid gray;
+
+                    &:last-child {
+                        border-bottom: none;
+                    }
+                }
             }
         }
     }
