@@ -108,7 +108,7 @@ class Tab {
     static update_content(content) {
         let ayahs = '';
         for (const aya of content) {
-            ayahs += `<p>${aya.text}</p>`;
+            ayahs += `<span id="${aya.index}">${aya.text}</span>`;
         }
         Tab.main_content.innerHTML = ayahs;
     }

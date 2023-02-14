@@ -565,18 +565,19 @@ body .main.disabled {
   user-select: none;
 }
 body .main__content {
-  height: 100%;
+  min-height: 100vh;
   padding: 75px 0;
 }
 body .main__content * {
   font-family: "KFG", sans-serif;
 }
-body .main p {
+body .main span {
   font-size: 25px;
   line-height: 40px;
   letter-spacing: -0.025em;
   font-weight: bold;
   margin: 0;
+  cursor: pointer;
 }
 
 /*# sourceMappingURL=main.css.map */
