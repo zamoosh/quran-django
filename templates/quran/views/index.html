@@ -159,18 +159,14 @@
             <div class="container-fluid">
                 <!-- handmade -->
                 <div class="side-menu__btn-group container-fluid" role="group" aria-label="Basic example">
-                    <button type="button" data-bs-target="#home" class="active">سورة</button>
+                    <button type="button" data-bs-target="#sura" class="active">سورة</button>
                     <button type="button" data-bs-target="#profile" class="">صفحة</button>
                     <button type="button" data-bs-target="#messages" class="">جزء</button>
                 </div>
                 <!-- Tab panes -->
                 <div class="side-menu__tab-content container-fluid">
-                    <div class="side-menu__tab-content__tab active" id="home" role="tabpanel" tabindex="0">لكن لا بد أن
-                        و سأعرض مثال حي لهذا، من منا لم يتحمل جهد بدني شاق إلا من أجل الحصول على ميزة أو فائدة؟ ولكن من
-                        لديه الحق أن ينتقد شخص ما أراد أن يشعر بالسعادة التي لا تشوبها عواقب أليملهائمون في رغباتهم فلا
-                        يدركون
-                        ما يعقبها من الألم والأسي المحتم، واللوم كذلك يشمل هؤلاء الذين أخفقوا في واجباتهم نتيجة لضعف
-                        إرادتهم فيتساوي مع هؤلاء الذين يتجنبون وينأون عن تحمل الكدح والألم .
+                    <div class="side-menu__tab-content__tab active" id="sura" role="tabpanel" tabindex="0">
+
                     </div>
                     <div class="side-menu__tab-content__tab" id="profile" role="tabpanel" tabindex="0">
                         لكن لا بد أن أوضح لك أن كل هذه الأفكار المغلوطة حول استنكار النشوة وتمجيد الألم نشأت بالفعل،
@@ -223,6 +219,13 @@
                 <!-- handmade -->
             </div>
         </div>
+
+        <script>
+            let sura_list_url = '{% url 'quran:sura_list' %}';
+        </script>
+
+        <!-- jquery -->
+        <script src="{% static 'assets/plugins/jquery.js' %}"></script>
 
         <!-- side menu -->
         <script src="{% static 'assets/js/side_menu.js' %}"></script>
