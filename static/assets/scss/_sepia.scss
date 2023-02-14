@@ -1,0 +1,83 @@
+body.sepia {
+    color: $text-sepia;
+    
+    header {
+        background-color: $header-color-sepia;
+        
+        .header {
+            &__menu-btn {
+                &__burger {
+                    background-color: $text-sepia;
+                    
+                    &.open {
+                        background-color: transparent;
+                    }
+                    
+                    &::before, &::after {
+                        background-color: $text-sepia;
+                    }
+                }
+            }
+            
+            &__back {
+                &__icon {
+                    &::before, &::after {
+                        background-color: $text-sepia;
+                    }
+                }
+            }
+        }
+    }
+    
+    .main {
+        background-color: $body-color-sepia;
+        
+        //&.disabled {
+        //    // NOTE: this is a new color must be added to the utils.scss
+        //    background-color: #232324;
+        //}
+    }
+    
+    footer {
+        background-color: $header-color-sepia;
+        
+        .footer {
+            &__settings {
+                
+                > div {
+                    .dark {
+                        display: none;
+                    }
+                    
+                    .light {
+                        display: unset;
+                    }
+                }
+                
+                & button {
+                    
+                    &.theme {
+                        
+                        > .dark {
+                            opacity: 1;
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+            
+            &__more {
+                //filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(112deg) brightness(103%) contrast(104%);
+                
+                & * {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+        }
+    }
+    
+    .side-menu {
+        background-color: $header-color-sepia;
+    }
+}

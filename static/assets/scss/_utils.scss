@@ -1,0 +1,68 @@
+// dark theme
+$body-color: #0a101a;
+$header-color: #0c1f34;
+$highlight-color: #847048;
+$text-dark: #e2f0f1;
+$button-color: #1c6981;
+
+// light theme
+$body-color-light: #FDFDFD;
+$header-color-light: #E2F0F1;
+$highlight-color-light: #b8dbd9;
+$side-menu-color: rgb(184, 219, 217);
+$text-light: #0c1f34;
+
+// sepia theme
+$body-color-sepia: #f8ebd5;
+$text-sepia: #0c1f34;
+$header-color-sepia: #fff7ea;
+
+*[role='button'] {
+    cursor: pointer;
+}
+
+.container,
+.container-fluid,
+.container-xxl,
+.container-xl,
+.container-lg,
+.container-md,
+.container-sm {
+    --bs-gutter-x: 1.5rem;
+    --bs-gutter-y: 0;
+    width: 100%;
+    padding-right: calc(var(--bs-gutter-x) * 0.5);
+    padding-left: calc(var(--bs-gutter-x) * 0.5);
+    margin-right: auto;
+    margin-left: auto;
+}
+
+@media (min-width: 576px) {
+    .container-sm, .container {
+        max-width: 540px;
+    }
+}
+
+@media (min-width: 768px) {
+    .container-md, .container-sm, .container {
+        max-width: 720px;
+    }
+}
+
+@media (min-width: 992px) {
+    .container-lg, .container-md, .container-sm, .container {
+        max-width: 960px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container-xl, .container-lg, .container-md, .container-sm, .container {
+        max-width: 1140px;
+    }
+}
+
+@media (min-width: 1400px) {
+    .container-xxl, .container-xl, .container-lg, .container-md, .container-sm, .container {
+        max-width: 1320px;
+    }
+}

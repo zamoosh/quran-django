@@ -1,12 +1,247 @@
 <!DOCTYPE html>
-<html lang="en">
+{% load static %}
+<html lang="ar" dir="rtl">
+
     <head>
-        <meta charset="UTF-8">
-        <title>Title</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width"/>
+        <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+        <!--<meta name="description" content="The Quran is the holy book of Islam and a source of guidance for over 1 billion Muslims around the world. Explore its teachings and history here.">
+        <meta name="keywords" content="Quran, Islam, holy book, teachings, history">
+        <meta name="robots" content="index, follow">
+        <meta name="author" content="[Your Website Name]">
+        <link rel="canonical" href="https://www.yourwebsite.com/quran/">
+        <meta property="og:title" content="The Quran: Explore its Teachings and History">
+        <meta property="og:description" content="The Quran is the holy book of Islam and a source of guidance for over 1 billion Muslims around the world. Explore its teachings and history here.">
+        <meta property="og:image" content="https://www.yourwebsite.com/quran/cover.jpg">
+        <meta property="og:url" content="https://www.yourwebsite.com/quran/">
+        <meta property="og:type" content="website">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:site_name" content="[Your Website Name]">-->
+
+        <title>Quran</title>
+
+        <!--  favicon  -->
+        <link rel="shortcut icon" href="{% static 'assets/img/tanzil.svg' %}" type="image/x-icon"/>
+
+        <!--  CSS  -->
+        <link rel="stylesheet" href="{% static 'assets/css/normalize.css' %}"/>
+        <link rel="stylesheet" href="{% static 'assets/scss/main.css' %}"/>
     </head>
+
     <body>
-        {% for foo in surah %}
-            {{ foo }}
-        {% endfor %}
+        <header>
+            <div class="header">
+                <div role="button" class="header__menu-btn">
+                    <span class="header__menu-btn__burger"></span>
+                </div>
+                <div role="button" class="header__surah">
+                    <span>ألرَحمنٌ</span>
+                </div>
+                <div role="button" class="header__back">
+                    <span class="header__back__icon"></span>
+                </div>
+            </div>
+        </header>
+
+        <div class="main">
+            <div class="container">
+                <div class="main__content">
+                    <p>
+                        لكن لا بد أن و سأعرض مثال حي لهذا، من منا لم يتحمل جهد بدني شاق إلا من أجل الحصول على ميزة أو فائدة؟
+                        ولكن من لديه الحق أن ينتقد شخص ما أراد أن يشعر بالسعادة التي لا تشوبها عواقب أليملهائمون في رغباتهم فلا
+                        يدركون ما يعقبها من الألم والأسي المحتم، واللوم كذلك يشمل هؤلاء الذين أخرغباتهم فلا
+                        يدركون ما يعقبها من الألم والأسي المحتم، واللوم كذلك يشمل هؤلاء الذين أخرغباتهم فلا
+                        يدركون ما يعقبها من الألم والأسي المحتم، واللوم كذلك يشمل هؤلاء الذين أصول على ميزة أو فائدة؟
+                        ولكن من لديه الحق أن ينتقد شخص ما أراد أن يشعر بالسعادة التي لا تشوبها عواقب أليملهائمون في رغباتهم فلا
+                        يدركون ما يعقبها من الألم والأسي المحتم، واللوم كذلك يشمل هؤلاء الذين أخرغباتهم فلا
+                        يدركون ما يعقبها من الألم والأسي المحتم، واللوم كذلك يشمل هؤلاء الذين أخرغباتهم فلا
+                        يدركون ما يعقبها من الألم والأسي المحتم، واللوم كذلك يشمل هؤلاء الذين أخرغباتهم فلا
+                        يدركون ما يعقبها من الألم والأسي المحتم، واللوم كذلك يشمل هؤلاء الو فائدة؟
+                        ولكن من لديه الحق أن ينتقد شخص ما أراد أن يشعر بالسعادة التي لا تشوبها عواقب أليملهائمون في رغباتهم فلا
+                        يدركون ما يعقبها من الألم والأسي المحتم، واللوم كذلك يشمل هؤلاء الذين أخرغباتهم فلا
+                        يدركون ما يعقبها من الألم والأسي المحتم، واللوم كذلك يشمل هؤلاء الذين أخرغباتهم فلا
+                        يدركون ما يعقبها من الألم والأسي المحتم، واللوم كذلك يشمل هؤلاء الذين أصول على ميزة أو فائدة؟
+                        ولكن من لديه الحق أن ينتقد شخص ما أراد أن يشعر بالسعادة التي لا تشوبها عواقب أليملهائمون في رغباتهم فلا
+                        يدركون ما يعقبها من الألم والأسي المحتم، واللوم كذلك يشمل هؤلاء الذين أخرغباتهم فلا
+                        يدركون ما يعقبها من الألم والأسي المحتم، واللوم كذلك يشمل هؤلاء الذين أخرغباتهم فلا
+                        يدركون ما يعقبها من الألم والأسي المحتم، واللوم كذلك يشمل هؤلاء الذين أخرغباتهم فلا
+                        يدركون ما يعقبها من الألم والأسي المحتم، واللوم كذلك يشمل هؤلاء الو فائدة؟
+                        ولكن من لديه الحق أن ينتقد شخص ما أراد أن يشعر بالسعادة التي لا تشوبها عواقب أليملهائمون في رغباتهم فلا
+                        يدركون ما يعقبها من الألم والأسي المحتم، واللوم كذلك يشمل هؤلاء الذين أخرغباتهم فلا
+                        يدركون ما يعقبها من الألم والأسي المحتم، واللوم كذلك يشمل هؤلاء الذين أخرغباتهم فلا
+                        يدركون ما يعقبها من الألم والأسي المحتم، واللوم كذلك يشمل هؤلاء الذين أصول على ميزة أو فائدة؟
+                        ولكن من لديه الحق أن ينتقد شخص ما أراد أن يشعر بالسعادة التي لا تشوبها عواقب أليملهائمون في رغباتهم فلا
+                        يدركون ما يعقبها من الألم والأسي المحتم، واللوم كذلك يشمل هؤلاء الذين أخرغباتهم فلا
+                        يدركون ما يعقبها من الألم والأسي المحتم، واللوم كذلك يشمل هؤلاء الذين أخرغباتهم فلا
+                        يدركون ما يعقبها من الألم والأسي المحتم، واللوم كذلك يشمل هؤلاء الذين أخرغباتهم فلا
+                        يدركون ما يعقبها من الألم والأسي المحتم، واللوم كذلك يشمل هؤلاء الذين أخفقوا في وا
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <progress id="progress" value="0" max="100"></progress>
+            <div class="footer" id="player">
+                <div role="button" class="footer__settings">
+                    <div>
+                        <img class="light" src="{% static 'assets/icons/svg/Adark.svg' %}" alt="font settings">
+                        <img class="dark" src="{% static 'assets/icons/svg/Alight.svg' %}" alt="font settings">
+                    </div>
+                    <button class="theme">
+                        <img class="dark" src="{% static 'assets/icons/svg/moon.svg' %}"
+                             alt="dark theme">
+                        <img class="light" src="{% static 'assets/icons/svg/sun.svg' %}"
+                             alt="light theme">
+                    </button>
+                    <button class="sepia">
+                        <img class="dark" src="{% static 'assets/icons/svg/sepia.svg' %}"
+                             alt="sepia">
+                    </button>
+                    <button value="plus" class="font">
+                        <img src="{% static 'assets/icons/svg/A+.svg' %}" alt="increase font size">
+                    </button>
+                    <button value="minus" class="font">
+                        <img src="{% static 'assets/icons/svg/A-.svg' %}" alt="decrease font size">
+                    </button>
+                </div>
+                <div role="button" class="footer__speed-toolbar">
+                    <div class="footer__speed-selected">
+                        1.00x
+                    </div>
+                    <button value="1" class="active">1.00x</button>
+                    <button value="1.5" class="">1.50x</button>
+                    <button value="2" class="">2.00x</button>
+                    <button value="2.5" class="">2.50x</button>
+                </div>
+                <div role="button" class="footer__player">
+                    <div>
+                        <img class="play active logo" src="{% static 'assets/icons/svg/play-circle-fill.svg' %}"
+                             alt="play icon">
+                        <img class="pause logo" src="{% static 'assets/icons/svg/pause-circle-fill.svg' %}"
+                             alt="pause icon">
+                    </div>
+                    <audio>
+                        <source src="{% static 'assets/audio/ziarat-ashoura_meytham.mp3' %}" type="audio/mp3"/>
+                        <source src="{% static 'assets/audio/ziarat-ashoura_meytham.mp3' %}" type="audio/ogg"/>
+                    </audio>
+                </div>
+                <div role="button" class="footer__singer">
+                    <div>
+                        مداح
+                    </div>
+                </div>
+                <div role="button" class="footer__more">
+                    <img src="{% static 'assets/icons/svg/three-dots-vertical.svg' %}" alt="more options">
+                </div>
+            </div>
+        </footer>
+
+        <div class="side-menu">
+            <!-- bootstrap version -->
+            <!--<div class="row">
+                <div class="side-menu__btn-group" role="group" aria-label="Basic example">
+                    <button type="button" data-bs-target="#home" data-bs-toggle="tab" role="tab" aria-selected="true" class="btn btn-light active">Left</button>
+                    <button type="button" data-bs-target="#profile" data-bs-toggle="tab" role="tab" aria-selected="false" class="btn btn-light">Middle</button>
+                    <button type="button" data-bs-target="#messages" data-bs-toggle="tab" role="tab" aria-selected="false" class="btn btn-light">Right</button>
+                </div>
+                &lt;!&ndash; Tab panes &ndash;&gt;
+                <div class="tab-content">
+                    <div class="tab-pane show active" id="home" role="tabpanel" aria-labelledby="home-tab" tabindex="0">home</div>
+                    <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">profile</div>
+                    <div class="tab-pane" id="messages" role="tabpanel" aria-labelledby="messages-tab" tabindex="0">messages</div>
+                </div>
+            </div>-->
+            <!-- bootstrap version -->
+
+            <div class="container-fluid">
+                <!-- handmade -->
+                <div class="side-menu__btn-group container-fluid" role="group" aria-label="Basic example">
+                    <button type="button" data-bs-target="#home" class="active">سورة</button>
+                    <button type="button" data-bs-target="#profile" class="">صفحة</button>
+                    <button type="button" data-bs-target="#messages" class="">جزء</button>
+                </div>
+                <!-- Tab panes -->
+                <div class="side-menu__tab-content container-fluid">
+                    <div class="side-menu__tab-content__tab active" id="home" role="tabpanel" tabindex="0">لكن لا بد أن
+                        و سأعرض مثال حي لهذا، من منا لم يتحمل جهد بدني شاق إلا من أجل الحصول على ميزة أو فائدة؟ ولكن من
+                        لديه الحق أن ينتقد شخص ما أراد أن يشعر بالسعادة التي لا تشوبها عواقب أليملهائمون في رغباتهم فلا
+                        يدركون
+                        ما يعقبها من الألم والأسي المحتم، واللوم كذلك يشمل هؤلاء الذين أخفقوا في واجباتهم نتيجة لضعف
+                        إرادتهم فيتساوي مع هؤلاء الذين يتجنبون وينأون عن تحمل الكدح والألم .
+                    </div>
+                    <div class="side-menu__tab-content__tab" id="profile" role="tabpanel" tabindex="0">
+                        لكن لا بد أن أوضح لك أن كل هذه الأفكار المغلوطة حول استنكار النشوة وتمجيد الألم نشأت بالفعل،
+                        وسأعرض لك التفاصيل لتكتشف حقيقة وأساس تلك السعادة البشرية، فلا أحد يرفض أو يكره أو يتجنب الشعور
+                        المنال ويتلذذ بالآلام، الألم هو الألم ولكن نتيجة لظروف ما قد تكمن السعاده فيما نتحمله من كد
+                        وأسي.
+
+                    </div>
+                    <div class="side-menu__tab-content__tab" id="messages" role="tabpanel" tabindex="0">لكن لا بد أن
+                        أوضح لك أن كل هذه الأفكار المغلوطة حول استنكار النشوة وتمجيد الألم نشأت بالفعل، وسأعرض لك
+                        التفاصيل لتكتشف حقيقة وأساس تلك السعادة البشرية، فلا أحد يرفض أو يكره أو يتجنب الشعور بالسعادة،
+                        ولكن بفضل هؤلاء الأشخاص الذين لا يدركون بأن السعادة لا بد أن نستشعرها بصورة أكثر عقلانية ومنطقية
+                        فيعرضهم هذا لمواجهة الظروف الأليمة، وأكرر بأنه لا يوجد من يرغب في الحب ونيل المنال ويتلذذ
+                        بالآلام، الألم هو الألم ولكن نتيجة لظروف ما قد تكمن السعاده فيما نتحمله من كد وأسي.
+
+                        و سأعرض مثال حي لهذا، من منا لم يتحمل جهد بدني شاق إلا من أجل الحصول على ميزة أو فائدة؟ ولكن من
+                        لديه الحق أن ينتقد شخص ما أراد أن يشعر بالسعادة التي لا تشوبها عواقب أليمة أو آخر أراد ض لك
+                        التفاصيل لتكتشف حقيقة وأساس تلك السعادة البشرية، فلا أحد يرفض أو يكره أو يتجنب الشعور بالسعادة،
+                        ولكن بفضل هؤلاء الأشخاص الذين لا يدركون بأن السعادة لا بد أن نستشعرها بصورة أكثر عقلانية ومنطقية
+                        فيعرضهم هذا لمواجهة الظروف الأليمة، وأكرر بأنه لا يوجد من يرغب في الحب ونيل المنال ويتلذذ
+                        بالآلام، الألم هو الألم ولكن نتيجة لظروف ما قد تكمن السعاده فيما نتحمله من كد وأسي.
+
+                        و سأعرض مثال حي لهذا، من منا لم يتحمل جهد بدني شاق إلا من أجل الحصول على ميزة أو فائدة؟ ولكن من
+                        لديه الحق أن ينتقد شخص ما أراد أن يشعر بالسعادة التي لا تشوبها عواقب أليمة أو آخر أراد ض لك
+                        التفاصيل لتكتشف حقيقة وأساس تلك السعادة البشرية، فلا أحد يرفض أو يكره أو يتجنب الشعور بالسعادة،
+                        ولكن بفضل هؤلاء الأشخاص الذين لا يدركون بأن السعادة لا بد أن نستشعرها بصورة أكثر عقلانية ومنطقية
+                        فيعرضهم هذا لمواجهة الظروف الأليمة، وأكرر بأنه لا يوجد من يرغب في الحب ونيل المنال ويتلذذ
+                        بالآلام، الألم هو الألم ولكن نتيجة لظروف ما قد تكمن السعاده فيما نتحمله من كد وأسي.
+
+                        و سأعرض مثال حي لهذا، من منا لم يتحمل جهد بدني شاق إلا من أجل الحصول على ميزة أو فائدة؟ ولكن من
+                        لديه الحق أن ينتقد شخص ما أراد أن يشعر بالسعادة التي لا تشوبها عواقب أليمة أو آخر أراد ض لك
+                        التفاصيل لتكتشف حقيقة وأساس تلك السعادة البشرية، فلا أحد يرفض أو يكره أو يتجنب الشعور بالسعادة،
+                        ولكن بفضل هؤلاء الأشخاص الذين لا يدركون بأن السعادة لا بد أن نستشعرها بصورة أكثر عقلانية ومنطقية
+                        فيعرضهم هذا لمواجهة الظروف الأليمة، وأكرر بأنه لا يوجد من يرغب في الحب ونيل المنال ويتلذذ
+                        بالآلام، الألم هو الألم ولكن نتيجة لظروف ما قد تكمن السعاده فيما نتحمله من كد وأسي.
+
+                        و سأعرض مثال حي لهذا، من منا لم يتحمل جهد بدني شاق إلا من أجل الحصول على ميزة أو فائدة؟ ولكن من
+                        لديه الحق أن ينتقد شخص ما أراد أن يشعر بالسعادة التي لا تشوبها عواقب أليمة أو آخر أراد ض لك
+                        التفاصيل لتكتشف حقيقة وأساس تلك السعادة البشرية، فلا أحد يرفض أو يكره أو يتجنب الشعور بالسعادة،
+                        ولكن بفضل هؤلاء الأشخاص الذين لا يدركون بأن السعادة لا بد أن نستشعرها بصورة أكثر عقلانية ومنطقية
+                        فيعرضهم هذا لمواجهة الظروف الأليمة، وأكرر بأنه لا يوجد من يرغب في الحب ونيل المنال ويتلذذ
+                        بالآلام، الألم هو الألم ولكن نتيجة لظروف ما قد تكمن السعاده فيما نتحمله من كد وأسي.
+
+                        و سأعرض مثال حي لهذا، من منا لم يتحمل جهد بدني شاق إلا من أجل الحصول على ميزة أو فائدة؟ ولكن من
+                        لديه الحق أن ينتقد شخص ما أراد أن يشعر بالسعادة التي لا تشوبها عواقب أليمة أو آخر أراد أن يتجنب
+                        ما يعقبها من الألم والأسي المحتم، واللوم كذلك يشمل هؤلاء الذين أخفقوا في واجباتهم نتيجة لضعف
+                        إرادتهم فيتساوي مع هؤلاء الذين يتجنبون وينأون عن تحمل الكدح والألم .
+                    </div>
+                </div>
+                <!-- handmade -->
+            </div>
+        </div>
+
+        <!-- side menu -->
+        <script src="{% static 'assets/js/side_menu.js' %}"></script>
+
+        <!-- side menu -->
+        <script src="{% static 'assets/js/tab.js' %}"></script>
+
+        <!-- player -->
+        <script src="{% static 'assets/js/player.js' %}"></script>
+
+        <!-- page js -->
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                let side_menu = new SideMenu(".side-menu");
+                let tab = new Tab();
+                let player = new Player("player");
+
+            });
+        </script>
     </body>
+
 </html>

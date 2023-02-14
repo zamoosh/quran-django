@@ -1,0 +1,68 @@
+@import "utils";
+@import "header";
+@import "body";
+@import "footer";
+@import "side-menu";
+@import "dark";
+@import "sepia";
+
+@font-face {
+    font-family: "KFG";
+    src: url("../fonts/KFG.ttf");
+}
+
+
+@font-face {
+    font-family: "vazirmatn";
+    src: url("../fonts/vazirmatn/Vazirmatn-Regular.ttf"), url("../fonts/vazirmatn/Vazirmatn-Medium.ttf"),
+    url("../fonts/vazirmatn/Vazirmatn-Bold.ttf"), url("../fonts/vazirmatn/Vazirmatn-ExtraBold.ttf");
+}
+
+
+* {
+    box-sizing: border-box;
+}
+
+*:not(i) {
+    font-family: "vazirmatn", sans-serif;
+}
+
+body {
+    color: $text-light;
+    
+    &.disabled {
+        overflow-y: hidden;
+    }
+    
+    .main {
+        background-color: $body-color-light;
+        text-align: justify;
+        transition: background-color 300ms;
+        
+        .container {
+            padding: 0 20px;
+        }
+        
+        &.disabled {
+            background-color: #000000a1;
+            user-select: none;
+        }
+        
+        &__content {
+            height: 100%;
+            padding: 75px 0;
+            
+            & * {
+                font-family: 'KFG', sans-serif;
+            }
+        }
+        
+        p {
+            font-size: 25px;
+            line-height: 40px;
+            letter-spacing: -0.025em;
+            font-weight: bold;
+            margin: 0;
+        }
+    }
+}
