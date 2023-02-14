@@ -571,13 +571,24 @@ body .main__content {
 body .main__content * {
   font-family: "KFG", sans-serif;
 }
-body .main span {
+body .main span.aya {
   font-size: 25px;
-  line-height: 40px;
+  line-height: 1.8em;
   letter-spacing: -0.025em;
   font-weight: bold;
-  margin: 0;
   cursor: pointer;
+  transition: background-color 75ms;
+  border-radius: 5px;
+}
+body .main span.aya :hover {
+  background-color: rgba(184, 219, 217, 0.45);
+}
+body .main span.aya .number {
+  color: #2b712b;
+  cursor: text;
+}
+body .main span.aya .text {
+  border-radius: 5px;
 }
 
 /*# sourceMappingURL=main.css.map */

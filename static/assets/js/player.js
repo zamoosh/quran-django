@@ -9,6 +9,7 @@ class Player {
     speed_selected;
     footer_settings;
     footer_settings_logo;
+    static font_change;
 
     constructor(selector) {
         this.player = document.getElementById(selector);
@@ -129,18 +130,36 @@ class Player {
 
     changeFontSize(e) {
         let btn = e.target;
-        let elements = document.querySelectorAll(".main p");
+        let elements = document.querySelectorAll(".main span.aya");
         if (btn.value === "plus") {
             elements.forEach(element => {
                 let size = parseInt(window.getComputedStyle(element).fontSize);
                 element.style.fontSize = size + 2 + "px";
+                Player.font_change++;
+                // let change = 0;
+                // change = Player.font_change / 2;
+                // if (change !== 0)
+                //     obj.changeLineHeight(change)
             });
         } else {
             elements.forEach(element => {
                 let size = parseInt(window.getComputedStyle(element).fontSize);
                 element.style.fontSize = size - 2 + "px";
+                Player.font_change--;
+                // let change = 0;
+                // change = Player.font_change / 2;
+                // if (change !== 0)
+                //     obj.changeLineHeight(change)
             });
         }
+    }
+    
+    changeLineHeight(change) {
+        let elements = document.querySelectorAll(".main span.aya");
+        elements.forEach(element => {
+            let size = parseInt(window.getComputedStyle(element).lineHeight);
+            element.style.lineHeight = size + change + "px";
+        });
     }
 
     themeChange() {

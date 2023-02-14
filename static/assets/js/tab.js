@@ -55,16 +55,16 @@ class Tab {
                     let e = document.createElement("a");
                     e.id = s.sura;
                     e.href = "javascript:void(0)";
-                    e.innerHTML = Tab.toEnglishNumber(String(s.sura)) + ". " + s.sura_name;
+                    e.innerHTML = Tab.toArabicNumber(String(s.sura)) + ". " + s.sura_name;
                     e.addEventListener("click", obj.sura.bind(e.id));
                     sura_tab.appendChild(e);
                 }
                 for (const j of context['sura_details.py']) {
-                    let item = `<a href="javascript:void(0)" id="${j}">الجزء ${Tab.toEnglishNumber(j)}</a>`;
+                    let item = `<a href="javascript:void(0)" id="${j}">الجزء ${Tab.toArabicNumber(j)}</a>`;
                     juz_tab.innerHTML += item;
                 }
                 for (const p of context['page_list']) {
-                    let item = `<a href="javascript:void(0)" id="${p}">الصفحة ${Tab.toEnglishNumber(p)}</a>`;
+                    let item = `<a href="javascript:void(0)" id="${p}">الصفحة ${Tab.toArabicNumber(p)}</a>`;
                     page_tab.innerHTML += item;
                 }
             },
@@ -74,9 +74,9 @@ class Tab {
         });
     }
     
-    static toEnglishNumber(strNum) {
+    static toArabicNumber(strNum) {
         let ar = ["٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"];
-        let cache = strNum;
+        let cache = String(strNum);
         for (let i = 0; i < 10; i++)
             cache = cache.replace(cache[i], ar[Number(cache[i])]);
         return cache;
@@ -106,9 +106,16 @@ class Tab {
     }
     
     static update_content(content) {
+        // ﴿﴾
+        let bes = 'بِسْمِ اللَّهِ الرَّحْمَـٰنِ الرَّحِيمِ';
         let ayahs = '';
-        for (const aya of content) {
-            ayahs += `<span id="${aya.index}">${aya.text}</span>`;
+        for (const row of content) {
+            ayahs += `<span class="aya">
+                <span class="text" id="${row.index}">${row.text}</span>
+                <span class="number">﴿${Tab.toArabicNumber(row.aya)}﴾</span>
+            </span>`;
+            // ayahs += `<span id="${row.index}">${row.text}</span>`;
+            // ayahs +=`<span class="number">﴿${Tab.toArabicNumber(row.aya)}﴾</span>`;
         }
         Tab.main_content.innerHTML = ayahs;
     }
