@@ -56,7 +56,7 @@ class Tab {
                     e.id = s.sura;
                     e.href = "javascript:void(0)";
                     e.innerHTML = Tab.toArabicNumber(String(s.sura)) + ". " + s.sura_name;
-                    e.addEventListener("click", obj.sura.bind(e.id));
+                    e.addEventListener("click", obj.get_sura.bind(e.id));
                     sura_tab.appendChild(e);
                 }
                 for (const j of context['sura_details.py']) {
@@ -82,7 +82,7 @@ class Tab {
         return cache;
     }
     
-    sura(e) {
+    get_sura(e) {
         let rows = document.querySelector("div#sura").querySelectorAll('a');
         rows.forEach(row => {
             row.classList.remove('selected');
@@ -97,7 +97,7 @@ class Tab {
             },
             cache: true,
             success: function (context) {
-                Tab.update_content(context['sura'])
+                Tab.update_content(context)
             },
             error: function () {
                 console.log('error');
@@ -106,7 +106,7 @@ class Tab {
     }
     
     static update_content(content) {
-        // ﴿﴾
+        console.log(content);
         let bes = 'بِسْمِ اللَّهِ الرَّحْمَـٰنِ الرَّحِيمِ';
         let ayahs = '';
         for (const row of content) {

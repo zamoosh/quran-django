@@ -63,7 +63,7 @@ body {
             letter-spacing: -0.025em;
             font-weight: bold;
             cursor: pointer;
-            transition: background-color 75ms;
+            transition: background-color 100ms;
             border-radius: 5px;
 
             :hover {
@@ -73,6 +73,11 @@ body {
             .number {
                 color: #2b712b;
                 cursor: text;
+                background-color: transparent;
+
+                :hover {
+                    background-color: transparent;
+                }
             }
 
             .text {

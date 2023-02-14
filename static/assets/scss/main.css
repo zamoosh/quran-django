@@ -487,6 +487,12 @@ body.dark .side-menu button {
 body.dark .side-menu button:hover, body.dark .side-menu button.active {
   background-color: #847048;
 }
+body.dark .side-menu__tab-content__tab.active * {
+  color: #e2f0f1;
+}
+body.dark .side-menu__tab-content__tab.active *.selected {
+  background-color: rgba(142, 192, 189, 0.49);
+}
 
 body.sepia {
   color: #0c1f34;
@@ -577,15 +583,19 @@ body .main span.aya {
   letter-spacing: -0.025em;
   font-weight: bold;
   cursor: pointer;
-  transition: background-color 75ms;
+  transition: background-color 100ms;
   border-radius: 5px;
 }
 body .main span.aya :hover {
-  background-color: rgba(184, 219, 217, 0.45);
+  background-color: rgba(184, 219, 217, 0.33);
 }
 body .main span.aya .number {
   color: #2b712b;
   cursor: text;
+  background-color: transparent;
+}
+body .main span.aya .number :hover {
+  background-color: transparent;
 }
 body .main span.aya .text {
   border-radius: 5px;
