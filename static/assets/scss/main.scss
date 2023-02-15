@@ -51,7 +51,17 @@ body {
         &__content {
             min-height: 100vh;
             padding: 75px 0;
-            
+
+            .owl-carousel {
+                z-index: 0;
+
+                .item {
+                    height: 100vh;
+                    background-color: transparent;
+                    color: $text-dark;
+                }
+            }
+
             & * {
                 font-family: 'KFG', sans-serif;
             }

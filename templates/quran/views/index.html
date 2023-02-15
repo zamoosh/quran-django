@@ -25,8 +25,14 @@
         <!--  favicon  -->
         <link rel="shortcut icon" href="{% static 'assets/img/tanzil.svg' %}" type="image/x-icon"/>
 
-        <!--  CSS  -->
+        <!--  Normalize  -->
         <link rel="stylesheet" href="{% static 'assets/css/normalize.css' %}"/>
+
+        <!--  OWL  -->
+        <link rel="stylesheet" href="{% static 'assets/plugins/owl/owl.carousel.min.css' %}"/>
+        <link rel="stylesheet" href="{% static 'assets/plugins/owl/owl.theme.default.min.css' %}"/>
+
+        <!--  Custom  -->
         <link rel="stylesheet" href="{% static 'assets/scss/main.css' %}"/>
     </head>
 
@@ -47,7 +53,9 @@
 
         <div class="main">
             <div class="container">
-                <div class="main__content"></div>
+                <div class="main__content">
+                    <div class="owl-carousel owl-theme"></div>
+                </div>
             </div>
         </div>
 
@@ -150,6 +158,9 @@
         <!-- jquery -->
         <script src="{% static 'assets/plugins/jquery.js' %}"></script>
 
+        <!-- OWL js -->
+        <script src="{% static 'assets/plugins/owl/owl.carousel.min.js' %}"></script>
+
         <!-- side menu -->
         <script src="{% static 'assets/js/side_menu.js' %}"></script>
 
@@ -166,6 +177,12 @@
                 let tab = new Tab();
                 let player = new Player("player");
 
+                $(".owl-carousel").owlCarousel({
+                    items: 1,
+                    rtl: true,
+                    dotsData: false,
+                    dots: false,
+                });
             });
         </script>
     </body>

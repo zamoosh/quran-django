@@ -109,14 +109,32 @@ class Tab {
         console.log(content);
         let bes = 'بِسْمِ اللَّهِ الرَّحْمَـٰنِ الرَّحِيمِ';
         let ayahs = '';
-        for (const row of content) {
+        let current_page = 0;
+        let pages = [];
+        let owl_carousel = document.querySelector('.owl-carousel');
+        let e;
+        for (const row of content['pack']) {
             ayahs += `<span class="aya">
                 <span class="text" id="${row.index}">${row.text}</span>
                 <span class="number">﴿${Tab.toArabicNumber(row.aya)}﴾</span>
             </span>`;
-            // ayahs += `<span id="${row.index}">${row.text}</span>`;
-            // ayahs +=`<span class="number">﴿${Tab.toArabicNumber(row.aya)}﴾</span>`;
+            if (current_page === row.page) {
+                e.innerHTML += ayahs;
+                ayahs = '';
+            } else {
+                if (e) {
+                    pages.push(e);
+                }
+                current_page = row.page;
+                e = document.createElement('div');
+                e.classList.add('item');
+                e.innerHTML = ayahs;
+                ayahs = '';
+            }
         }
-        Tab.main_content.innerHTML = ayahs;
+        let carousel = $('.owl-carousel');
+        for (const page of pages) {
+            carousel.trigger('add.owl.carousel', page).trigger('refresh.owl.carousel');
+        }
     }
 }
