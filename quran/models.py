@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Value
 from django.conf import settings
 import os
 import json
@@ -10,6 +11,7 @@ class Text(models.Model):
     sura_name = models.CharField(max_length=100, null=True)
     aya = models.IntegerField()
     text = models.TextField()
+    page = models.IntegerField(null=True)
 
     @staticmethod
     def get_juz():
@@ -234,6 +236,55 @@ class Text(models.Model):
             [6230, 6, 21, 1, "الناس", "An-Nas", "Mankind", "Meccan"],
         ]
         for item in sura:
-            print(sura.index(item) + 1, item[4])
-            # Text.objects.filter(sura=(sura.index(item) + 1)).update(sura_name=item[4])
-        print('done!')
+            Text.objects.filter(sura=(sura.index(item) + 1)).update(sura_name=item[4])
+        print('all names added!')
+
+    @staticmethod
+    def add_page():
+        """
+        item[0] -> sura
+        item[1] -> aya
+        """
+        page_data = Text.get_page()
+        for key in page_data:
+            current_key = key
+            next_key = str(int(key) + 1)
+            if page_data.get(next_key):
+                # next page is exists
+                current_s_a: list = json.loads(page_data[current_key])
+                next_s_a: list = json.loads(page_data[next_key])
+                if current_s_a[0] == next_s_a[0]:
+                    # sura is more than one page
+                    sura_id = int(current_s_a[0])
+                    first_aya = int(current_s_a[1])
+                    last_aya = int(next_s_a[1]) - 1
+                    Text.objects.filter(
+                        sura=sura_id,
+                        aya__gte=first_aya,
+                        aya__lte=last_aya
+                    ).update(page=Value(int(key)))
+                else:
+                    # sura is small and all of this in this page (key)
+                    current_sura = int(current_s_a[0])
+                    next_sura = int(next_s_a[0])
+                    if next_sura - current_sura == 1:
+                        # we don't jump a sura
+                        sura_id = int(current_s_a[0])
+                        current_aya = int(current_s_a[1])
+                        Text.objects.filter(sura=sura_id, aya__gte=current_aya).update(page=Value(int(key)))
+                    else:
+                        # we jump over some sura
+                        jumped_suras = []
+                        for item in range(current_sura, next_sura):
+                            jumped_suras.append(item)
+                        for sura_id in jumped_suras:
+                            Text.objects.filter(sura=sura_id).update(page=Value(int(key)))
+            else:
+                # next page is not exists
+                current_s_a: list = json.loads(page_data[current_key])
+                sura_id = int(current_s_a[0])
+                last_sura_id = 114
+                while sura_id <= last_sura_id:
+                    Text.objects.filter(sura=sura_id).update(page=Value(int(key)))
+                    sura_id += 1
+        print('all pages set!')

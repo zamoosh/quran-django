@@ -4,6 +4,7 @@ from .imports import *
 
 
 def sura_details(request, sura_id):
+    Text.add_page()
     page_data = Text.get_page()
     p = str(page_data)
     start_page = int(p[int(p.find(f'[{sura_id}') - 5)])
