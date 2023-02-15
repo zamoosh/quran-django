@@ -28,7 +28,7 @@ class Text(models.Model):
         return data
 
     @staticmethod
-    def run():
+    def add_sura_name():
         sura = [
             [0, 7, 5, 1, "الفاتحة", "Al-Fatiha", "The Opening", "Meccan"],
             [7, 286, 87, 40, "البقرة", "Al-Baqara", "The Heifer", "Medinan"],
