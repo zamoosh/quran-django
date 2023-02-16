@@ -1,10 +1,16 @@
-import json
-from django.db.models import Value
 from .imports import *
 
 
 def sura_details(request, sura_id):
-    Text.add_page()
+    current_page = int(Text.objects.filter(sura=sura_id).values_list('page', flat=True).distinct()[0])
+    next_page = current_page + 2
+    q = Text.objects.filter(page__gte=current_page, page__lte=next_page)
+    context = {
+        'pack': list(q.values())
+    }
+    return JsonResponse(context)
+
+    Text.objects.filter(sura=sura_id, page__gte=F('page'), page__lte=F('page') + 10)
     page_data = Text.get_page()
     p = str(page_data)
     start_page = int(p[int(p.find(f'[{sura_id}') - 5)])
