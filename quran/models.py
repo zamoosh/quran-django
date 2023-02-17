@@ -12,6 +12,7 @@ class Text(models.Model):
     aya = models.IntegerField()
     text = models.TextField()
     page = models.IntegerField(null=True)
+    juz = models.DecimalField(default=0, max_digits=2, decimal_places=0)
 
     @staticmethod
     def get_juz():
@@ -304,8 +305,9 @@ class Text(models.Model):
                 # next juz is exists
                 current_page = int(json.loads(page_data[current_key])[0])
                 next_page = int(json.loads(page_data[next_key])[0]) - 1
-                Text.objects.filter(page__gte=current_page, page__lte=next_page).annotate(juz=Value(int(key)))
+                Text.objects.filter(page__gte=current_page, page__lte=next_page).update(juz=Value(int(key)))
             else:
                 # next juz is not exists
                 current_page = int(json.loads(page_data[current_key])[0])
-                Text.objects.filter(page__gte=current_page).annotate(juz=Value(int(key)))
+                Text.objects.filter(page__gte=current_page).update(juz=Value(int(key)))
+        print('all juz were added!')
