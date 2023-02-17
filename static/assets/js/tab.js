@@ -141,6 +141,7 @@ class Tab {
         let page, title, content;
         page = document.createElement("div");
         page.classList.add("item");
+        page.classList.add(String(row.page));
         title = document.createElement("div");
         title.innerHTML = `<span>
                                 <span>﴿</span>

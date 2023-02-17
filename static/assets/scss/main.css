@@ -130,6 +130,13 @@ header .header__menu-btn__burger::after {
 header .header__surah {
   font-weight: bold;
   font-size: 1.75rem;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+}
+header .header__surah :last-child {
+  font-size: 0.75rem;
 }
 header .header__back {
   font-size: 1.5rem;
@@ -579,6 +586,7 @@ body .main__content .owl-carousel {
 }
 body .main__content .owl-carousel .item {
   background-color: transparent;
+  min-height: 75vh;
 }
 body .main__content .owl-carousel .item .title {
   width: 100%;

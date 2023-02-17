@@ -77,6 +77,14 @@ header {
         &__surah {
             font-weight: bold;
             font-size: 1.75rem;
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+            justify-content: center;
+
+            :last-child {
+                font-size: .75rem;
+            }
         }
         
         &__back {
