@@ -51,37 +51,37 @@ body {
         &__content {
             min-height: 100vh;
             padding: 75px 0;
-
+            
             .owl-carousel {
                 z-index: 0;
-
+                
                 .item {
                     background-color: transparent;
                     
                     .title {
                         width: 100%;
-                        display: flex;
                         justify-content: center;
+                        display: none;
+                        margin: .75em 0;
                         
-                        span {
+                        &.active {
                             display: flex;
-                            align-items: center;
-                            font-size: 2.5rem;
-                            font-weight: bold;
-                            margin-bottom: .3em;
                             
-                            :not(.sura_name) {
-                                color: #1668ba;
+                            span {
+                                display: flex;
+                                align-items: center;
+                                font-size: 2.5rem;
+                                font-weight: bold;
+                                
+                                :not(.sura_name) {
+                                    color: #1668ba;
+                                }
                             }
                         }
-                        //background-image: url("../img/title.png");
-                        //background-repeat: no-repeat;
-                        //background-size: cover;
-                        //background-position: center;
                     }
                 }
             }
-
+            
             & * {
                 font-family: 'KFG', sans-serif;
             }
@@ -95,21 +95,21 @@ body {
             cursor: pointer;
             transition: background-color 100ms;
             border-radius: 5px;
-
+            
             :hover {
                 background-color: $highlight-color-light-hover;
             }
-
+            
             .number {
                 color: #2b712b;
                 cursor: text;
                 background-color: transparent;
-
+                
                 :hover {
                     background-color: transparent;
                 }
             }
-
+            
             .text {
                 border-radius: 5px;
             }

@@ -582,17 +582,20 @@ body .main__content .owl-carousel .item {
 }
 body .main__content .owl-carousel .item .title {
   width: 100%;
-  display: flex;
   justify-content: center;
+  display: none;
+  margin: 0.75em 0;
 }
-body .main__content .owl-carousel .item .title span {
+body .main__content .owl-carousel .item .title.active {
+  display: flex;
+}
+body .main__content .owl-carousel .item .title.active span {
   display: flex;
   align-items: center;
   font-size: 2.5rem;
   font-weight: bold;
-  margin-bottom: 0.3em;
 }
-body .main__content .owl-carousel .item .title span :not(.sura_name) {
+body .main__content .owl-carousel .item .title.active span :not(.sura_name) {
   color: #1668ba;
 }
 body .main__content * {

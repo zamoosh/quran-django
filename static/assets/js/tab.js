@@ -125,7 +125,7 @@ class Tab {
                 page.lastElementChild.innerHTML += ayahs;
             } else {
                 current_page = row.page;
-                page = Tab.add_page(row.sura_name);
+                page = Tab.add_page(row);
                 page.lastElementChild.innerHTML = ayahs;
                 pages.push(page);
             }
@@ -137,17 +137,19 @@ class Tab {
         }
     }
 
-    static add_page(sura_name) {
+    static add_page(row) {
         let page, title, content;
         page = document.createElement("div");
         page.classList.add("item");
         title = document.createElement("div");
         title.innerHTML = `<span>
                                 <span>﴿</span>
-                                <span class="sura_name">${sura_name}</span> 
+                                <span class="sura_name">${row.sura_name}</span> 
                                 <span>﴾</span>
                            </span>`;
         title.classList.add("title");
+        if (row.aya === 1)
+            title.classList.add("active");
         content = document.createElement("div");
         content.classList.add("content");
         page.appendChild(title);
