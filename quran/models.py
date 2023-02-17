@@ -362,3 +362,63 @@ class Text(models.Model):
                 current_page = int(json.loads(page_data[current_key])[0])
                 Text.objects.filter(page__gte=current_page).update(juz=Value(int(key)))
         print('all juz were added!')
+
+    @staticmethod
+    def add_page_2():
+        """
+        item[0] -> sura
+        item[1] -> aya
+        """
+        page_data = Text.get_page()
+        for key in page_data:
+            current_key = key
+            next_key = str(int(current_key) + 1)
+
+            current_s_a = json.loads(page_data.get(current_key))
+            if page_data.get(next_key):
+                next_s_a = json.loads(page_data.get(next_key))
+            else:
+                next_s_a = [112, 1]
+
+            current_sura_id = int(current_s_a[0])
+            next_sura_id = int(next_s_a[0])
+
+            if current_sura_id != next_sura_id and next_s_a[1] == 1:
+                # sura, ends at end of a page
+                first_aya = int(current_s_a[1])
+                Text.objects.filter(sura=current_sura_id, aya__gte=first_aya).update(page=Value(int(key)))
+
+                jump_sura = []
+                for item in range(current_sura_id + 1, next_sura_id):
+                    jump_sura.append(item)
+                Text.objects.filter(sura__in=jump_sura).update(page=Value(int(key)))
+
+            elif current_sura_id != next_sura_id and next_s_a[1] != 1:
+                # sura, ends in middle of a page (still on prev sura)
+                first_aya = int(current_s_a[1])
+                Text.objects.filter(sura=current_sura_id, aya__gte=first_aya).update(page=Value(int(key)))
+
+                jump_sura = []
+                for item in range(current_sura_id + 1, next_sura_id):
+                    jump_sura.append(item)
+                Text.objects.filter(sura__in=jump_sura).update(page=Value(int(key)))
+
+                last_aya = int(next_s_a[1]) - 1
+                Text.objects.filter(sura=next_sura_id, aya__lte=last_aya).update(page=Value(int(key)))
+            elif current_sura_id == next_sura_id and current_s_a[1] == 1:
+                # sura starts, at the beginning of a page
+                if key == '604':
+                    Text.objects.filter(sura__gte=112).update(page=Value(int(key)))
+                else:
+                    first_aya = int(current_s_a[1])
+                    last_aya = int(next_s_a[1]) - 1
+                    Text.objects.filter(sura=current_sura_id, aya__gte=first_aya, aya__lte=last_aya).update(
+                        page=Value(int(key)))
+
+            elif current_sura_id == next_sura_id and current_s_a[1] != 1:
+                # sura starts at the middle of a page
+                first_aya = int(current_s_a[1])
+                last_aya = int(next_s_a[1]) - 1
+                Text.objects.filter(sura=current_sura_id, aya__gte=first_aya, aya__lte=last_aya).update(
+                    page=Value(int(key)))
+        print('pages all set!!!')
