@@ -578,9 +578,7 @@ body .main__content .owl-carousel {
   z-index: 0;
 }
 body .main__content .owl-carousel .item {
-  height: 100vh;
   background-color: transparent;
-  color: #e2f0f1;
 }
 body .main__content * {
   font-family: "KFG", sans-serif;

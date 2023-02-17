@@ -112,24 +112,22 @@ class Tab {
         let current_page = 0;
         let pages = [];
         let owl_carousel = document.querySelector('.owl-carousel');
-        let e;
+        let page;
         for (const row of content['pack']) {
             ayahs += `<span class="aya">
                 <span class="text" id="${row.index}">${row.text}</span>
                 <span class="number">﴿${Tab.toArabicNumber(row.aya)}﴾</span>
             </span>`;
             if (current_page === row.page) {
-                e.innerHTML += ayahs;
+                page.innerHTML += ayahs;
                 ayahs = '';
             } else {
-                if (e) {
-                    pages.push(e);
-                }
                 current_page = row.page;
-                e = document.createElement('div');
-                e.classList.add('item');
-                e.innerHTML = ayahs;
+                page = document.createElement('div');
+                page.classList.add('item');
+                page.innerHTML = ayahs;
                 ayahs = '';
+                pages.push(page);
             }
         }
         let carousel = $('.owl-carousel');
