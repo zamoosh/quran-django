@@ -288,3 +288,24 @@ class Text(models.Model):
                     Text.objects.filter(sura=sura_id).update(page=Value(int(key)))
                     sura_id += 1
         print('all pages set!')
+
+    @staticmethod
+    def add_juz():
+        """
+        item[0] -> page
+        item[1] -> sura
+        item[2] -> aya
+        """
+        page_data = Text.get_juz()
+        for key in page_data:
+            current_key = key
+            next_key = str(int(key) + 1)
+            if page_data.get(next_key):
+                # next juz is exists
+                current_page = int(json.loads(page_data[current_key])[0])
+                next_page = int(json.loads(page_data[next_key])[0]) - 1
+                Text.objects.filter(page__gte=current_page, page__lte=next_page).annotate(juz=Value(int(key)))
+            else:
+                # next juz is not exists
+                current_page = int(json.loads(page_data[current_key])[0])
+                Text.objects.filter(page__gte=current_page).annotate(juz=Value(int(key)))
