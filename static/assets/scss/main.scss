@@ -57,6 +57,28 @@ body {
 
                 .item {
                     background-color: transparent;
+                    
+                    .title {
+                        width: 100%;
+                        display: flex;
+                        justify-content: center;
+                        
+                        span {
+                            display: flex;
+                            align-items: center;
+                            font-size: 2.5rem;
+                            font-weight: bold;
+                            margin-bottom: .3em;
+                            
+                            :not(.sura_name) {
+                                color: #1668ba;
+                            }
+                        }
+                        //background-image: url("../img/title.png");
+                        //background-repeat: no-repeat;
+                        //background-size: cover;
+                        //background-position: center;
+                    }
                 }
             }
 

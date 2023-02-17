@@ -1,7 +1,7 @@
 class Tab {
     static main_content;
-    
-    
+
+
     constructor() {
         Tab.main_content = document.querySelector(".main__content");
         this.tabButtons = document.querySelectorAll(".side-menu__btn-group button");
@@ -10,10 +10,10 @@ class Tab {
             this.tabPanels[btn.dataset.bsTarget] = document.querySelector(btn.dataset.bsTarget);
             btn.addEventListener("click", this.toggleTab.bind(this, btn));
         });
-        
+
         this.sura_juz_page_list();
     }
-    
+
     toggleTab(btn) {
         this.tabButtons.forEach(b => {
             b.classList.remove("active");
@@ -21,13 +21,13 @@ class Tab {
             tab.classList.remove("show");
             tab.classList.remove("active");
         });
-        
+
         btn.classList.toggle("active");
         let tabPanel = this.tabPanels[btn.dataset.bsTarget];
         tabPanel.classList.toggle("show");
         tabPanel.classList.toggle("active");
     }
-    
+
     sura_juz_page_list() {
         // const xhttp = new XMLHttpRequest();
         // xhttp.open("GET", sura_list_url, true);
@@ -44,7 +44,7 @@ class Tab {
         let sura_tab = this.tabPanels["#sura"];
         let juz_tab = this.tabPanels["#juz"];
         let page_tab = this.tabPanels["#page"];
-        
+
         $.ajax({
             method: "GET",
             url: sura_juz_page_list_url,
@@ -59,11 +59,11 @@ class Tab {
                     e.addEventListener("click", obj.get_sura.bind(e.id));
                     sura_tab.appendChild(e);
                 }
-                for (const j of context['sura_details.py']) {
+                for (const j of context["sura_details.py"]) {
                     let item = `<a href="javascript:void(0)" id="${j}">الجزء ${Tab.toArabicNumber(j)}</a>`;
                     juz_tab.innerHTML += item;
                 }
-                for (const p of context['page_list']) {
+                for (const p of context["page_list"]) {
                     let item = `<a href="javascript:void(0)" id="${p}">الصفحة ${Tab.toArabicNumber(p)}</a>`;
                     page_tab.innerHTML += item;
                 }
@@ -73,7 +73,7 @@ class Tab {
             }
         });
     }
-    
+
     static toArabicNumber(strNum) {
         let ar = ["٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"];
         let cache = String(strNum);
@@ -81,58 +81,77 @@ class Tab {
             cache = cache.replace(cache[i], ar[Number(cache[i])]);
         return cache;
     }
-    
+
     get_sura(e) {
-        let rows = document.querySelector("div#sura").querySelectorAll('a');
+        let rows = document.querySelector("div#sura").querySelectorAll("a");
         rows.forEach(row => {
-            row.classList.remove('selected');
+            row.classList.remove("selected");
         });
         let row = e.target;
-        row.classList.toggle('selected');
+        row.classList.toggle("selected");
         $.ajax({
             method: "GET",
-            url: sura_details_url.replace('0', row.id),
+            url: sura_details_url.replace("0", row.id),
             data: {
-                'sura_id': row.id
+                "sura_id": row.id
             },
             cache: true,
             success: function (context) {
-                Tab.update_content(context)
+                Tab.update_content(context);
             },
             error: function () {
-                console.log('error');
+                console.log("error");
             }
         });
     }
-    
+
     static update_content(content) {
-        console.log(content);
-        let bes = 'بِسْمِ اللَّهِ الرَّحْمَـٰنِ الرَّحِيمِ';
-        let ayahs = '';
+        let bes = "بِسْمِ اللَّهِ الرَّحْمَـٰنِ الرَّحِيمِ";
+        let ayahs = "";
         let current_page = 0;
         let pages = [];
-        let owl_carousel = document.querySelector('.owl-carousel');
         let page;
-        for (const row of content['pack']) {
+        for (const row of content["pack"]) {
+            let text = "";
+            if (row.sura === 1)
+                text = row.text;
+            else
+                text = row.text.replace(bes, "");
             ayahs += `<span class="aya">
-                <span class="text" id="${row.index}">${row.text}</span>
-                <span class="number">﴿${Tab.toArabicNumber(row.aya)}﴾</span>
-            </span>`;
+                          <span class="text" id="${row.index}">${text}</span>
+                          <span class="number">﴿${Tab.toArabicNumber(row.aya)}﴾</span>
+                      </span>`;
             if (current_page === row.page) {
-                page.innerHTML += ayahs;
-                ayahs = '';
+                page.lastElementChild.innerHTML += ayahs;
             } else {
                 current_page = row.page;
-                page = document.createElement('div');
-                page.classList.add('item');
-                page.innerHTML = ayahs;
-                ayahs = '';
+                page = Tab.add_page(row.sura_name);
+                page.lastElementChild.innerHTML = ayahs;
                 pages.push(page);
             }
+            ayahs = "";
         }
-        let carousel = $('.owl-carousel');
+        let carousel = $(".owl-carousel");
         for (const page of pages) {
-            carousel.trigger('add.owl.carousel', page).trigger('refresh.owl.carousel');
+            carousel.trigger("add.owl.carousel", page).trigger("refresh.owl.carousel");
         }
+    }
+
+    static add_page(sura_name) {
+        let page, title, content;
+        page = document.createElement("div");
+        page.classList.add("item");
+        title = document.createElement("div");
+        title.innerHTML = `<span>
+                                <span>﴿</span>
+                                <span class="sura_name">${sura_name}</span> 
+                                <span>﴾</span>
+                           </span>`;
+        title.classList.add("title");
+        content = document.createElement("div");
+        content.classList.add("content");
+        page.appendChild(title);
+        page.appendChild(content);
+        return page;
     }
 }
