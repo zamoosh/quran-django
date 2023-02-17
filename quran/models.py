@@ -1,3 +1,4 @@
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.db.models import Value
 from django.conf import settings
@@ -11,8 +12,8 @@ class Text(models.Model):
     sura_name = models.CharField(max_length=100, null=True)
     aya = models.IntegerField()
     text = models.TextField()
-    page = models.IntegerField(null=True)
-    juz = models.DecimalField(default=0, max_digits=2, decimal_places=0)
+    page = models.PositiveSmallIntegerField(default=0)
+    juz = models.PositiveSmallIntegerField(default=0)
 
     @staticmethod
     def get_juz():
