@@ -264,7 +264,7 @@ class Text(models.Model):
         print('all juz were added!')
 
     @staticmethod
-    def add_page_2():
+    def add_page():
         """
         item[0] -> sura
         item[1] -> aya
