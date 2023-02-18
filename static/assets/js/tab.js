@@ -142,6 +142,8 @@ class Tab {
         page = document.createElement("div");
         page.classList.add("item");
         page.classList.add(String(row.page));
+        if (row.page % 10 === 0)
+            page.classList.add('ajax');
         title = document.createElement("div");
         title.innerHTML = `<span>
                                 <span>﴿</span>
@@ -151,8 +153,10 @@ class Tab {
         title.classList.add("title");
         if (row.aya === 1)
             title.classList.add("active");
+        
         content = document.createElement("div");
         content.classList.add("content");
+        
         page.appendChild(title);
         page.appendChild(content);
         return page;

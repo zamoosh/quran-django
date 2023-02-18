@@ -178,32 +178,14 @@
                 let tab = new Tab();
                 let player = new Player("player");
 
-                let carousel =$(".owl-carousel")
+                let current_element, prev_element;
+                let carousel = $(".owl-carousel");
                 carousel.owlCarousel({
                     items: 1,
                     margin: 30,
                     rtl: true,
                     dotsData: false,
                     dots: false,
-                    // Set the onTranslate callback function
-                    onTranslate: function (event) {
-                        // Get the current item index
-                        let current = event.item;
-                        let prev_element = event.target.querySelector('.owl-item.active').firstElementChild;
-                        let current_element = prev_element.parentElement.nextSibling.firstChild;
-                        console.log('prev: ', prev_element);
-                        console.log("current: ", current_element);
-
-                        // Set some data for the current page
-                        // console.log($(event.target).find('.owl-item.active').eq(current).get('prevObject')[0]);
-                        // console.log();
-                        // console.log($(event.target).find('.owl-item').eq(current));
-                        $(event.target).find('.owl-item').eq(current).data('pageData', {
-                            title: 'Page ' + (current + 1),
-                            content: 'This is the content for page ' + (current + 1)
-                        });
-                    },
-                     // Set the onTranslated callback function
                     {% comment %}onTranslated: function (event) {
                         // Get the current item index
                         var current = event.item.index;
@@ -215,6 +197,24 @@
                         $('#page-title').text(pageData.title);
                         $('#page-content').text(pageData.content);
                     }{% endcomment %}
+                });
+
+                carousel.on('translated.owl.carousel', function (event) {
+                    current_element = event.target.querySelector('.owl-item.active').firstElementChild;
+                    let current_id = Number(current_element.classList.value.split(' ')[1]);
+                    let prev_id = Number(current_element.classList.value.split(' ')[1]) - 1;
+                    if (prev_id === 0)
+                        prev_id = 1;
+                    let prev = event.target.getElementsByClassName(`item ${prev_id}`)[0];
+                    console.log("current: ", current_element);
+                    console.log('prev: ', prev);
+                    if (current_element.classList.contains('ajax')) {
+                        if (current_id - prev_id > 0)
+                            console.log('going for the NEXT ajax!');
+                        else
+                            console.log('going for the PREV ajax!');
+                    }
+                    console.log();
                 });
             });
         </script>
