@@ -1,9 +1,36 @@
-from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.db.models import Value
 from django.conf import settings
 import os
 import json
+
+
+class Pack(models.Model):
+
+    @staticmethod
+    def create_pack():
+        if Pack.objects.count() == 61 or Pack.objects.exists():
+            print('packs are exists!')
+            return
+        for item in range(61):
+            Pack.objects.create()
+        print('packs were created!')
+
+    @staticmethod
+    def set_pack():
+        first_page = 1
+        last_page = 10
+        not_yat = True
+        while not_yat:
+            pack_id = last_page / 10
+            Text.objects.filter(
+                page__gte=first_page,
+                page__lte=last_page
+            ).update(pack_id=pack_id)
+            not_yat = Text.objects.filter(pack__isnull=True).exists()
+            first_page += 10
+            last_page += 10
+        print('all packs set!')
 
 
 class Text(models.Model):
@@ -14,6 +41,7 @@ class Text(models.Model):
     text = models.TextField()
     page = models.PositiveSmallIntegerField(default=0)
     juz = models.PositiveSmallIntegerField(default=0)
+    pack = models.ForeignKey(Pack, on_delete=models.SET_NULL, null=True)
 
     @staticmethod
     def get_juz():
