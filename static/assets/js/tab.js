@@ -111,6 +111,7 @@ class Tab {
         let current_page = 0;
         let pages = [];
         let page;
+        let prev_sura_name = "";
         for (const row of content["pack"]) {
             let text = "";
             if (row.sura === 1)
@@ -121,12 +122,97 @@ class Tab {
                           <span class="text" id="${row.index}">${text}</span>
                           <span class="number">﴿${Tab.toArabicNumber(row.aya)}﴾</span>
                       </span>`;
+
             if (current_page === row.page) {
-                page.lastElementChild.innerHTML += ayahs;
+                if (prev_sura_name !== row.sura_name) {
+                    let sura = document.createElement("div");
+                    sura.classList.add("sura");
+                    sura.classList.add(row.sura_name);
+
+                    let title = document.createElement("div");
+                    title.innerHTML = `<span>
+                                            <span>﴿</span>
+                                            <span class="sura_name">${row.sura_name}</span>
+                                            <span>﴾</span>
+                                       </span>`;
+                    title.classList.add("title");
+
+                    sura.appendChild(title);
+
+                    if (row.sura !== 1) {
+                        let besm_allah = document.createElement("div");
+                        besm_allah.classList.add("besm-allah");
+                        besm_allah.innerHTML = bes;
+                        sura.appendChild(besm_allah);
+                    }
+
+                    let content = document.createElement("div");
+                    content.classList.add("content");
+                    content.innerHTML = ayahs;
+
+                    sura.appendChild(content);
+
+                    page.appendChild(sura);
+
+                    prev_sura_name = row.sura_name;
+                }
+
+                if (row.index === 12)
+                    console.log("13");
+
+                if (page.getElementsByClassName(prev_sura_name)) {
+                    let content = page.getElementsByClassName(prev_sura_name)[0].querySelector(".content");
+                    content.innerHTML += ayahs;
+                } else {
+                    let content = page.getElementsByClassName("content")[0].querySelector(".content");
+                    content.innerHTML += ayahs;
+                }
             } else {
                 current_page = row.page;
                 page = Tab.add_page(row);
-                page.lastElementChild.innerHTML = ayahs;
+
+                let sura = document.createElement("div");
+                sura.classList.add("sura");
+                sura.classList.add(row.sura_name);
+
+                // adding title to the sura in new page
+                if (prev_sura_name !== row.sura_name) {
+                    let title = document.createElement("div");
+                    title.innerHTML = `<span>
+                                            <span>﴿</span>
+                                            <span class="sura_name">${row.sura_name}</span>
+                                            <span>﴾</span>
+                                       </span>`;
+                    title.classList.add("title");
+
+                    sura.appendChild(title);
+
+                    if (row.sura !== 1) {
+                        let besm_allah = document.createElement("div");
+                        besm_allah.classList.add("besm-allah");
+                        besm_allah.innerHTML = bes;
+                        sura.appendChild(besm_allah);
+                    }
+
+                    let content = document.createElement("div");
+                    content.classList.add("content");
+                    content.innerHTML = ayahs;
+
+                    sura.appendChild(content);
+
+                    page.appendChild(sura);
+
+                    prev_sura_name = row.sura_name;
+                } else {
+                    let content = document.createElement("div");
+                    content.classList.add("content");
+                    content.innerHTML = ayahs;
+
+                    sura.appendChild(content);
+
+                    page.appendChild(sura);
+                }
+
                 pages.push(page);
             }
             ayahs = "";
@@ -138,27 +224,12 @@ class Tab {
     }
 
     static add_page(row) {
-        let page, title, content;
+        let page;
         page = document.createElement("div");
         page.classList.add("item");
         page.classList.add(String(row.page));
         if (row.page % 10 === 0)
-            page.classList.add('ajax');
-        title = document.createElement("div");
-        title.innerHTML = `<span>
-                                <span>﴿</span>
-                                <span class="sura_name">${row.sura_name}</span> 
-                                <span>﴾</span>
-                           </span>`;
-        title.classList.add("title");
-        if (row.aya === 1)
-            title.classList.add("active");
-        
-        content = document.createElement("div");
-        content.classList.add("content");
-        
-        page.appendChild(title);
-        page.appendChild(content);
+            page.classList.add("ajax");
         return page;
     }
 }

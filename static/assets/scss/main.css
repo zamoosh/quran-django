@@ -588,22 +588,29 @@ body .main__content .owl-carousel .item {
   background-color: transparent;
   min-height: 75vh;
 }
-body .main__content .owl-carousel .item .title {
+body .main__content .owl-carousel .item .sura {
+  margin-bottom: 20px;
+}
+body .main__content .owl-carousel .item .sura .besm-allah {
+  margin: 1rem 0;
+  display: flex;
+  justify-content: center;
+  font-size: 1.6rem;
+  font-weight: bold;
+}
+body .main__content .owl-carousel .item .sura .title {
   width: 100%;
   justify-content: center;
-  display: none;
+  display: flex;
   margin: 0.75em 0;
 }
-body .main__content .owl-carousel .item .title.active {
-  display: flex;
-}
-body .main__content .owl-carousel .item .title.active span {
+body .main__content .owl-carousel .item .sura .title span {
   display: flex;
   align-items: center;
   font-size: 2.5rem;
   font-weight: bold;
 }
-body .main__content .owl-carousel .item .title.active span :not(.sura_name) {
+body .main__content .owl-carousel .item .sura .title span :not(.sura_name) {
   color: #1668ba;
 }
 body .main__content * {

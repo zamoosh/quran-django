@@ -59,14 +59,22 @@ body {
                     background-color: transparent;
                     min-height: 75vh;
                     
-                    .title {
-                        width: 100%;
-                        justify-content: center;
-                        display: none;
-                        margin: .75em 0;
+                    .sura {
+                        margin-bottom: 20px;
                         
-                        &.active {
+                        .besm-allah {
+                            margin: 1rem 0;
                             display: flex;
+                            justify-content: center;
+                            font-size: 1.6rem;
+                            font-weight: bold;
+                        }
+                        
+                        .title {
+                            width: 100%;
+                            justify-content: center;
+                            display: flex;
+                            margin: .75em 0;
                             
                             span {
                                 display: flex;
