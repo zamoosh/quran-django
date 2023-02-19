@@ -114,7 +114,11 @@ class Player {
         let btn_d = 36;
         let d = 52;
         let buttons = this.footer_settings.querySelectorAll("button");
-        if (e.target.tagName === "DIV" || e.target.tagName === "IMG")
+        let target = e.target;
+        if (target.tagName === "IMG") {
+            target = target.parentElement;
+        }
+        if (target.tagName === "DIV")
             this.footer_settings.classList.toggle("open");
         if (this.footer_settings.classList.contains("open")) {
             buttons.forEach((btn, index) => {
@@ -130,6 +134,9 @@ class Player {
 
     changeFontSize(e) {
         let btn = e.target;
+        if (btn.tagName === "IMG") {
+            btn = btn.parentElement;
+        }
         let elements = document.querySelectorAll(".main span.aya");
         if (btn.value === "plus") {
             elements.forEach(element => {
@@ -153,7 +160,7 @@ class Player {
             });
         }
     }
-    
+
     changeLineHeight(change) {
         let elements = document.querySelectorAll(".main span.aya");
         elements.forEach(element => {
@@ -168,15 +175,15 @@ class Player {
         btn.addEventListener("click", function () {
             document.body.classList.toggle("dark");
             document.body.classList.remove("sepia");
-            btn.classList.add('active');
-            sepia.classList.remove('active');
+            btn.classList.add("active");
+            sepia.classList.remove("active");
         });
 
         sepia.addEventListener("click", function () {
             document.body.classList.toggle("sepia");
             document.body.classList.remove("dark");
-            btn.classList.remove('active');
-            sepia.classList.add('active');
+            btn.classList.remove("active");
+            sepia.classList.add("active");
         });
     }
 }

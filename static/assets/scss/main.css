@@ -303,9 +303,10 @@ footer .footer__player {
   position: relative;
 }
 footer .footer__player img {
+  width: 0;
   opacity: 0;
   position: absolute;
-  transition: opacity 75ms;
+  transition: opacity 150ms;
   visibility: hidden;
 }
 footer .footer__player img.active {
@@ -636,10 +637,9 @@ body .main__content .owl-carousel .item .sura .content span.aya .text {
   border-radius: 5px;
 }
 body .main__content .owl-carousel .item .sura .content span.aya .text .number {
-  font-size: 30px;
+  font-size: 35px;
   color: #2b712b;
   cursor: text;
-  font-weight: bold;
 }
 body .main__content * {
   font-family: "uthmani", sans-serif;

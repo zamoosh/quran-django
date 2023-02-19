@@ -165,9 +165,10 @@ footer {
             position: relative;
             
             img {
+                width: 0;
                 opacity: 0;
                 position: absolute;
-                transition: opacity 75ms;
+                transition: opacity 150ms;
                 visibility: hidden;
             }
             
