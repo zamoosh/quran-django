@@ -176,7 +176,7 @@
             import { Tab } from "{% static 'assets/js/tab.js' %}";
             document.addEventListener("DOMContentLoaded", function () {
                 let side_menu = new SideMenu(".side-menu");
-                let tab = new Tab();
+                let tab = new Tab(side_menu);
                 let player = new Player("player");
 
                 let current_element, prev_element;
@@ -207,8 +207,8 @@
                     if (prev_id === 0)
                         prev_id = 1;
                     let prev = event.target.getElementsByClassName(`item ${prev_id}`)[0];
-                    console.log("current: ", current_element);
-                    console.log('prev: ', prev);
+                    // console.log("current: ", current_element);
+                    // console.log('prev: ', prev);
                     if (current_element.classList.contains('ajax')) {
                         if (current_id - prev_id > 0)
                             console.log('going for the NEXT ajax!');

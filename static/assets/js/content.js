@@ -10,13 +10,16 @@ export class Content {
         let current_page = 0;
         let pages = [];
         let page;
-        let prev_sura_name = "";
+        let prev_sura_id = "";
         for (const row of content["pack"]) {
             let text = "";
             if (row.sura === 1)
                 text = row.text;
             else
                 text = row.text.replace(bes, "");
+            if (row.sura === 40) {
+                console.log("ali");
+            }
             ayahs += `<span class="aya">
                           <span class="text" id="${row.index}">
                               ${text}
@@ -27,7 +30,10 @@ export class Content {
                       </span>`;
 
             if (current_page === row.page) {
-                if (prev_sura_name !== row.sura_name) {
+                // updating existing page
+
+                if (prev_sura_id !== row.sura && row.aya === 1) {
+                    // adding a title to the sura
                     let sura = document.createElement("div");
                     sura.classList.add("sura");
                     sura.classList.add(row.sura);
@@ -42,13 +48,14 @@ export class Content {
 
                     sura.appendChild(title);
 
-                    if (row.sura !== 1) {
+                    if (row.sura !== 1 && row.aya === 1) {
                         let besm_allah = document.createElement("div");
                         besm_allah.classList.add("besm-allah");
                         besm_allah.innerHTML = bes;
                         sura.appendChild(besm_allah);
                     }
 
+                    // add content(sura text is here)
                     let content = document.createElement("div");
                     content.classList.add("content");
                     content.innerHTML = ayahs;
@@ -57,17 +64,22 @@ export class Content {
 
                     page.appendChild(sura);
 
-                    prev_sura_name = row.sura_name;
+                    prev_sura_id = row.sura;
                 }
 
-                if (page.getElementsByClassName(prev_sura_name)) {
-                    let content = page.getElementsByClassName(row.sura)[0].querySelector(".content");
-                    content.innerHTML += ayahs;
-                } else {
-                    let content = page.getElementsByClassName("content")[0].querySelector(".content");
-                    content.innerHTML += ayahs;
+                if (row.aya !== 1) {
+                    // this peace of code, update the content for the operating sura
+                    // if you look at the code, you will understand that we're updating content using '+='
+                    if (page.getElementsByClassName(row.sura)) {
+                        let content = page.getElementsByClassName(row.sura)[0].querySelector(".content");
+                        content.innerHTML += ayahs;
+                    } else {
+                        let content = page.getElementsByClassName("content")[0].querySelector(".content");
+                        content.innerHTML += ayahs;
+                    }
                 }
             } else {
+                // creating new page
                 current_page = row.page;
                 page = Content.add_page(row);
 
@@ -75,8 +87,8 @@ export class Content {
                 sura.classList.add("sura");
                 sura.classList.add(row.sura);
 
-                // adding title to the sura in new page
-                if (prev_sura_name !== row.sura_name) {
+                if (prev_sura_id !== row.sura && row.aya === 1) {
+                    // adding a title to the sura
                     let title = document.createElement("div");
                     title.innerHTML = `<span>
                                             <!-- <span>﴿</span> -->
@@ -87,13 +99,14 @@ export class Content {
 
                     sura.appendChild(title);
 
-                    if (row.sura !== 1) {
+                    if (row.sura !== 1 && row.aya === 1) {
                         let besm_allah = document.createElement("div");
                         besm_allah.classList.add("besm-allah");
                         besm_allah.innerHTML = bes;
                         sura.appendChild(besm_allah);
                     }
 
+                    // add content(sura text is here)
                     let content = document.createElement("div");
                     content.classList.add("content");
                     content.innerHTML = ayahs;
@@ -102,7 +115,7 @@ export class Content {
 
                     page.appendChild(sura);
 
-                    prev_sura_name = row.sura_name;
+                    prev_sura_id = row.sura;
                 } else {
                     let content = document.createElement("div");
                     content.classList.add("content");
@@ -121,6 +134,10 @@ export class Content {
         Content.update_carousel(Content.carousel, pages);
 
         Content.go_to_page(Content.carousel, page_number);
+
+    }
+
+    static add_sura_title() {
 
     }
 

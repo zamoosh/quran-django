@@ -3,10 +3,12 @@ import {Content} from "./content.js";
 
 export class Tab {
     static main_content;
+    static side_menu;
 
 
-    constructor() {
+    constructor(side_menu) {
         Tab.main_content = document.querySelector(".main__content");
+        Tab.side_menu = side_menu;
         this.tabButtons = document.querySelectorAll(".side-menu__btn-group button");
         this.tabPanels = {};
         this.tabButtons.forEach(btn => {
@@ -82,6 +84,8 @@ export class Tab {
         rows.forEach(row => {
             row.classList.remove("selected");
         });
+
+        // row: id of sura in side menu, sura list
         let row = e.target;
         row.classList.toggle("selected");
         $.ajax({
@@ -92,10 +96,11 @@ export class Tab {
             },
             cache: true,
             success: function (context) {
-                let page_number = context['page_number'];
+                let page_number = context["page_number"];
 
                 // page_number is the page sura starts
                 Content.update_content(context, page_number);
+                Tab.side_menu.closeMenu()
             },
             error: function () {
                 console.log("error");
