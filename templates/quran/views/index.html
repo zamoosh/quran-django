@@ -165,14 +165,15 @@
         <!-- side menu -->
         <script src="{% static 'assets/js/side_menu.js' %}"></script>
 
-        <!-- side menu -->
-        <script src="{% static 'assets/js/tab.js' %}"></script>
+        <!-- tabs -->
+        <script type="module" src="{% static 'assets/js/tab.js' %}"></script>
 
         <!-- player -->
         <script src="{% static 'assets/js/player.js' %}"></script>
 
         <!-- page js -->
-        <script>
+        <script type="module">
+            import { Tab } from "{% static 'assets/js/tab.js' %}";
             document.addEventListener("DOMContentLoaded", function () {
                 let side_menu = new SideMenu(".side-menu");
                 let tab = new Tab();

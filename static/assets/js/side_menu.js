@@ -109,7 +109,7 @@ class SideMenu {
     // touch dragging
     touch_drag_handling() {
         let obj = this;
-        this.menu.addEventListener("touchstart", handleTouchStart);
+        this.menu.addEventListener("touchstart", handleTouchStart, {passive: true});
         this.menu.addEventListener("touchend", handleTouchEnd);
 
         function handleTouchStart(e) {
