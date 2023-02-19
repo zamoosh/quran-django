@@ -92,7 +92,10 @@ export class Tab {
             },
             cache: true,
             success: function (context) {
-                Content.update_content(context);
+                let page_number = context['page_number'];
+
+                // page_number is the page sura starts
+                Content.update_content(context, page_number);
             },
             error: function () {
                 console.log("error");

@@ -1,8 +1,10 @@
 import {toArabicNumber} from "./utils.js";
 
 export class Content {
+    static carousel = $(".owl-carousel");
 
-    static update_content(content) {
+    static update_content(content, page_number) {
+        page_number = String(page_number--);
         let bes = "بِسْمِ اللَّهِ الرَّحْمَـٰنِ الرَّحِيمِ";
         let ayahs = "";
         let current_page = 0;
@@ -28,7 +30,7 @@ export class Content {
                 if (prev_sura_name !== row.sura_name) {
                     let sura = document.createElement("div");
                     sura.classList.add("sura");
-                    sura.classList.add(row.sura_name);
+                    sura.classList.add(row.sura);
 
                     let title = document.createElement("div");
                     title.innerHTML = `<span>
@@ -58,11 +60,8 @@ export class Content {
                     prev_sura_name = row.sura_name;
                 }
 
-                if (row.index === 12)
-                    console.log("13");
-
                 if (page.getElementsByClassName(prev_sura_name)) {
-                    let content = page.getElementsByClassName(prev_sura_name)[0].querySelector(".content");
+                    let content = page.getElementsByClassName(row.sura)[0].querySelector(".content");
                     content.innerHTML += ayahs;
                 } else {
                     let content = page.getElementsByClassName("content")[0].querySelector(".content");
@@ -74,7 +73,7 @@ export class Content {
 
                 let sura = document.createElement("div");
                 sura.classList.add("sura");
-                sura.classList.add(row.sura_name);
+                sura.classList.add(row.sura);
 
                 // adding title to the sura in new page
                 if (prev_sura_name !== row.sura_name) {
@@ -118,9 +117,30 @@ export class Content {
             }
             ayahs = "";
         }
-        let carousel = $(".owl-carousel");
+
+        Content.update_carousel(Content.carousel, pages);
+
+        Content.go_to_page(Content.carousel, page_number);
+
+    }
+
+    static update_carousel(carousel, pages) {
         for (const page of pages) {
             carousel.trigger("add.owl.carousel", page).trigger("refresh.owl.carousel");
+        }
+    }
+
+    static go_to_page(carousel, page_number) {
+        let index_list = {};
+        let page_list = carousel.find(".owl-item > *");
+        for (let i = 0; i < page_list.length; i++) {
+            let item_number = page_list[i].classList[1];
+            index_list[item_number] = i;
+        }
+
+        if (index_list[page_number]) {
+            let item_number = Number(index_list[page_number]);
+            carousel.trigger("to.owl.carousel", item_number);
         }
     }
 
