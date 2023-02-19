@@ -71,6 +71,24 @@ body {
                     
                     .sura {
                         margin-bottom: 20px;
+    
+                        .title {
+                            width: 100%;
+                            justify-content: center;
+                            display: flex;
+                            margin: .75em 0;
+        
+                            span {
+                                display: flex;
+                                align-items: center;
+                                font-size: 2.5rem;
+                                font-weight: bold;
+            
+                                :not(.sura_name) {
+                                    color: #1668ba;
+                                }
+                            }
+                        }
                         
                         .besm-allah {
                             margin: 1rem 0;
@@ -87,49 +105,22 @@ body {
                                 line-height: 1.8em;
                                 letter-spacing: -0.025em;
                                 cursor: pointer;
-                                transition: background-color 150ms;
+                                transition: background-color 120ms;
                                 border-radius: 5px;
                                 
-                                :hover {
+                                &:hover {
                                     background-color: $highlight-color-light-hover;
-                                    
-                                    
-                                }
-                                
-                                .number {
-                                    color: #2b712b;
-                                    cursor: text;
-                                    
-                                    :hover {
-                                        background-color: $highlight-color-light-hover;
-                                    }
                                 }
                                 
                                 .text {
                                     border-radius: 5px;
-                                }
-                            }
-                            
-                            span.number {
-                                font-size: 30px;
-                                font-weight: normal;
-                            }
-                        }
-                        
-                        .title {
-                            width: 100%;
-                            justify-content: center;
-                            display: flex;
-                            margin: .75em 0;
-                            
-                            span {
-                                display: flex;
-                                align-items: center;
-                                font-size: 2.5rem;
-                                font-weight: bold;
-                                
-                                :not(.sura_name) {
-                                    color: #1668ba;
+    
+                                    .number {
+                                        font-size: 30px;
+                                        color: #2b712b;
+                                        cursor: text;
+                                        font-weight: bold;
+                                    }
                                 }
                             }
                         }

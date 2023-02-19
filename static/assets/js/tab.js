@@ -119,9 +119,12 @@ class Tab {
             else
                 text = row.text.replace(bes, "");
             ayahs += `<span class="aya">
-                          <span class="text" id="${row.index}">${text}</span>
+                          <span class="text" id="${row.index}">
+                              ${text}
+                              <span class="number">${Tab.toArabicNumber(row.aya)}</span>
+                          </span>
                           <!-- <span class="number">﴿${Tab.toArabicNumber(row.aya)}﴾</span> -->
-                          <span class="number">${Tab.toArabicNumber(row.aya)}</span>
+                          <!-- <span class="number">${Tab.toArabicNumber(row.aya)}</span> -->
                       </span>`;
 
             if (current_page === row.page) {
