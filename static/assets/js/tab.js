@@ -120,7 +120,8 @@ class Tab {
                 text = row.text.replace(bes, "");
             ayahs += `<span class="aya">
                           <span class="text" id="${row.index}">${text}</span>
-                          <span class="number">﴿${Tab.toArabicNumber(row.aya)}﴾</span>
+                          <!-- <span class="number">﴿${Tab.toArabicNumber(row.aya)}﴾</span> -->
+                          <span class="number">${Tab.toArabicNumber(row.aya)}</span>
                       </span>`;
 
             if (current_page === row.page) {
@@ -131,9 +132,9 @@ class Tab {
 
                     let title = document.createElement("div");
                     title.innerHTML = `<span>
-                                            <span>﴿</span>
+                                            <!-- <span>﴿</span> -->
                                             <span class="sura_name">${row.sura_name}</span>
-                                            <span>﴾</span>
+                                            <!-- <span>﴾</span> -->
                                        </span>`;
                     title.classList.add("title");
 
@@ -179,9 +180,9 @@ class Tab {
                 if (prev_sura_name !== row.sura_name) {
                     let title = document.createElement("div");
                     title.innerHTML = `<span>
-                                            <span>﴿</span>
+                                            <!-- <span>﴿</span> -->
                                             <span class="sura_name">${row.sura_name}</span>
-                                            <span>﴾</span>
+                                            <!-- <span>﴾</span> -->
                                        </span>`;
                     title.classList.add("title");
 

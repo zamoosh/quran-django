@@ -11,6 +11,16 @@
     src: url("../fonts/KFG.ttf");
 }
 
+@font-face {
+    font-family: "uthmani";
+    src: url("../fonts/UthmanicHafs1Ver18.woff2");
+}
+
+@font-face {
+    font-family: "sura_names";
+    src: url("../fonts/sura_names.woff2");
+}
+
 
 @font-face {
     font-family: "vazirmatn";
@@ -70,6 +80,42 @@ body {
                             font-weight: bold;
                         }
                         
+                        .content {
+                            
+                            span.aya {
+                                font-size: 30px;
+                                line-height: 1.8em;
+                                letter-spacing: -0.025em;
+                                cursor: pointer;
+                                transition: background-color 150ms;
+                                border-radius: 5px;
+                                
+                                :hover {
+                                    background-color: $highlight-color-light-hover;
+                                    
+                                    
+                                }
+                                
+                                .number {
+                                    color: #2b712b;
+                                    cursor: text;
+                                    
+                                    :hover {
+                                        background-color: $highlight-color-light-hover;
+                                    }
+                                }
+                                
+                                .text {
+                                    border-radius: 5px;
+                                }
+                            }
+                            
+                            span.number {
+                                font-size: 30px;
+                                font-weight: normal;
+                            }
+                        }
+                        
                         .title {
                             width: 100%;
                             justify-content: center;
@@ -92,35 +138,7 @@ body {
             }
             
             & * {
-                font-family: 'KFG', sans-serif;
-            }
-        }
-        
-        span.aya {
-            font-size: 25px;
-            line-height: 1.8em;
-            letter-spacing: -0.025em;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background-color 100ms;
-            border-radius: 5px;
-            
-            :hover {
-                background-color: $highlight-color-light-hover;
-            }
-            
-            .number {
-                color: #2b712b;
-                cursor: text;
-                background-color: transparent;
-                
-                :hover {
-                    background-color: transparent;
-                }
-            }
-            
-            .text {
-                border-radius: 5px;
+                font-family: 'uthmani', sans-serif;
             }
         }
     }

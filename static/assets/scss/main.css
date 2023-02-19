@@ -548,6 +548,14 @@ body.sepia .side-menu {
   src: url("../fonts/KFG.ttf");
 }
 @font-face {
+  font-family: "uthmani";
+  src: url("../fonts/UthmanicHafs1Ver18.woff2");
+}
+@font-face {
+  font-family: "sura_names";
+  src: url("../fonts/sura_names.woff2");
+}
+@font-face {
   font-family: "vazirmatn";
   src: url("../fonts/vazirmatn/Vazirmatn-Regular.ttf"), url("../fonts/vazirmatn/Vazirmatn-Medium.ttf"), url("../fonts/vazirmatn/Vazirmatn-Bold.ttf"), url("../fonts/vazirmatn/Vazirmatn-ExtraBold.ttf");
 }
@@ -598,6 +606,31 @@ body .main__content .owl-carousel .item .sura .besm-allah {
   font-size: 1.6rem;
   font-weight: bold;
 }
+body .main__content .owl-carousel .item .sura .content span.aya {
+  font-size: 30px;
+  line-height: 1.8em;
+  letter-spacing: -0.025em;
+  cursor: pointer;
+  transition: background-color 150ms;
+  border-radius: 5px;
+}
+body .main__content .owl-carousel .item .sura .content span.aya :hover {
+  background-color: rgba(184, 219, 217, 0.33);
+}
+body .main__content .owl-carousel .item .sura .content span.aya .number {
+  color: #2b712b;
+  cursor: text;
+}
+body .main__content .owl-carousel .item .sura .content span.aya .number :hover {
+  background-color: rgba(184, 219, 217, 0.33);
+}
+body .main__content .owl-carousel .item .sura .content span.aya .text {
+  border-radius: 5px;
+}
+body .main__content .owl-carousel .item .sura .content span.number {
+  font-size: 30px;
+  font-weight: normal;
+}
 body .main__content .owl-carousel .item .sura .title {
   width: 100%;
   justify-content: center;
@@ -614,30 +647,7 @@ body .main__content .owl-carousel .item .sura .title span :not(.sura_name) {
   color: #1668ba;
 }
 body .main__content * {
-  font-family: "KFG", sans-serif;
-}
-body .main span.aya {
-  font-size: 25px;
-  line-height: 1.8em;
-  letter-spacing: -0.025em;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 100ms;
-  border-radius: 5px;
-}
-body .main span.aya :hover {
-  background-color: rgba(184, 219, 217, 0.33);
-}
-body .main span.aya .number {
-  color: #2b712b;
-  cursor: text;
-  background-color: transparent;
-}
-body .main span.aya .number :hover {
-  background-color: transparent;
-}
-body .main span.aya .text {
-  border-radius: 5px;
+  font-family: "uthmani", sans-serif;
 }
 
 /*# sourceMappingURL=main.css.map */
