@@ -98,9 +98,10 @@ export class Tab {
             success: function (context) {
                 let page_number = context["page_number"];
 
+                Tab.side_menu.closeMenu();
+
                 // page_number is the page sura starts
-                Content.update_content(context, page_number);
-                Tab.side_menu.closeMenu()
+                Content.update_content(context, page_number, row.id);
             },
             error: function () {
                 console.log("error");

@@ -3,21 +3,22 @@ import {toArabicNumber} from "./utils.js";
 export class Content {
     static carousel = $(".owl-carousel");
 
-    static update_content(content, page_number) {
+    static update_content(content, page_number, sura_id) {
         page_number = String(page_number--);
         let bes = "بِسْمِ اللَّهِ الرَّحْمَـٰنِ الرَّحِيمِ";
         let ayahs = "";
         let current_page = 0;
         let pages = [];
-        let page;
+        let page = "";
         let prev_sura_id = "";
         for (const row of content["pack"]) {
+            // prepare the aya
             let text = "";
             if (row.sura === 1)
                 text = row.text;
             else
                 text = row.text.replace(bes, "");
-            if (row.sura === 40) {
+            if (row.sura === 73 && row.aya === 19) {
                 console.log("ali");
             }
             ayahs += `<span class="aya">
@@ -28,10 +29,12 @@ export class Content {
                           <!-- <span class="number">﴿${toArabicNumber(row.aya)}﴾</span> -->
                           <!-- <span class="number">${toArabicNumber(row.aya)}</span> -->
                       </span>`;
+            // end prepare the aya
 
+            // updating existing page
             if (current_page === row.page) {
-                // updating existing page
 
+                // prev_sura_id = Content.add_sura_title(page, row, prev_sura_id, ayahs);
                 if (prev_sura_id !== row.sura && row.aya === 1) {
                     // adding a title to the sura
                     let sura = document.createElement("div");
@@ -87,6 +90,8 @@ export class Content {
                 sura.classList.add("sura");
                 sura.classList.add(row.sura);
 
+                // prev_sura_id = Content.add_sura_title(page, row, prev_sura_id, ayahs);
+
                 if (prev_sura_id !== row.sura && row.aya === 1) {
                     // adding a title to the sura
                     let title = document.createElement("div");
@@ -107,24 +112,18 @@ export class Content {
                     }
 
                     // add content(sura text is here)
-                    let content = document.createElement("div");
-                    content.classList.add("content");
-                    content.innerHTML = ayahs;
 
-                    sura.appendChild(content);
-
-                    page.appendChild(sura);
 
                     prev_sura_id = row.sura;
-                } else {
-                    let content = document.createElement("div");
-                    content.classList.add("content");
-                    content.innerHTML = ayahs;
-
-                    sura.appendChild(content);
-
-                    page.appendChild(sura);
                 }
+
+                let content = document.createElement("div");
+                content.classList.add("content");
+                content.innerHTML = ayahs;
+
+                sura.appendChild(content);
+
+                page.appendChild(sura);
 
                 pages.push(page);
             }
@@ -133,12 +132,47 @@ export class Content {
 
         Content.update_carousel(Content.carousel, pages);
 
-        Content.go_to_page(Content.carousel, page_number);
+        Content.go_to_page(Content.carousel, page_number, sura_id);
 
     }
 
-    static add_sura_title() {
+    static add_sura_title(page, row, prev_sura_id, ayahs) {
+        let bes = "بِسْمِ اللَّهِ الرَّحْمَـٰنِ الرَّحِيمِ";
+        if (prev_sura_id !== row.sura && row.aya === 1) {
+            // adding a title to the sura
+            let sura = document.createElement("div");
+            sura.classList.add("sura");
+            sura.classList.add(row.sura);
 
+            let title = document.createElement("div");
+            title.innerHTML = `<span>
+                                            <!-- <span>﴿</span> -->
+                                            <span class="sura_name">${row.sura_name}</span>
+                                            <!-- <span>﴾</span> -->
+                                       </span>`;
+            title.classList.add("title");
+
+            sura.appendChild(title);
+
+            if (row.sura !== 1 && row.aya === 1) {
+                let besm_allah = document.createElement("div");
+                besm_allah.classList.add("besm-allah");
+                besm_allah.innerHTML = bes;
+                sura.appendChild(besm_allah);
+            }
+
+            // add content(sura text is here)
+            let content = document.createElement("div");
+            content.classList.add("content");
+            content.innerHTML = ayahs;
+
+            sura.appendChild(content);
+
+            page.appendChild(sura);
+
+            prev_sura_id = row.sura;
+        }
+        return prev_sura_id;
     }
 
     static update_carousel(carousel, pages) {
@@ -147,7 +181,7 @@ export class Content {
         }
     }
 
-    static go_to_page(carousel, page_number) {
+    static go_to_page(carousel, page_number, sura_id) {
         let index_list = {};
         let page_list = carousel.find(".owl-item > *");
         for (let i = 0; i < page_list.length; i++) {
@@ -158,6 +192,16 @@ export class Content {
         if (index_list[page_number]) {
             let item_number = Number(index_list[page_number]);
             carousel.trigger("to.owl.carousel", item_number);
+
+            // scroll into the sura element
+            carousel.on("translated.owl.carousel", function () {
+                let sura_content = document.getElementsByClassName(`sura ${sura_id}`)[0];
+                sura_content.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center"
+                });
+                carousel.unbind("translated.owl.carousel");
+            });
         }
     }
 
