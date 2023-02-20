@@ -5,58 +5,31 @@ export class Content {
 
     static update_content(content, page_number, sura_id) {
         page_number = String(page_number--);
-        let bes = "بِسْمِ اللَّهِ الرَّحْمَـٰنِ الرَّحِيمِ";
-        let ayahs = "";
         let current_page = 0;
         let pages = [];
         let page = "";
         let prev_sura_id = "";
         for (const row of content["pack"]) {
             // prepare the aya
-            let text = "";
-            if (row.sura === 1)
-                text = row.text;
-            else
-                text = row.text.replace(bes, "");
-            if (row.sura === 73 && row.aya === 19) {
-                console.log("ali");
-            }
-            ayahs += `<span class="aya">
-                          <span class="text" id="${row.index}">
-                              ${text}
-                              <span class="number">${toArabicNumber(row.aya)}</span>
-                          </span>
-                          <!-- <span class="number">﴿${toArabicNumber(row.aya)}﴾</span> -->
-                          <!-- <span class="number">${toArabicNumber(row.aya)}</span> -->
-                      </span>`;
-            // end prepare the aya
+            let ayahs = Content.prepare_aya(row);
 
             // updating existing page
             if (current_page === row.page) {
 
                 // prev_sura_id = Content.add_sura_title(page, row, prev_sura_id, ayahs);
                 if (prev_sura_id !== row.sura && row.aya === 1) {
-                    // adding a title to the sura
+
                     let sura = document.createElement("div");
                     sura.classList.add("sura");
                     sura.classList.add(row.sura);
 
-                    let title = document.createElement("div");
-                    title.innerHTML = `<span>
-                                            <!-- <span>﴿</span> -->
-                                            <span class="sura_name">${row.sura_name}</span>
-                                            <!-- <span>﴾</span> -->
-                                       </span>`;
-                    title.classList.add("title");
-
+                    // creates and return title for sura
+                    let title = Content.add_sura_title(row);
                     sura.appendChild(title);
 
-                    if (row.sura !== 1 && row.aya === 1) {
-                        let besm_allah = document.createElement("div");
-                        besm_allah.classList.add("besm-allah");
-                        besm_allah.innerHTML = bes;
-                        sura.appendChild(besm_allah);
-                    }
+                    // replace besm allah if sura == 1
+                    Content.replace_besm_allah(row, sura);
+
 
                     // add content(sura text is here)
                     let content = document.createElement("div");
@@ -91,32 +64,19 @@ export class Content {
                 sura.classList.add(row.sura);
 
                 // prev_sura_id = Content.add_sura_title(page, row, prev_sura_id, ayahs);
-
                 if (prev_sura_id !== row.sura && row.aya === 1) {
-                    // adding a title to the sura
-                    let title = document.createElement("div");
-                    title.innerHTML = `<span>
-                                            <!-- <span>﴿</span> -->
-                                            <span class="sura_name">${row.sura_name}</span>
-                                            <!-- <span>﴾</span> -->
-                                       </span>`;
-                    title.classList.add("title");
 
+                    // creates and return title for sura
+                    let title = Content.add_sura_title(row);
                     sura.appendChild(title);
 
-                    if (row.sura !== 1 && row.aya === 1) {
-                        let besm_allah = document.createElement("div");
-                        besm_allah.classList.add("besm-allah");
-                        besm_allah.innerHTML = bes;
-                        sura.appendChild(besm_allah);
-                    }
-
-                    // add content(sura text is here)
-
+                    // replace besm allah if sura == 1
+                    Content.replace_besm_allah(row, sura);
 
                     prev_sura_id = row.sura;
                 }
 
+                // add content(sura text is here)
                 let content = document.createElement("div");
                 content.classList.add("content");
                 content.innerHTML = ayahs;
@@ -136,43 +96,15 @@ export class Content {
 
     }
 
-    static add_sura_title(page, row, prev_sura_id, ayahs) {
-        let bes = "بِسْمِ اللَّهِ الرَّحْمَـٰنِ الرَّحِيمِ";
-        if (prev_sura_id !== row.sura && row.aya === 1) {
-            // adding a title to the sura
-            let sura = document.createElement("div");
-            sura.classList.add("sura");
-            sura.classList.add(row.sura);
-
-            let title = document.createElement("div");
-            title.innerHTML = `<span>
-                                            <!-- <span>﴿</span> -->
-                                            <span class="sura_name">${row.sura_name}</span>
-                                            <!-- <span>﴾</span> -->
-                                       </span>`;
-            title.classList.add("title");
-
-            sura.appendChild(title);
-
-            if (row.sura !== 1 && row.aya === 1) {
-                let besm_allah = document.createElement("div");
-                besm_allah.classList.add("besm-allah");
-                besm_allah.innerHTML = bes;
-                sura.appendChild(besm_allah);
-            }
-
-            // add content(sura text is here)
-            let content = document.createElement("div");
-            content.classList.add("content");
-            content.innerHTML = ayahs;
-
-            sura.appendChild(content);
-
-            page.appendChild(sura);
-
-            prev_sura_id = row.sura;
-        }
-        return prev_sura_id;
+    static add_sura_title(row) {
+        let title = document.createElement("div");
+        title.innerHTML = `<span>
+                                <!-- <span>﴿</span> -->
+                                <span class="sura_name">${row.sura_name}</span>
+                                <!-- <span>﴾</span> -->
+                           </span>`;
+        title.classList.add("title");
+        return title;
     }
 
     static update_carousel(carousel, pages) {
@@ -216,4 +148,31 @@ export class Content {
     }
 
 
+    static prepare_aya(row) {
+        let bes = "بِسْمِ اللَّهِ الرَّحْمَـٰنِ الرَّحِيمِ";
+        let text = "";
+        if (row.sura === 1)
+            text = row.text;
+        else
+            text = row.text.replace(bes, "");
+
+        return `<span class="aya">
+                    <span class="text" id="${row.index}">
+                        ${text}
+                        <span class="number">${toArabicNumber(row.aya)}</span>
+                    </span>
+                    <!-- <span class="number">﴿${toArabicNumber(row.aya)}﴾</span> -->
+                    <!-- <span class="number">${toArabicNumber(row.aya)}</span> -->
+                </span>`;
+    }
+
+    static replace_besm_allah(row, sura) {
+        let bes = "بِسْمِ اللَّهِ الرَّحْمَـٰنِ الرَّحِيمِ";
+        if (row.sura !== 1 && row.aya === 1) {
+            let besm_allah = document.createElement("div");
+            besm_allah.classList.add("besm-allah");
+            besm_allah.innerHTML = bes;
+            sura.appendChild(besm_allah);
+        }
+    }
 }
