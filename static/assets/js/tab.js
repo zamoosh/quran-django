@@ -4,6 +4,7 @@ import {Content} from "./content.js";
 export class Tab {
     static main_content;
     static side_menu;
+    static rows = [];
 
 
     constructor(side_menu) {
@@ -88,6 +89,11 @@ export class Tab {
         // row: id of sura in side menu, sura list
         let row = e.target;
         row.classList.toggle("selected");
+        if (Tab.rows.includes(Number(row.id))) {
+            Tab.side_menu.closeMenu();
+            Content.go_to_page(null, row.id);
+            return;
+        }
         $.ajax({
             method: "GET",
             url: sura_details_url.replace("0", row.id),
@@ -97,6 +103,13 @@ export class Tab {
             cache: true,
             success: function (context) {
                 let page_number = context["page_number"];
+                let pack = context["pack"];
+                let sura_ids = pack.map(function (item) {
+                    return item["sura"];
+                });
+                sura_ids = [...new Set(sura_ids)];
+                Tab.rows = Tab.rows.concat(sura_ids);
+                console.log(Tab.rows);
 
                 Tab.side_menu.closeMenu();
 
