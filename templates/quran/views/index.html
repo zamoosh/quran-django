@@ -179,7 +179,6 @@
                 let tab = new Tab(side_menu);
                 let player = new Player("player");
 
-                let current_element, prev_element;
                 let carousel = $(".owl-carousel");
                 carousel.owlCarousel({
                     items: 1,
@@ -187,17 +186,8 @@
                     rtl: true,
                     dotsData: false,
                     dots: false,
-                    // onTranslated: function (event) {
-                    //     // Get the current item index
-                    //     var current = event.item.index;
-                    //
-                    //     // Get the data for the current page
-                    //     var pageData = $(event.target).find('.owl-item').eq(current).data('pageData');
-                    //
-                    //     // Do something with the data, e.g. update the page title and content
-                    //     $('#page-title').text(pageData.title);
-                    //     $('#page-content').text(pageData.content);
-                    // }
+                    slideTransition: "",
+                    smartSpeed: 100,
                 });
 
                 // add 604 page to owl-carousel
@@ -210,23 +200,23 @@
                 carousel.trigger("refresh.owl.carousel");
 
 
-                /*carousel.on('translated.owl.carousel', function (event) {
-                    current_element = event.target.querySelector('.owl-item.active').firstElementChild;
-                    let current_id = Number(current_element.classList.value.split(' ')[1]);
-                    let prev_id = Number(current_element.classList.value.split(' ')[1]) - 1;
-                    if (prev_id === 0)
-                        prev_id = 1;
-                    let prev = event.target.getElementsByClassName(`item ${prev_id}`)[0];
-                    // console.log("current: ", current_element);
-                    // console.log('prev: ', prev);
-                    if (current_element.classList.contains('ajax')) {
-                        if (current_id - prev_id > 0)
-                            console.log('going for the NEXT ajax!');
-                        else
-                            console.log('going for the PREV ajax!');
+                let first_current_id;
+                let second_current_id;
+                let semaphore;
+                carousel.on("translate.owl.carousel", function (event) {
+                    if (semaphore > event.item.index) {
+                        console.log("going back");
+                    } else if (semaphore < event.item.index) {
+                        console.log("going forward");
                     }
-                    console.log();
-                });*/
+                    let next_id = event.item.index + 2;
+                    let next_item;
+                    if (next_id <= 604)
+                        next_item = event.target.getElementsByClassName(`item ${next_id}`)[0];
+                    // console.log('first ', first_current_id);
+                    // console.log('second ',second_current_id);
+                    semaphore = event.item.index;
+                });
             });
         </script>
     </body>
