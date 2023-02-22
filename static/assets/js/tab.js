@@ -114,6 +114,7 @@ export class Tab {
 
                 // page_number is the page sura starts
                 Content.update_content(context, page_number, row.id);
+                Content.update_page_number(page_number);
             },
             error: function () {
                 console.log("error");

@@ -226,6 +226,7 @@
                         }
                         console.log("going forward", next_item);
                     }
+                    Content.update_page_number(event.item.index + 1);
                     prev_id = event.item.index;
                 });
             });

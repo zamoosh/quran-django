@@ -121,65 +121,20 @@ export class Content {
     }
 
     static update_carousel() {
-        // console.log(Content.carousel);
-        // Content.carousel.trigger("destroy.owl.carousel");
+        // update each page of carousel. It changes the innerHTML
         for (const page of Content.pages_added) {
-            // Content.carousel.trigger("remove.owl.carousel", page);
             let item = document.getElementsByClassName(`item ${page}`)[0];
             item.innerHTML = Content.pages[page].innerHTML;
-            // item.append(Content.pages[page]);
-            // Content.carousel.trigger("add.owl.carousel", [Content.pages[page], page - 1]);
         }
-        // Content.carousel.trigger("refresh.owl.carousel");
         Content.pages_added = [];
     }
 
     static go_to_page(page_number, sura_id) {
-        // let index_list = {};
-        // let page_list = Content.carousel.find(".owl-item > *");
-        // for (let i = 0; i < page_list.length; i++) {
-        //     let item_number = page_list[i].classList[1];
-        //     index_list[item_number] = i;
-        // }
+        // is sura_id is null, then it won't scroll in to the sura
         if (sura_id !== null) {
             page_number = document.getElementsByClassName(`sura ${sura_id}`)[0].parentElement.classList[1];
             Content.carousel.trigger("to.owl.carousel", page_number - 1);
         }
-
-        // if (page_number !== undefined || page_number) {
-        //     Content.carousel.trigger("to.owl.carousel", page_number - 1);
-        // } else {
-        //     page_number = document.getElementsByClassName(`item ${sura_id}`)[0].parentElement.classList[1];
-        //     Content.carousel.trigger("to.owl.carousel", page_number - 1);
-        // }
-
-
-        // if (index_list[page_number] !== undefined) {
-        //     let item_number = index_list[page_number];
-        //     Content.update_page_number(page_number);
-        //     Content.carousel.trigger("to.owl.carousel", item_number);
-        //
-        //     // scroll into the sura element
-        //     // Content.carousel.on("translated.owl.carousel", function () {
-        //     //     let sura_content = document.getElementsByClassName(`sura ${sura_id}`)[0];
-        //     //     sura_content.scrollIntoView({
-        //     //         behavior: "smooth",
-        //     //         block: "center"
-        //     //     });
-        //     //     Content.carousel.unbind("translated.owl.carousel");
-        //     // });
-        // } else {
-        //     let page = Content.carousel[0].getElementsByClassName(`sura ${sura_id}`)[0].parentElement;
-        //     let index = Object.keys(page_list).find(function (key) {
-        //         if (page_list[key] === page) {
-        //             Content.update_page_number(page);
-        //             return key;
-        //         }
-        //     });
-        //     Content.carousel.trigger("to.owl.carousel", index);
-        // }
-
-        // Content.carousel.on("translated.owl.carousel", Content.update_page_number);
     }
 
     static add_page(row) {
