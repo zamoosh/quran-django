@@ -109,7 +109,6 @@ export class Tab {
                 });
                 sura_ids = [...new Set(sura_ids)];
                 Tab.rows = Tab.rows.concat(sura_ids);
-                console.log(Tab.rows);
 
                 Tab.side_menu.closeMenu();
 

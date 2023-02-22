@@ -2,12 +2,14 @@ import {toArabicNumber} from "./utils.js";
 
 export class Content {
     static carousel = $(".owl-carousel");
-    static pages = [];
+    static pages = {};
+    static pages_added = [];
+    static page_number = document.querySelector("span#page_number");
 
     static update_content(content, page_number, sura_id) {
         page_number = String(page_number--);
         let current_page = 0;
-        // let pages = [];
+        let current_page_number = 1;
         let page = "";
         let prev_sura_id = "";
         for (const row of content["pack"]) {
@@ -86,15 +88,24 @@ export class Content {
 
                 page.appendChild(sura);
 
-                Content.pages.push(page);
+                Content.pages_added.push(row.page);
+                current_page_number++;
+                Content.pages[current_page] = page;
             }
             ayahs = "";
         }
 
-        Content.update_carousel(Content.pages);
+        // Content.update_pages(new_pages);
+
+        Content.update_carousel();
 
         Content.go_to_page(page_number, sura_id);
 
+    }
+
+    static update_page_number(page_number) {
+        if (!isNaN(page_number))
+            Content.page_number.innerHTML = toArabicNumber(page_number);
     }
 
     static add_sura_title(row) {
@@ -108,43 +119,64 @@ export class Content {
         return title;
     }
 
-    static update_carousel(pages) {
-        console.log(Content.carousel);
-        for (const page of pages) {
-            Content.carousel.trigger("add.owl.carousel", page).trigger("refresh.owl.carousel");
+    static update_carousel() {
+        // console.log(Content.carousel);
+        // Content.carousel.trigger("destroy.owl.carousel");
+        for (const page of Content.pages_added) {
+            // Content.carousel.trigger("remove.owl.carousel", page);
+            let item = document.getElementsByClassName(`item ${page}`)[0];
+            item.innerHTML = Content.pages[page].innerHTML;
+            // item.append(Content.pages[page]);
+            // Content.carousel.trigger("add.owl.carousel", [Content.pages[page], page - 1]);
         }
+        // Content.carousel.trigger("refresh.owl.carousel");
+        Content.pages_added = [];
     }
 
     static go_to_page(page_number, sura_id) {
-        page_number = String(page_number);
-        let index_list = {};
-        let page_list = Content.carousel.find(".owl-item > *");
-        for (let i = 0; i < page_list.length; i++) {
-            let item_number = page_list[i].classList[1];
-            index_list[item_number] = i;
-        }
+        // let index_list = {};
+        // let page_list = Content.carousel.find(".owl-item > *");
+        // for (let i = 0; i < page_list.length; i++) {
+        //     let item_number = page_list[i].classList[1];
+        //     index_list[item_number] = i;
+        // }
+        page_number = document.getElementsByClassName(`sura ${sura_id}`)[0].parentElement.classList[1];
+        Content.carousel.trigger("to.owl.carousel", page_number - 1);
 
-        if (index_list[page_number] !== undefined) {
-            let item_number = index_list[page_number];
-            Content.carousel.trigger("to.owl.carousel", item_number);
+        // if (page_number !== undefined || page_number) {
+        //     Content.carousel.trigger("to.owl.carousel", page_number - 1);
+        // } else {
+        //     page_number = document.getElementsByClassName(`item ${sura_id}`)[0].parentElement.classList[1];
+        //     Content.carousel.trigger("to.owl.carousel", page_number - 1);
+        // }
 
-            // scroll into the sura element
-            Content.carousel.on("translated.owl.carousel", function () {
-                let sura_content = document.getElementsByClassName(`sura ${sura_id}`)[0];
-                sura_content.scrollIntoView({
-                    behavior: "smooth",
-                    block: "center"
-                });
-                Content.carousel.unbind("translated.owl.carousel");
-            });
-        } else {
-            let page = Content.carousel[0].getElementsByClassName(`sura ${sura_id}`)[0].parentElement;
-            let index = Object.keys(page_list).find(function (key) {
-                if (page_list[key] === page)
-                    return key;
-            });
-            Content.carousel.trigger("to.owl.carousel", index);
-        }
+
+        // if (index_list[page_number] !== undefined) {
+        //     let item_number = index_list[page_number];
+        //     Content.update_page_number(page_number);
+        //     Content.carousel.trigger("to.owl.carousel", item_number);
+        //
+        //     // scroll into the sura element
+        //     // Content.carousel.on("translated.owl.carousel", function () {
+        //     //     let sura_content = document.getElementsByClassName(`sura ${sura_id}`)[0];
+        //     //     sura_content.scrollIntoView({
+        //     //         behavior: "smooth",
+        //     //         block: "center"
+        //     //     });
+        //     //     Content.carousel.unbind("translated.owl.carousel");
+        //     // });
+        // } else {
+        //     let page = Content.carousel[0].getElementsByClassName(`sura ${sura_id}`)[0].parentElement;
+        //     let index = Object.keys(page_list).find(function (key) {
+        //         if (page_list[key] === page) {
+        //             Content.update_page_number(page);
+        //             return key;
+        //         }
+        //     });
+        //     Content.carousel.trigger("to.owl.carousel", index);
+        // }
+
+        // Content.carousel.on("translated.owl.carousel", Content.update_page_number);
     }
 
     static add_page(row) {
@@ -185,4 +217,38 @@ export class Content {
             sura.appendChild(besm_allah);
         }
     }
+
+    // static update_pages(new_pages) {
+    //     if (Content.pages.length === 0) {
+    //         Content.pages = [...new_pages];
+    //     }
+    //     // first and last page number in 'Content.pages'
+    //     let first_page_number = Content.pages[0].classList[1];
+    //     let last_page_number = Content.pages[Content.pages.length - 1].classList[1];
+    //
+    //     // first and last page number in 'new_pages'
+    //     let first_number = new_pages[0].classList[1];
+    //     let last_number = new_pages[new_pages.length - 1].classList[1];
+    //
+    //     console.log(first_page_number, last_page_number);
+    //     console.log(first_number, last_number);
+    //
+    //     if (last_page_number < first_number) {
+    //         // new pages, should be added to the end of Content.pages
+    //         console.log("add the end of pages");
+    //         Content.pages = Content.pages.concat(new_pages);
+    //
+    //     } else if (first_page_number > last_number) {
+    //         // new pages, should be added to the beginning of Content.pages
+    //         console.log("add the beginning of pages");
+    //         Content.pages = new_pages.concat(Content.pages);
+    //     } else {
+    //         // new pages, should be added to the middle of the Content.pages
+    //         console.log("add to the middle of pages!");
+    //
+    //         // for now, I'm doing this
+    //         Content.pages.concat(new_pages);
+    //     }
+    //
+    // }
 }

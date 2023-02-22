@@ -187,20 +187,30 @@
                     rtl: true,
                     dotsData: false,
                     dots: false,
-                    {% comment %}onTranslated: function (event) {
-                        // Get the current item index
-                        var current = event.item.index;
-
-                        // Get the data for the current page
-                        var pageData = $(event.target).find('.owl-item').eq(current).data('pageData');
-
-                        // Do something with the data, e.g. update the page title and content
-                        $('#page-title').text(pageData.title);
-                        $('#page-content').text(pageData.content);
-                    }{% endcomment %}
+                    // onTranslated: function (event) {
+                    //     // Get the current item index
+                    //     var current = event.item.index;
+                    //
+                    //     // Get the data for the current page
+                    //     var pageData = $(event.target).find('.owl-item').eq(current).data('pageData');
+                    //
+                    //     // Do something with the data, e.g. update the page title and content
+                    //     $('#page-title').text(pageData.title);
+                    //     $('#page-content').text(pageData.content);
+                    // }
                 });
 
-                carousel.on('translated.owl.carousel', function (event) {
+                // add 604 page to owl-carousel
+                for (let i = 1; i <= 604; i++) {
+                    let item = document.createElement("div");
+                    item.classList.add("item");
+                    item.classList.add(String(i));
+                    carousel.trigger("add.owl.carousel", item);
+                }
+                carousel.trigger("refresh.owl.carousel");
+
+
+                /*carousel.on('translated.owl.carousel', function (event) {
                     current_element = event.target.querySelector('.owl-item.active').firstElementChild;
                     let current_id = Number(current_element.classList.value.split(' ')[1]);
                     let prev_id = Number(current_element.classList.value.split(' ')[1]) - 1;
@@ -216,7 +226,7 @@
                             console.log('going for the PREV ajax!');
                     }
                     console.log();
-                });
+                });*/
             });
         </script>
     </body>
