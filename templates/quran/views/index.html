@@ -152,8 +152,9 @@
         </div>
 
         <script>
-            let sura_juz_page_list_url = '{% url 'quran:api:sura_juz_page_list' %}';
-            let sura_details_url = '{% url 'quran:api:sura_details' 0 %}';
+            let sura_juz_page_list_url = "{% url 'quran:api:sura_juz_page_list' %}";
+            let sura_details_url = "{% url 'quran:api:sura_details' 0 %}";
+            let get_pack_url = "{% url 'quran:api:get_pack' 0 %}";
         </script>
 
         <!-- jquery -->
@@ -174,6 +175,8 @@
         <!-- page js -->
         <script type="module">
             import { Tab } from "{% static 'assets/js/tab.js' %}";
+            import {Content} from "{% static 'assets/js/content.js' %}";
+
             document.addEventListener("DOMContentLoaded", function () {
                 let side_menu = new SideMenu(".side-menu");
                 let tab = new Tab(side_menu);
@@ -200,22 +203,30 @@
                 carousel.trigger("refresh.owl.carousel");
 
 
-                let first_current_id;
-                let second_current_id;
-                let semaphore;
+                let prev_id;
                 carousel.on("translate.owl.carousel", function (event) {
-                    if (semaphore > event.item.index) {
-                        console.log("going back");
-                    } else if (semaphore < event.item.index) {
-                        console.log("going forward");
-                    }
-                    let next_id = event.item.index + 2;
                     let next_item;
-                    if (next_id <= 604)
-                        next_item = event.target.getElementsByClassName(`item ${next_id}`)[0];
-                    // console.log('first ', first_current_id);
-                    // console.log('second ',second_current_id);
-                    semaphore = event.item.index;
+                    let prev_item;
+                    if (prev_id > event.item.index) {
+                        // going back
+                        prev_item = event.target.getElementsByClassName(`item ${prev_id}`)[0];
+                        if (prev_item.innerHTML === "") {
+                            let pack_number = Number(prev_item.classList[1]);
+                            pack_number = Math.ceil(pack_number / 10);
+                            Content.ajax_next_page(pack_number);
+                        }
+                        console.log("going back", prev_item);
+                    } else if (prev_id < event.item.index) {
+                        // going forward
+                        next_item = event.target.getElementsByClassName(`item ${event.item.index + 2}`)[0];
+                        if (next_item.innerHTML === "") {
+                            let pack_number = Number(next_item.classList[1]);
+                            pack_number = Math.ceil(pack_number / 10);
+                            Content.ajax_next_page(pack_number);
+                        }
+                        console.log("going forward", next_item);
+                    }
+                    prev_id = event.item.index;
                 });
             });
         </script>

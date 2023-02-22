@@ -1,4 +1,5 @@
 import {toArabicNumber} from "./utils.js";
+import {Tab} from "./tab.js";
 
 export class Content {
     static carousel = $(".owl-carousel");
@@ -140,8 +141,10 @@ export class Content {
         //     let item_number = page_list[i].classList[1];
         //     index_list[item_number] = i;
         // }
-        page_number = document.getElementsByClassName(`sura ${sura_id}`)[0].parentElement.classList[1];
-        Content.carousel.trigger("to.owl.carousel", page_number - 1);
+        if (sura_id !== null) {
+            page_number = document.getElementsByClassName(`sura ${sura_id}`)[0].parentElement.classList[1];
+            Content.carousel.trigger("to.owl.carousel", page_number - 1);
+        }
 
         // if (page_number !== undefined || page_number) {
         //     Content.carousel.trigger("to.owl.carousel", page_number - 1);
@@ -251,4 +254,27 @@ export class Content {
     //     }
     //
     // }
+
+    static ajax_next_page(pack_number) {
+        $.ajax({
+            method: "GET",
+            url: get_pack_url.replace(0, pack_number),
+            cache: true,
+            success: function (context) {
+                let page_number = context["page_number"];
+                let pack = context["pack"];
+                let sura_ids = pack.map(function (item) {
+                    return item["sura"];
+                });
+                sura_ids = [...new Set(sura_ids)];
+                Tab.rows = Tab.rows.concat(sura_ids);
+
+                // is the third parameter (sura_id) is null, then it won't scroll in to the sura
+                Content.update_content(context, page_number, null);
+            },
+            error: function () {
+                console.log("error");
+            }
+        });
+    }
 }
