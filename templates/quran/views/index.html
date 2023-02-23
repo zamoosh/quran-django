@@ -36,7 +36,7 @@
         <link rel="stylesheet" href="{% static 'assets/scss/main.css' %}"/>
     </head>
 
-    <body class="dark">
+    <body class="">
         <header>
             <div class="header">
                 <div role="button" class="header__menu-btn">
@@ -207,26 +207,34 @@
                 carousel.on("translate.owl.carousel", function (event) {
                     let next_item;
                     let prev_item;
+
+                    let sura;
+                    let sura_name;
                     if (prev_id > event.item.index) {
                         // going back
-                        prev_item = event.target.getElementsByClassName(`item ${prev_id}`)[0];
-                        if (prev_item.innerHTML === "") {
+                        prev_item = event.target.getElementsByClassName(`item ${prev_id - 2}`)[0];
+                        if (prev_item && prev_item.innerHTML === "") {
                             let pack_number = Number(prev_item.classList[1]);
                             pack_number = Math.ceil(pack_number / 10);
                             Content.ajax_next_page(pack_number);
                         }
+                        sura = event.target.getElementsByClassName(`item ${event.item.index + 1}`)[0].firstElementChild;
+                        sura_name = sura.dataset.sura;
                         console.log("going back", prev_item);
                     } else if (prev_id < event.item.index) {
                         // going forward
                         next_item = event.target.getElementsByClassName(`item ${event.item.index + 2}`)[0];
-                        if (next_item.innerHTML === "") {
+                        if (next_item && next_item.innerHTML === "") {
                             let pack_number = Number(next_item.classList[1]);
                             pack_number = Math.ceil(pack_number / 10);
                             Content.ajax_next_page(pack_number);
                         }
+                        sura = event.target.getElementsByClassName(`item ${event.item.index + 1}`)[0].firstElementChild;
+                        sura_name = sura.dataset.sura;
                         console.log("going forward", next_item);
                     }
                     Content.update_page_number(event.item.index + 1);
+                    Content.update_page_sura(sura_name);
                     prev_id = event.item.index;
                 });
             });

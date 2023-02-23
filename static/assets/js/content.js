@@ -6,6 +6,7 @@ export class Content {
     static pages = {};
     static pages_added = [];
     static page_number = document.querySelector("span#page_number");
+    static page_sura = document.querySelector(".header__surah > span");
 
     static update_content(content, page_number, sura_id) {
         page_number = String(page_number--);
@@ -26,6 +27,7 @@ export class Content {
                     let sura = document.createElement("div");
                     sura.classList.add("sura");
                     sura.classList.add(row.sura);
+                    sura.dataset.sura = row.sura_name;
 
                     // creates and return title for sura
                     let title = Content.add_sura_title(row);
@@ -66,6 +68,7 @@ export class Content {
                 let sura = document.createElement("div");
                 sura.classList.add("sura");
                 sura.classList.add(row.sura);
+                sura.dataset.sura = row.sura_name;
 
                 // prev_sura_id = Content.add_sura_title(page, row, prev_sura_id, ayahs);
                 if (prev_sura_id !== row.sura && row.aya === 1) {
@@ -100,13 +103,19 @@ export class Content {
 
         Content.update_carousel();
 
-        Content.go_to_page(page_number, sura_id);
+        Content.go_to_page(page_number, sura_id, undefined);
 
+        Content.update_page_sura();
     }
 
     static update_page_number(page_number) {
         if (!isNaN(page_number))
             Content.page_number.innerHTML = toArabicNumber(page_number);
+    }
+
+    static update_page_sura(sura_name) {
+        if (sura_name !== undefined)
+            Content.page_sura.innerHTML = sura_name;
     }
 
     static add_sura_title(row) {
@@ -129,11 +138,21 @@ export class Content {
         Content.pages_added = [];
     }
 
-    static go_to_page(page_number, sura_id) {
+    static go_to_page(page_number, sura_id, sura_name) {
         // is sura_id is null, then it won't scroll in to the sura
         if (sura_id !== null) {
             page_number = document.getElementsByClassName(`sura ${sura_id}`)[0].parentElement.classList[1];
             Content.carousel.trigger("to.owl.carousel", page_number - 1);
+        }
+
+        if (sura_name !== undefined) {
+            // if sura_name is passed, then we're going to replace it.
+            Content.update_page_sura(sura_name);
+        } else if (page_number !== undefined) {
+            // we're going to calculate the sura name
+            let sura = document.getElementsByClassName(`item ${page_number}`)[0];
+            sura_name = sura.firstElementChild.dataset.sura;
+            Content.update_page_sura(sura_name);
         }
     }
 

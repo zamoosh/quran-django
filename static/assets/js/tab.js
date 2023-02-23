@@ -91,7 +91,7 @@ export class Tab {
         row.classList.toggle("selected");
         if (Tab.rows.includes(Number(row.id))) {
             Tab.side_menu.closeMenu();
-            Content.go_to_page(null, row.id);
+            Content.go_to_page(undefined, row.id);
             return;
         }
         $.ajax({
@@ -115,6 +115,17 @@ export class Tab {
                 // page_number is the page sura starts
                 Content.update_content(context, page_number, row.id);
                 Content.update_page_number(page_number);
+
+                // check if next page is empty of not
+                let next_page = document.getElementsByClassName(`item ${page_number + 1}`)[0];
+                if (next_page && next_page.innerHTML === "") {
+                    // if true, then we're in the last page of current pack
+                    let pack_number = Math.ceil((page_number + 1) / 10);
+                    if (pack_number <= 61)
+                        Content.ajax_next_page(pack_number);
+                    else if (pack_number > 61)
+                        Content.ajax_next_page(61);
+                }
             },
             error: function () {
                 console.log("error");
