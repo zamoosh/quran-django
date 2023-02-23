@@ -141,25 +141,44 @@ export class Content {
     static go_to_page(page_number, sura_id, sura_name) {
         // is sura_id is null, then it won't scroll in to the sura
         if (sura_id !== null) {
-            page_number = document.getElementsByClassName(`sura ${sura_id}`)[0].parentElement.classList[1];
-            Content.carousel.trigger("to.owl.carousel", page_number - 1);
+            let sura = document.getElementsByClassName(`sura ${sura_id}`)[0];
+            let sura_name = sura.dataset.sura;
+            page_number = sura.parentElement.classList[1];
+            let promise = new Promise(function (resolve, reject) {
+                Content.carousel.trigger("to.owl.carousel", page_number - 1);
+                Content.carousel.on('translated.owl.carousel', function () {
+                    resolve(true);
+                });
+            });
+            Content.update_page_sura(sura_name);
+            promise.then(function (result) {
+                if (result) {
+                    console.log(result);
+                    sura.scrollIntoView({
+                        behavior: "smooth",
+                        block: "center",
+                        inline: "center"
+                    });
+                }
+            });
         }
 
         if (sura_name !== undefined) {
             // if sura_name is passed, then we're going to replace it.
             Content.update_page_sura(sura_name);
-        } else if (page_number !== undefined) {
-            // getting the page
-            let page = document.getElementsByClassName(`item ${page_number}`)[0];
-            if (sura_id) {
-                // if sura_id is exists, then the sura_name, should be the sura_id's name.
-                sura_name = page.getElementsByClassName(`sura ${sura_id}`)[0].dataset.sura;
-            } else {
-                // else, we're going to calculate the sura name. (first sura of page)
-                sura_name = page.firstElementChild.dataset.sura;
-            }
-            Content.update_page_sura(sura_name);
         }
+        // else if (page_number !== undefined) {
+        //     // getting the page
+        //     let page = document.getElementsByClassName(`item ${page_number}`)[0];
+        //     if (sura_id) {
+        //         // if sura_id is exists, then the sura_name, should be the sura_id's name.
+        //         sura_name = page.getElementsByClassName(`sura ${sura_id}`)[0].dataset.sura;
+        //     } else {
+        //         // else, we're going to calculate the sura name. (first sura of page)
+        //         sura_name = page.firstElementChild.dataset.sura;
+        //     }
+        //     Content.update_page_sura(sura_name);
+        // }
     }
 
     static add_page(row) {

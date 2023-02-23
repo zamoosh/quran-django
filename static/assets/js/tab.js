@@ -91,7 +91,7 @@ export class Tab {
         row.classList.toggle("selected");
         if (Tab.rows.includes(Number(row.id))) {
             Tab.side_menu.closeMenu();
-            Content.go_to_page(undefined, row.id);
+            Content.go_to_page(undefined, row.id, undefined);
             return;
         }
         $.ajax({
