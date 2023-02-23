@@ -105,7 +105,7 @@ export class Content {
 
         Content.go_to_page(page_number, sura_id, undefined);
 
-        Content.update_page_sura();
+        // Content.update_page_sura();
     }
 
     static update_page_number(page_number) {
@@ -149,9 +149,15 @@ export class Content {
             // if sura_name is passed, then we're going to replace it.
             Content.update_page_sura(sura_name);
         } else if (page_number !== undefined) {
-            // we're going to calculate the sura name
-            let sura = document.getElementsByClassName(`item ${page_number}`)[0];
-            sura_name = sura.firstElementChild.dataset.sura;
+            // getting the page
+            let page = document.getElementsByClassName(`item ${page_number}`)[0];
+            if (sura_id) {
+                // if sura_id is exists, then the sura_name, should be the sura_id's name.
+                sura_name = page.getElementsByClassName(`sura ${sura_id}`)[0].dataset.sura;
+            } else {
+                // else, we're going to calculate the sura name. (first sura of page)
+                sura_name = page.firstElementChild.dataset.sura;
+            }
             Content.update_page_sura(sura_name);
         }
     }
