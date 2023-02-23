@@ -109,8 +109,10 @@ export class Content {
     }
 
     static update_page_number(page_number) {
-        if (!isNaN(page_number))
+        if (!isNaN(page_number)) {
             Content.page_number.innerHTML = toArabicNumber(page_number);
+            Content.page_number.dataset.number = Number(page_number);
+        }
     }
 
     static update_page_sura(sura_name) {
@@ -144,24 +146,33 @@ export class Content {
             let sura = document.getElementsByClassName(`sura ${sura_id}`)[0];
             let sura_name = sura.dataset.sura;
             page_number = sura.parentElement.classList[1];
-            Content.carousel.trigger("to.owl.carousel", page_number - 1);
-            let promise = new Promise(function (resolve, reject) {
-                Content.carousel.on("translated.owl.carousel", function (event) {
-                    console.log(event.item);
-                    resolve(true);
+
+            if (page_number === Content.page_number.dataset.number) {
+                // in the same page
+                sura.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center",
+                    inline: "center"
                 });
-            });
-            Content.update_page_sura(sura_name);
-            promise.then(function (result) {
-                if (result) {
-                    console.log(result);
-                    sura.scrollIntoView({
-                        behavior: "smooth",
-                        block: "center",
-                        inline: "center"
+            } else {
+                // not in the same page
+                Content.carousel.trigger("to.owl.carousel", page_number - 1);
+                let promise = new Promise(function (resolve, reject) {
+                    Content.carousel.on("translated.owl.carousel", function (event) {
+                        resolve(true);
                     });
-                }
-            });
+                });
+                Content.update_page_sura(sura_name);
+                promise.then(function (result) {
+                    if (result) {
+                        sura.scrollIntoView({
+                            behavior: "smooth",
+                            block: "center",
+                            inline: "center"
+                        });
+                    }
+                });
+            }
         }
 
         if (sura_name !== undefined) {
