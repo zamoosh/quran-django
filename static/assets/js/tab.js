@@ -132,4 +132,15 @@ export class Tab {
             }
         });
     }
+
+    static update_sura_list(page_number) {
+        let rows = document.querySelector("div#sura").querySelectorAll("a");
+        rows.forEach(row => {
+            row.classList.remove("selected");
+        });
+        let page = document.getElementsByClassName(`item ${page_number}`)[0];
+        let sura_id_index = page.firstElementChild.classList[1] - 1;
+        let row = rows[sura_id_index];
+        row.classList.add("selected");
+    }
 }
