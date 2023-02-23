@@ -5,6 +5,7 @@ export class Tab {
     static main_content;
     static side_menu;
     static rows = [];
+    static row_selected = false;
 
 
     constructor(side_menu) {
@@ -89,9 +90,14 @@ export class Tab {
         // row: id of sura in side menu, sura list
         let row = e.target;
         row.classList.toggle("selected");
+        Tab.row_selected = true;
         if (Tab.rows.includes(Number(row.id))) {
             Tab.side_menu.closeMenu();
-            Content.go_to_page(undefined, row.id, undefined);
+            let sura = document.getElementsByClassName(`sura ${row.id}`)[0];
+            let sura_name = sura.dataset.sura;
+            let page = sura.parentElement;
+            let page_number = page.classList[1];
+            Content.go_to_page(undefined, row.id, sura_name);
             return;
         }
         $.ajax({

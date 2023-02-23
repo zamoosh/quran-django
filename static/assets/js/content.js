@@ -139,14 +139,15 @@ export class Content {
     }
 
     static go_to_page(page_number, sura_id, sura_name) {
-        // is sura_id is null, then it won't scroll in to the sura
+        // if sura_id is null, then it won't scroll in to the sura
         if (sura_id !== null) {
             let sura = document.getElementsByClassName(`sura ${sura_id}`)[0];
             let sura_name = sura.dataset.sura;
             page_number = sura.parentElement.classList[1];
+            Content.carousel.trigger("to.owl.carousel", page_number - 1);
             let promise = new Promise(function (resolve, reject) {
-                Content.carousel.trigger("to.owl.carousel", page_number - 1);
-                Content.carousel.on('translated.owl.carousel', function () {
+                Content.carousel.on("translated.owl.carousel", function (event) {
+                    console.log(event.item);
                     resolve(true);
                 });
             });
