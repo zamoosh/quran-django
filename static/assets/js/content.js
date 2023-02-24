@@ -19,7 +19,7 @@ export class Content {
             let ayahs = Content.prepare_aya(row);
 
             if (row.page === 502)
-                console.log(' ali ali ali ');
+                console.log(" ali ali ali ");
 
             // updating existing page
             if (current_page === row.page) {
@@ -148,12 +148,19 @@ export class Content {
     static go_to_page(page_number, sura_id, sura_name) {
         // if sura_id is null, then it won't scroll in to the sura
         if (sura_id !== null) {
+            // when we have sura_id (get sura api)
             let sura = document.getElementsByClassName(`sura ${sura_id}`)[0];
 
-            // get sura using juz id
+            // get sura using juz id (get juz api)
             if (sura === undefined) {
                 sura = document.querySelector(`[data-juz='${sura_id}']`);
             }
+
+            // get sura using only page number (get page api)
+            if (sura === undefined || sura === null) {
+                sura = document.getElementsByClassName(`item ${page_number}`)[0].firstElementChild;
+            }
+
             let sura_name = sura.dataset.sura;
             page_number = sura.parentElement.classList[1];
 

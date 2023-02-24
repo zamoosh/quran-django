@@ -81,9 +81,15 @@ export class Tab {
                     item.addEventListener("click", obj.get_juz.bind(item.id));
                     juz_tab.appendChild(item);
                 }
-                for (const row of context["page_list"]) {
-                    let item = `<a href="javascript:void(0)" id="${row}">الصفحة ${toArabicNumber(row)}</a>`;
-                    page_tab.innerHTML += item;
+                for (const page_id of context["page_list"]) {
+                    let item = document.createElement("a");
+                    item.id = page_id;
+                    item.href = "javascript:void(0)";
+                    item.innerHTML = toArabicNumber(String(page_id)) + ". " + "الصفحة";
+                    item.addEventListener("click", obj.get_page.bind(item.id));
+                    juz_tab.appendChild(item);
+                    // let item = `<a href="javascript:void(0)" id="${page_id}">الصفحة ${toArabicNumber(page_id)}</a>`;
+                    page_tab.appendChild(item);
                 }
             },
             error: function () {
@@ -144,6 +150,58 @@ export class Tab {
         });
     }
 
+    get_page(event) {
+        let rows = document.querySelector("div#page").querySelectorAll("a");
+        rows.forEach(row => {
+            row.classList.remove("selected");
+        });
+
+        // row: id of juz in side menu, juz list
+        let row = event.target;
+        row.classList.toggle("selected");
+        if (Tab.pages.includes(Number(row.id))) {
+            Tab.side_menu.closeMenu();
+            let sura = document.getElementsByClassName(`sura ${row.id}`)[0];
+            let sura_name = sura.dataset.sura;
+            Content.go_to_page(undefined, row.id, sura_name);
+            return;
+        }
+        $.ajax({
+            method: "GET",
+            url: page_details_url.replace("0", row.id),
+            cache: true,
+            success: function (context) {
+                let page_number = context["page_number"];
+                let pack = context["pack"];
+                let page_ids = pack.map(function (item) {
+                    return item["page"];
+                });
+                page_ids = [...new Set(page_ids)];
+                Tab.pages = Tab.rows.concat(page_ids);
+
+                Tab.side_menu.closeMenu();
+
+                // page_number is the page sura starts
+                Content.update_content(context, page_number, undefined);
+                Content.update_page_number(page_number);
+
+                // check if next page is empty of not
+                let next_page = page_number + 1;
+                if (next_page && next_page.innerHTML === "") {
+                    // if true, then we're in the last page of current pack
+                    let pack_number = Math.ceil((page_number + 1) / 10);
+                    if (pack_number <= 61)
+                        Content.ajax_next_page(pack_number);
+                    else if (pack_number > 61)
+                        Content.ajax_next_page(61);
+                }
+            },
+            error: function () {
+                console.log("error");
+            }
+        });
+    }
+
     get_juz(event) {
         let rows = document.querySelector("div#juz").querySelectorAll("a");
         rows.forEach(row => {
@@ -153,7 +211,7 @@ export class Tab {
         // row: id of juz in side menu, juz list
         let row = event.target;
         row.classList.toggle("selected");
-        if (Tab.rows.includes(Number(row.id))) {
+        if (Tab.juzs.includes(Number(row.id))) {
             Tab.side_menu.closeMenu();
             let sura = document.getElementsByClassName(`sura ${row.id}`)[0];
             let sura_name = sura.dataset.sura;
