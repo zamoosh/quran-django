@@ -23,14 +23,14 @@ $header-color-sepia: #fff7ea;
 }
 
 *::-webkit-scrollbar {
-  width: 0.4rem;
-  background-color: #ffffff;
+  width: 0.2rem;
+  background-color: transparent;
 }
 
 *::-webkit-scrollbar-thumb,
 .side-menu__tab-content__tab::-webkit-scrollbar-thumb {
-  background-color: #000000;
-  border-radius: 8px;
+  background-color: rgba(35, 35, 35, 0.62);
+  border-radius: 4px;
 }
 
 *::-webkit-scrollbar-track,

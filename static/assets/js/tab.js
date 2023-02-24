@@ -5,7 +5,6 @@ export class Tab {
     static main_content;
     static side_menu;
     static rows = [];
-    static row_selected = false;
 
 
     constructor(side_menu) {
@@ -33,6 +32,11 @@ export class Tab {
         let tabPanel = this.tabPanels[btn.dataset.bsTarget];
         tabPanel.classList.toggle("show");
         tabPanel.classList.toggle("active");
+        let row = tabPanel.getElementsByClassName("selected")[0];
+        row.scrollIntoView({
+            behavior: "auto",
+            block: "center"
+        });
     }
 
     sura_juz_page_list() {
@@ -90,13 +94,10 @@ export class Tab {
         // row: id of sura in side menu, sura list
         let row = e.target;
         row.classList.toggle("selected");
-        Tab.row_selected = true;
         if (Tab.rows.includes(Number(row.id))) {
             Tab.side_menu.closeMenu();
             let sura = document.getElementsByClassName(`sura ${row.id}`)[0];
             let sura_name = sura.dataset.sura;
-            let page = sura.parentElement;
-            let page_number = page.classList[1];
             Content.go_to_page(undefined, row.id, sura_name);
             return;
         }
@@ -148,5 +149,37 @@ export class Tab {
         let sura_id_index = page.firstElementChild.classList[1] - 1;
         let row = rows[sura_id_index];
         row.classList.add("selected");
+        row.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+    }
+
+    static update_page_list(page_number) {
+        let rows = document.querySelector("div#page").querySelectorAll("a");
+        rows.forEach(row => {
+            row.classList.remove("selected");
+        });
+        let page_index = document.getElementsByClassName(`item ${page_number}`)[0].classList[1] - 1;
+        let row = rows[page_index];
+        row.classList.add("selected");
+        row.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+    }
+
+    static update_juz_list(page_number) {
+        let rows = document.querySelector("div#page").querySelectorAll("a");
+        rows.forEach(row => {
+            row.classList.remove("selected");
+        });
+        let page_index = document.getElementsByClassName(`item ${page_number}`)[0].classList[1] - 1;
+        let row = rows[page_index];
+        row.classList.add("selected");
+        row.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
     }
 }

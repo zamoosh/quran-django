@@ -71,7 +71,7 @@
     }
     
     &__tab-content {
-        overflow-y: scroll;
+        overflow-y: hidden;
         height: 100%;
         user-select: none;
         
@@ -82,6 +82,7 @@
             &.active {
                 display: block;
                 height: 100%;
+                overflow-y: scroll;
                 
                 & * {
                     height: 50px;
