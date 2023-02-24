@@ -18,6 +18,9 @@ export class Content {
             // prepare the aya
             let ayahs = Content.prepare_aya(row);
 
+            if (row.page === 502)
+                console.log(' ali ali ali ');
+
             // updating existing page
             if (current_page === row.page) {
 
@@ -28,6 +31,7 @@ export class Content {
                     sura.classList.add("sura");
                     sura.classList.add(row.sura);
                     sura.dataset.sura = row.sura_name;
+                    sura.dataset.juz = row.juz;
 
                     // creates and return title for sura
                     let title = Content.add_sura_title(row);
@@ -69,6 +73,7 @@ export class Content {
                 sura.classList.add("sura");
                 sura.classList.add(row.sura);
                 sura.dataset.sura = row.sura_name;
+                sura.dataset.juz = row.juz;
 
                 // prev_sura_id = Content.add_sura_title(page, row, prev_sura_id, ayahs);
                 if (prev_sura_id !== row.sura && row.aya === 1) {
@@ -144,6 +149,11 @@ export class Content {
         // if sura_id is null, then it won't scroll in to the sura
         if (sura_id !== null) {
             let sura = document.getElementsByClassName(`sura ${sura_id}`)[0];
+
+            // get sura using juz id
+            if (sura === undefined) {
+                sura = document.querySelector(`[data-juz='${sura_id}']`);
+            }
             let sura_name = sura.dataset.sura;
             page_number = sura.parentElement.classList[1];
 

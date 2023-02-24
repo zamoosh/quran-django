@@ -289,6 +289,9 @@ class Text(models.Model):
                 # next juz is not exists
                 current_page = int(json.loads(page_data[current_key])[0])
                 Text.objects.filter(page__gte=current_page).update(juz=Value(int(key)))
+
+        # juz 26, starts from middle of the page
+        Text.objects.filter(sura=45, aya__gte=33).update(juz=25)
         print('all juz were added!')
 
     @staticmethod

@@ -5,6 +5,8 @@ export class Tab {
     static main_content;
     static side_menu;
     static rows = [];
+    static pages = [];
+    static juzs = [];
 
 
     constructor(side_menu) {
@@ -33,10 +35,11 @@ export class Tab {
         tabPanel.classList.toggle("show");
         tabPanel.classList.toggle("active");
         let row = tabPanel.getElementsByClassName("selected")[0];
-        row.scrollIntoView({
-            behavior: "auto",
-            block: "center"
-        });
+        if (row)
+            row.scrollIntoView({
+                behavior: "auto",
+                block: "center"
+            });
     }
 
     sura_juz_page_list() {
@@ -62,20 +65,24 @@ export class Tab {
             data: {},
             cache: true,
             success: function (context) {
-                for (const s of context["sura_list"]) {
-                    let e = document.createElement("a");
-                    e.id = s.sura;
-                    e.href = "javascript:void(0)";
-                    e.innerHTML = toArabicNumber(String(s.sura)) + ". " + s.sura_name;
-                    e.addEventListener("click", obj.get_sura.bind(e.id));
-                    sura_tab.appendChild(e);
+                for (const sura of context["sura_list"]) {
+                    let item = document.createElement("a");
+                    item.id = sura.sura;
+                    item.href = "javascript:void(0)";
+                    item.innerHTML = toArabicNumber(String(sura.sura)) + ". " + sura.sura_name;
+                    item.addEventListener("click", obj.get_sura.bind(item.id));
+                    sura_tab.appendChild(item);
                 }
-                for (const j of context["sura_details.py"]) {
-                    let item = `<a href="javascript:void(0)" id="${j}">الجزء ${toArabicNumber(j)}</a>`;
-                    juz_tab.innerHTML += item;
+                for (const juz_id of context["juz_list"]) {
+                    let item = document.createElement("a");
+                    item.id = juz_id;
+                    item.href = "javascript:void(0)";
+                    item.innerHTML = toArabicNumber(String(juz_id)) + ". " + "الجزء";
+                    item.addEventListener("click", obj.get_juz.bind(item.id));
+                    juz_tab.appendChild(item);
                 }
-                for (const p of context["page_list"]) {
-                    let item = `<a href="javascript:void(0)" id="${p}">الصفحة ${toArabicNumber(p)}</a>`;
+                for (const row of context["page_list"]) {
+                    let item = `<a href="javascript:void(0)" id="${row}">الصفحة ${toArabicNumber(row)}</a>`;
                     page_tab.innerHTML += item;
                 }
             },
@@ -85,14 +92,14 @@ export class Tab {
         });
     }
 
-    get_sura(e) {
+    get_sura(event) {
         let rows = document.querySelector("div#sura").querySelectorAll("a");
         rows.forEach(row => {
             row.classList.remove("selected");
         });
 
         // row: id of sura in side menu, sura list
-        let row = e.target;
+        let row = event.target;
         row.classList.toggle("selected");
         if (Tab.rows.includes(Number(row.id))) {
             Tab.side_menu.closeMenu();
@@ -104,9 +111,6 @@ export class Tab {
         $.ajax({
             method: "GET",
             url: sura_details_url.replace("0", row.id),
-            data: {
-                "sura_id": row.id
-            },
             cache: true,
             success: function (context) {
                 let page_number = context["page_number"];
@@ -140,14 +144,68 @@ export class Tab {
         });
     }
 
+    get_juz(event) {
+        let rows = document.querySelector("div#juz").querySelectorAll("a");
+        rows.forEach(row => {
+            row.classList.remove("selected");
+        });
+
+        // row: id of juz in side menu, juz list
+        let row = event.target;
+        row.classList.toggle("selected");
+        if (Tab.rows.includes(Number(row.id))) {
+            Tab.side_menu.closeMenu();
+            let sura = document.getElementsByClassName(`sura ${row.id}`)[0];
+            let sura_name = sura.dataset.sura;
+            Content.go_to_page(undefined, row.id, sura_name);
+            return;
+        }
+        $.ajax({
+            method: "GET",
+            url: juz_details_url.replace("0", row.id),
+            cache: true,
+            success: function (context) {
+                let page_number = context["page_number"];
+                let pack = context["pack"];
+                let juz_ids = pack.map(function (item) {
+                    return item["juz"];
+                });
+                juz_ids = [...new Set(juz_ids)];
+                Tab.juzs = Tab.rows.concat(juz_ids);
+
+                Tab.side_menu.closeMenu();
+
+                // page_number is the page sura starts
+                Content.update_content(context, page_number, row.id);
+                Content.update_page_number(page_number);
+
+                // check if next page is empty of not
+                let next_page = document.getElementsByClassName(`item ${page_number + 1}`)[0];
+                if (next_page && next_page.innerHTML === "") {
+                    // if true, then we're in the last page of current pack
+                    let pack_number = Math.ceil((page_number + 1) / 10);
+                    if (pack_number <= 61)
+                        Content.ajax_next_page(pack_number);
+                    else if (pack_number > 61)
+                        Content.ajax_next_page(61);
+                }
+            },
+            error: function () {
+                console.log("error");
+            }
+        });
+    }
+
     static update_sura_list(page_number) {
+        if (page_number === undefined)
+            return;
         let rows = document.querySelector("div#sura").querySelectorAll("a");
         rows.forEach(row => {
             row.classList.remove("selected");
         });
         let page = document.getElementsByClassName(`item ${page_number}`)[0];
-        let sura_id_index = page.firstElementChild.classList[1] - 1;
-        let row = rows[sura_id_index];
+        let sura_id_index = page.firstElementChild.classList[1];
+        let row = rows[sura_id_index - 1];
         row.classList.add("selected");
         row.scrollIntoView({
             behavior: "smooth",
@@ -156,12 +214,14 @@ export class Tab {
     }
 
     static update_page_list(page_number) {
+        if (page_number === undefined)
+            return;
         let rows = document.querySelector("div#page").querySelectorAll("a");
         rows.forEach(row => {
             row.classList.remove("selected");
         });
-        let page_index = document.getElementsByClassName(`item ${page_number}`)[0].classList[1] - 1;
-        let row = rows[page_index];
+        let page_index = document.getElementsByClassName(`item ${page_number}`)[0].classList[1];
+        let row = rows[page_index - 1];
         row.classList.add("selected");
         row.scrollIntoView({
             behavior: "smooth",
@@ -170,12 +230,15 @@ export class Tab {
     }
 
     static update_juz_list(page_number) {
-        let rows = document.querySelector("div#page").querySelectorAll("a");
+        if (page_number === undefined)
+            return;
+        let rows = document.querySelector("div#juz").querySelectorAll("a");
         rows.forEach(row => {
             row.classList.remove("selected");
         });
-        let page_index = document.getElementsByClassName(`item ${page_number}`)[0].classList[1] - 1;
-        let row = rows[page_index];
+        let page = document.getElementsByClassName(`item ${page_number}`)[0];
+        let juz_number = page.firstElementChild.dataset.juz;
+        let row = rows[juz_number - 1];
         row.classList.add("selected");
         row.scrollIntoView({
             behavior: "smooth",
