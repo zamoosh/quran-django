@@ -11,7 +11,6 @@ export class Content {
 
     static update_content(content, page_number, sura_id) {
         page_number = String(page_number--);
-        let current_pages = [];
         let current_page = 0;
         let current_page_number = 1;
         let page = "";
@@ -106,7 +105,6 @@ export class Content {
                 Content.pages_added.push(row.page);
                 current_page_number++;
                 Content.pages[current_page] = page;
-                current_pages.push(page);
             }
             ayahs = "";
         }
@@ -129,7 +127,11 @@ export class Content {
 
                     let text_id = String(text.id);
                     text_id = text_id.padStart(3, "0");
-                    console.log(Content.url.concat(sura_id + text_id, ".mp3"));
+                    let url = Content.url.concat(sura_id + text_id, ".mp3");
+                    let audio = document.getElementsByTagName("audio")[0];
+                    audio.firstElementChild.src = url;
+                    audio.load();
+                    console.log(url);
                 }
             });
             page.setAttribute("clickable", true);
@@ -257,7 +259,7 @@ export class Content {
         aya.classList.add("aya");
 
         let text = document.createElement("span");
-        text.id = row.index;
+        text.id = row.aya;
         text.classList.add("text");
         text.innerText += aya_text;
 
