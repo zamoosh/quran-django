@@ -10,6 +10,7 @@ export class Content {
 
     static update_content(content, page_number, sura_id) {
         page_number = String(page_number--);
+        let current_pages = [];
         let current_page = 0;
         let current_page_number = 1;
         let page = "";
@@ -44,7 +45,8 @@ export class Content {
                     // add content(sura text is here)
                     let content = document.createElement("div");
                     content.classList.add("content");
-                    content.innerHTML = ayahs;
+                    // content.innerHTML = ayahs;
+                    content.appendChild(ayahs);
 
                     sura.appendChild(content);
 
@@ -58,10 +60,12 @@ export class Content {
                     // if you look at the code, you will understand that we're updating content using '+='
                     if (page.getElementsByClassName(row.sura)) {
                         let content = page.getElementsByClassName(row.sura)[0].querySelector(".content");
-                        content.innerHTML += ayahs;
+                        // content.innerHTML += ayahs;
+                        content.appendChild(ayahs);
                     } else {
                         let content = page.getElementsByClassName("content")[0].querySelector(".content");
-                        content.innerHTML += ayahs;
+                        // content.innerHTML += ayahs;
+                        content.appendChild(ayahs);
                     }
                 }
             } else {
@@ -91,7 +95,8 @@ export class Content {
                 // add content(sura text is here)
                 let content = document.createElement("div");
                 content.classList.add("content");
-                content.innerHTML = ayahs;
+                // content.innerHTML = ayahs;
+                content.appendChild(ayahs);
 
                 sura.appendChild(content);
 
@@ -100,9 +105,20 @@ export class Content {
                 Content.pages_added.push(row.page);
                 current_page_number++;
                 Content.pages[current_page] = page;
+                current_pages.push(page);
             }
             ayahs = "";
         }
+        for (const page of current_pages) {
+            let ayas = page.querySelectorAll("span.aya");
+            for (const aya of ayas) {
+                debugger;
+                aya.addEventListener("click", function () {
+                    console.log(`aya: ${aya}, was clicked!`);
+                });
+            }
+        }
+        // current_pages = null;
 
         // Content.update_pages(new_pages);
 
@@ -223,15 +239,31 @@ export class Content {
 
     static prepare_aya(row) {
         let bes = "بِسْمِ اللَّهِ الرَّحْمَـٰنِ الرَّحِيمِ";
-        let text = "";
+        let aya_text = "";
         if (row.sura === 1)
-            text = row.text;
+            aya_text = row.text;
         else
-            text = row.text.replace(bes, "");
+            aya_text = row.text.replace(bes, "");
+        let aya = document.createElement("span");
+        aya.classList.add("aya");
+
+        let text = document.createElement("span");
+        text.id = row.index;
+        text.classList.add("text");
+        text.innerText += aya_text;
+
+        let number = document.createElement("span");
+        number.classList.add("number");
+        number.innerText += toArabicNumber(row.aya);
+
+        text.append(number);
+
+        aya.appendChild(text);
+        return aya;
 
         return `<span class="aya">
                     <span class="text" id="${row.index}">
-                        ${text}
+                        ${aya_text}
                         <span class="number">${toArabicNumber(row.aya)}</span>
                     </span>
                     <!-- <span class="number">﴿${toArabicNumber(row.aya)}﴾</span> -->
