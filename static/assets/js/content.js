@@ -7,6 +7,7 @@ export class Content {
     static pages_added = [];
     static page_number = document.querySelector("span#page_number");
     static page_sura = document.querySelector(".header__surah > span");
+    static url = "https://tanzil.net/res/audio/afasy/";
 
     static update_content(content, page_number, sura_id) {
         page_number = String(page_number--);
@@ -109,22 +110,30 @@ export class Content {
             }
             ayahs = "";
         }
-        for (const page of current_pages) {
-            let ayas = page.querySelectorAll("span.aya");
-            for (const aya of ayas) {
-                debugger;
-                aya.addEventListener("click", function () {
-                    console.log(`aya: ${aya}, was clicked!`);
-                });
-            }
-        }
-        // current_pages = null;
-
-        // Content.update_pages(new_pages);
 
         Content.update_carousel();
 
         Content.go_to_page(page_number, sura_id, undefined);
+
+        let pages = document.querySelectorAll(".owl-carousel .owl-item");
+        for (const page of pages) {
+            if (page.getAttribute("clickable"))
+                continue;
+            page.addEventListener("click", function (event) {
+                if (event.target.classList.contains("text")) {
+                    let text = event.target;
+                    let sura = event.target.parentElement.parentElement.parentElement;
+
+                    let sura_id = String(sura.classList[1]);
+                    sura_id = sura_id.padStart(3, "0");
+
+                    let text_id = String(text.id);
+                    text_id = text_id.padStart(3, "0");
+                    console.log(Content.url.concat(sura_id + text_id, ".mp3"));
+                }
+            });
+            page.setAttribute("clickable", true);
+        }
 
         // Content.update_page_sura();
     }
