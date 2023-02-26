@@ -101,7 +101,7 @@
                         <img class="pause logo" src="{% static 'assets/icons/svg/pause-circle-fill.svg' %}"
                              alt="pause icon">
                     </div>
-                    <audio>
+                    <audio preload="metadata">
                         <source src="{% static 'assets/audio/ziarat-ashoura_meytham.mp3' %}" type="audio/mp3"/>
                         <!-- <source src="{% static 'assets/audio/ziarat-ashoura_meytham.mp3' %}" type="audio/ogg"/> -->
                     </audio>
@@ -169,17 +169,19 @@
         <script src="{% static 'assets/js/side_menu.js' %}"></script>
 
         <!-- tabs -->
-        <script type="module" src="{% static 'assets/js/tab.js' %}"></script>
+        <!--<script type="module" src="{% static 'assets/js/tab.js' %}"></script>-->
 
         <!-- player -->
-        <script src="{% static 'assets/js/player.js' %}"></script>
+        <!--<script src="{% static 'assets/js/player.js' %}"></script>-->
 
         <!-- page js -->
         <script type="module">
-            import { Tab } from "{% static 'assets/js/tab.js' %}";
+            import {Tab} from "{% static 'assets/js/tab.js' %}";
             import {Content} from "{% static 'assets/js/content.js' %}";
+            import {Player} from "{% static 'assets/js/player.js' %}";
 
             document.addEventListener("DOMContentLoaded", function () {
+
                 let side_menu = new SideMenu(".side-menu");
                 let tab = new Tab(side_menu);
                 let player = new Player("player");

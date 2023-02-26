@@ -1,10 +1,10 @@
-class Player {
+export class Player {
     player;
-    play_logo;
-    pause_logo;
-    audio;
+    static play_logo;
+    static pause_logo;
+    static audio = document.querySelector("audio");
     playing = false;
-    progress_bar;
+    static progress_bar = document.querySelector("progress");
     speed_toolbar;
     speed_selected;
     footer_settings;
@@ -14,10 +14,8 @@ class Player {
     constructor(selector) {
         this.player = document.getElementById(selector);
         let logos = this.player.querySelectorAll("img.logo");
-        this.play_logo = logos[0];
-        this.pause_logo = logos[1];
-        this.audio = document.querySelector("audio");
-        this.progress_bar = document.querySelector("progress");
+        Player.play_logo = logos[0];
+        Player.pause_logo = logos[1];
         this.speed_toolbar = this.player.querySelector(".footer__speed-toolbar");
         this.speed_selected = this.speed_toolbar.querySelector(".footer__speed-selected");
         this.footer_settings = document.querySelector(".footer__settings");
@@ -31,38 +29,41 @@ class Player {
     }
 
     makePlayable() {
-        let obj = this;
         let play_pause_btn = this.player.querySelector(".footer__player");
-        play_pause_btn.addEventListener("click", function () {
-            obj.togglePlay();
-        });
+        play_pause_btn.addEventListener("click", this.togglePlay.bind(this));
     }
 
     togglePlay() {
         if (this.playing) {
-            this.audio.pause();
+            Player.audio.pause();
             this.playing = false;
-            toggleShape(this);
+            Player.toggle_shape();
         } else {
-            this.audio.play();
+            Player.audio.play();
             this.playing = true;
-            toggleShape(this);
-        }
-
-        function toggleShape(obj) {
-            obj.play_logo.classList.toggle("active");
-            obj.pause_logo.classList.toggle("active");
+            Player.toggle_shape();
         }
     }
 
-    updateProgressBar() {
-        let obj = this;
-        let current_time;
-        obj.audio.addEventListener("timeupdate", updateProgressBar);
+    static toggle_shape() {
+        Player.play_logo.classList.toggle("active");
+        Player.pause_logo.classList.toggle("active");
+    }
 
-        function updateProgressBar() {
-            current_time = Math.ceil(obj.audio.currentTime);
-            obj.progress_bar.value = (current_time / obj.audio.duration) * 100;
+    static update_src(src) {
+        let url = new URL(src);
+        Player.audio.firstElementChild.src = url.href;
+        Player.audio.load();
+    }
+
+    updateProgressBar() {
+        let current_time;
+        Player.audio.addEventListener("timeupdate", updateProgressBar);
+
+        function updateProgressBar(event) {
+            current_time = Math.ceil(Player.audio.currentTime);
+            if (Player.audio.duration)
+                Player.progress_bar.value = (current_time / Player.audio.duration) * 100;
         }
     }
 
@@ -98,7 +99,7 @@ class Player {
         });
         e.target.classList.add("active");
         this.speed_selected.innerHTML = e.target.innerHTML;
-        this.audio.playbackRate = e.target.value;
+        Player.audio.playbackRate = e.target.value;
     }
 
 
@@ -137,7 +138,7 @@ class Player {
         if (btn.tagName === "IMG") {
             btn = btn.parentElement;
         }
-        let elements = document.querySelectorAll(".main span.aya");
+        let elements = document.querySelectorAll(".main span.aya .text, .main span.aya .number");
         if (btn.value === "plus") {
             elements.forEach(element => {
                 let size = parseInt(window.getComputedStyle(element).fontSize);
@@ -161,14 +162,6 @@ class Player {
         }
     }
 
-    changeLineHeight(change) {
-        let elements = document.querySelectorAll(".main span.aya");
-        elements.forEach(element => {
-            let size = parseInt(window.getComputedStyle(element).lineHeight);
-            element.style.lineHeight = size + change + "px";
-        });
-    }
-
     themeChange() {
         let btn = this.footer_settings.querySelector("button.theme");
         let sepia = this.footer_settings.querySelector("button.sepia");
@@ -185,5 +178,15 @@ class Player {
             btn.classList.remove("active");
             sepia.classList.add("active");
         });
+    }
+
+    static restart_progressbar() {
+        Player.progress_bar.value = 0;
+        Player.pause_shape();
+    }
+
+    static pause_shape() {
+        Player.play_logo.classList.add("active");
+        Player.pause_logo.classList.remove("active");
     }
 }

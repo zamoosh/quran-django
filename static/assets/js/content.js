@@ -1,5 +1,6 @@
 import {toArabicNumber} from "./utils.js";
 import {Tab} from "./tab.js";
+import {Player} from "./player.js";
 
 export class Content {
     static carousel = $(".owl-carousel");
@@ -127,11 +128,10 @@ export class Content {
 
                     let text_id = String(text.id);
                     text_id = text_id.padStart(3, "0");
+
                     let url = Content.url.concat(sura_id + text_id, ".mp3");
-                    let audio = document.getElementsByTagName("audio")[0];
-                    audio.firstElementChild.src = url;
-                    audio.load();
-                    console.log(url);
+                    Player.restart_progressbar();
+                    Player.update_src(url);
                 }
             });
             page.setAttribute("clickable", true);
@@ -271,15 +271,6 @@ export class Content {
 
         aya.appendChild(text);
         return aya;
-
-        return `<span class="aya">
-                    <span class="text" id="${row.index}">
-                        ${aya_text}
-                        <span class="number">${toArabicNumber(row.aya)}</span>
-                    </span>
-                    <!-- <span class="number">﴿${toArabicNumber(row.aya)}﴾</span> -->
-                    <!-- <span class="number">${toArabicNumber(row.aya)}</span> -->
-                </span>`;
     }
 
     static replace_besm_allah(row, sura) {
@@ -291,40 +282,6 @@ export class Content {
             sura.appendChild(besm_allah);
         }
     }
-
-    // static update_pages(new_pages) {
-    //     if (Content.pages.length === 0) {
-    //         Content.pages = [...new_pages];
-    //     }
-    //     // first and last page number in 'Content.pages'
-    //     let first_page_number = Content.pages[0].classList[1];
-    //     let last_page_number = Content.pages[Content.pages.length - 1].classList[1];
-    //
-    //     // first and last page number in 'new_pages'
-    //     let first_number = new_pages[0].classList[1];
-    //     let last_number = new_pages[new_pages.length - 1].classList[1];
-    //
-    //     console.log(first_page_number, last_page_number);
-    //     console.log(first_number, last_number);
-    //
-    //     if (last_page_number < first_number) {
-    //         // new pages, should be added to the end of Content.pages
-    //         console.log("add the end of pages");
-    //         Content.pages = Content.pages.concat(new_pages);
-    //
-    //     } else if (first_page_number > last_number) {
-    //         // new pages, should be added to the beginning of Content.pages
-    //         console.log("add the beginning of pages");
-    //         Content.pages = new_pages.concat(Content.pages);
-    //     } else {
-    //         // new pages, should be added to the middle of the Content.pages
-    //         console.log("add to the middle of pages!");
-    //
-    //         // for now, I'm doing this
-    //         Content.pages.concat(new_pages);
-    //     }
-    //
-    // }
 
     static ajax_next_page(pack_number) {
         $.ajax({
