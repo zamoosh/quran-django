@@ -114,14 +114,22 @@ export class Content {
 
         Content.go_to_page(page_number, sura_id, undefined);
 
+        // add event listener for every span.text in pages
         let pages = document.querySelectorAll(".owl-carousel .owl-item");
         for (const page of pages) {
             if (page.getAttribute("clickable"))
                 continue;
             page.addEventListener("click", function (event) {
                 if (event.target.classList.contains("text")) {
+                    // remove selected class of aya element
+                    document.querySelectorAll("span.text").forEach(function (item) {
+                        item.parentElement.classList.remove("selected");
+                    });
+                    // add selected class to the aya element
                     let text = event.target;
-                    let sura = event.target.parentElement.parentElement.parentElement;
+                    text.parentElement.classList.add("selected");
+
+                    let sura = text.parentElement.parentElement.parentElement;
 
                     let sura_id = String(sura.classList[1]);
                     sura_id = sura_id.padStart(3, "0");

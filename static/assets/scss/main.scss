@@ -71,19 +71,19 @@ body {
                     
                     .sura {
                         margin-bottom: 20px;
-    
+                        
                         .title {
                             width: 100%;
                             justify-content: center;
                             display: flex;
                             margin: .75em 0;
-        
+                            
                             span {
                                 display: flex;
                                 align-items: center;
                                 font-size: 2.5rem;
                                 font-weight: bold;
-            
+                                
                                 :not(.sura_name) {
                                     color: #1668ba;
                                 }
@@ -107,6 +107,11 @@ body {
                                 cursor: pointer;
                                 transition: background-color 120ms;
                                 border-radius: 5px;
+                                margin-left: 10px;
+                                
+                                &.selected, &.selected:hover {
+                                    background-color: $highlight-color-light-select;
+                                }
                                 
                                 &:hover {
                                     background-color: $highlight-color-light-hover;
@@ -114,7 +119,7 @@ body {
                                 
                                 .text {
                                     border-radius: 5px;
-    
+                                    
                                     .number {
                                         font-size: 35px;
                                         color: #2b712b;

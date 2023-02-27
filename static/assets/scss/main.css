@@ -630,9 +630,13 @@ body .main__content .owl-carousel .item .sura .content span.aya {
   cursor: pointer;
   transition: background-color 120ms;
   border-radius: 5px;
+  margin-left: 10px;
+}
+body .main__content .owl-carousel .item .sura .content span.aya.selected, body .main__content .owl-carousel .item .sura .content span.aya.selected:hover {
+  background-color: rgba(184, 219, 217, 0.33);
 }
 body .main__content .owl-carousel .item .sura .content span.aya:hover {
-  background-color: rgba(184, 219, 217, 0.33);
+  background-color: rgba(184, 219, 217, 0.15);
 }
 body .main__content .owl-carousel .item .sura .content span.aya .text {
   border-radius: 5px;

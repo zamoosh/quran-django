@@ -238,9 +238,11 @@
                         console.log("going forward", next_item);
                     }
                     Content.update_page_number(event.item.index + 1);
+
+                    // update the sura name at top of the page
                     Content.update_page_sura(sura_name);
 
-                    // changing the sura_list in Tab class
+                    // changing the sura_list, page_list and juz_list in Tab
                     if (event.item.index + 1 <= 604) {
                         Tab.update_sura_list(event.item.index + 1);
                         Tab.update_page_list(event.item.index + 1)
@@ -256,6 +258,19 @@
                     }
 
                     prev_id = event.item.index;
+                });
+
+                // select first aya of each page
+                carousel.on("translated.owl.carousel", function (event) {
+                    let current_page_index = event.item.index + 1;
+                    let current_page = document.getElementsByClassName(`item ${current_page_index}`)[0];
+                    document.querySelectorAll("span.text").forEach(function (item) {
+                        item.parentElement.classList.remove("selected");
+                    });
+                    let first_aya = current_page.querySelector("span.aya > span.text");
+                    first_aya.parentElement.classList.add("selected");
+                    Player.restart_progressbar();
+                    Player.update_src(first_aya);
                 });
             });
         </script>

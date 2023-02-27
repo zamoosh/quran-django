@@ -1,3 +1,5 @@
+import {Content} from "./content.js";
+
 export class Player {
     player;
     static play_logo;
@@ -10,6 +12,7 @@ export class Player {
     footer_settings;
     footer_settings_logo;
     static font_change;
+    static cached_audio = {};
 
     constructor(selector) {
         this.player = document.getElementById(selector);
@@ -34,6 +37,7 @@ export class Player {
     }
 
     togglePlay() {
+        this.playing = !Player.audio.paused;
         if (this.playing) {
             Player.audio.pause();
             this.playing = false;
@@ -51,9 +55,38 @@ export class Player {
     }
 
     static update_src(src) {
-        let url = new URL(src);
-        Player.audio.firstElementChild.src = url.href;
-        Player.audio.load();
+        // src is an url for an aya
+        if (typeof src === "string") {
+            console.log(Player.cached_audio);
+            if (Player.get_cache_audio(src)) {
+                // audio is cached before
+                Player.audio.firstElementChild.src = src;
+            } else {
+                // we need to get the audio
+                Player.cache_audio(src, new Audio(src));
+                Player.audio.firstElementChild.src = src;
+            }
+            Player.audio.load();
+        } else {
+            // src itself is the first aya (span.text) of the current page
+            let sura = src.parentElement.parentElement.parentElement;
+            let sura_id = String(sura.classList[1]);
+            sura_id = sura_id.padStart(3, "0");
+
+            let text_id = String(src.id);
+            text_id = text_id.padStart(3, "0");
+
+            let url = Content.url.concat(sura_id + text_id, ".mp3");
+            this.update_src(url);
+        }
+    }
+
+    static cache_audio(url, audio) {
+        Player.cached_audio[url] = audio;
+    }
+
+    static get_cache_audio(url) {
+        return Player.cached_audio[url];
     }
 
     updateProgressBar() {
@@ -65,6 +98,8 @@ export class Player {
             if (Player.audio.duration)
                 Player.progress_bar.value = (current_time / Player.audio.duration) * 100;
         }
+
+        Player.audio.addEventListener("ended", Player.restart_progressbar);
     }
 
     speedControl() {
@@ -181,7 +216,9 @@ export class Player {
     }
 
     static restart_progressbar() {
+        Player.audio.currentTime = 0;
         Player.progress_bar.value = 0;
+        Player.audio.pause();
         Player.pause_shape();
     }
 
