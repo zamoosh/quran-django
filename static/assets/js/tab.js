@@ -130,6 +130,7 @@ export class Tab {
                 Tab.side_menu.closeMenu();
 
                 // page_number is the page sura starts
+                // row.id, is sura.id
                 Content.update_content(context, page_number, row.id);
                 Content.update_page_number(page_number);
 

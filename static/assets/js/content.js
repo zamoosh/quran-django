@@ -196,6 +196,14 @@ export class Content {
                 sura = document.getElementsByClassName(`item ${page_number}`)[0].firstElementChild;
             }
 
+            document.querySelectorAll("span.text").forEach(function (item) {
+                item.parentElement.classList.remove("selected");
+            });
+            let first_aya = sura.querySelector("span.aya > span.text");
+            first_aya.parentElement.classList.add("selected");
+            Player.restart_progressbar();
+            Player.update_src(first_aya);
+
             let sura_name = sura.dataset.sura;
             page_number = sura.parentElement.classList[1];
 
@@ -206,6 +214,8 @@ export class Content {
                     block: "center",
                     inline: "center"
                 });
+
+                console.log(first_aya);
             } else {
                 // not in the same page
                 Content.carousel.trigger("to.owl.carousel", page_number - 1);
@@ -222,6 +232,8 @@ export class Content {
                             block: "center",
                             inline: "center"
                         });
+
+                        console.log(first_aya);
                     }
                 });
             }

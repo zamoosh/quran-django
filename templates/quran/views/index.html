@@ -264,13 +264,17 @@
                 carousel.on("translated.owl.carousel", function (event) {
                     let current_page_index = event.item.index + 1;
                     let current_page = document.getElementsByClassName(`item ${current_page_index}`)[0];
-                    document.querySelectorAll("span.text").forEach(function (item) {
-                        item.parentElement.classList.remove("selected");
-                    });
-                    let first_aya = current_page.querySelector("span.aya > span.text");
-                    first_aya.parentElement.classList.add("selected");
-                    Player.restart_progressbar();
-                    Player.update_src(first_aya);
+                    let aya = current_page.querySelector('span.aya.selected');
+                    if (!aya) {
+                        console.log("enter");
+                        document.querySelectorAll("span.text").forEach(function (item) {
+                            item.parentElement.classList.remove("selected");
+                        });
+                        let first_aya = current_page.querySelector("span.aya > span.text");
+                        first_aya.parentElement.classList.add("selected");
+                        Player.restart_progressbar();
+                        Player.update_src(first_aya);
+                    }
                 });
             });
         </script>
