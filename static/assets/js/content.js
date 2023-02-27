@@ -214,8 +214,6 @@ export class Content {
                     block: "center",
                     inline: "center"
                 });
-
-                console.log(first_aya);
             } else {
                 // not in the same page
                 Content.carousel.trigger("to.owl.carousel", page_number - 1);
@@ -232,8 +230,6 @@ export class Content {
                             block: "center",
                             inline: "center"
                         });
-
-                        console.log(first_aya);
                     }
                 });
             }
