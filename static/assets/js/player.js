@@ -99,7 +99,16 @@ export class Player {
                 Player.progress_bar.value = (current_time / Player.audio.duration) * 100;
         }
 
-        Player.audio.addEventListener("ended", Player.restart_progressbar);
+        Player.audio.addEventListener("play", function () {
+            let current_aya = document.querySelector("span.aya.selected");
+            let next_aya_text = current_aya.nextElementSibling.firstElementChild;
+            Player.get_nex_audio(next_aya_text);
+        });
+
+        Player.audio.addEventListener("ended", function () {
+            Player.restart_progressbar();
+            Player.go_to_next_aya();
+        });
     }
 
     speedControl() {
@@ -225,5 +234,36 @@ export class Player {
     static pause_shape() {
         Player.play_logo.classList.add("active");
         Player.pause_logo.classList.remove("active");
+    }
+
+    static go_to_next_aya() {
+        let current_aya = document.querySelector("span.aya.selected");
+        let next_aya_text = current_aya.nextElementSibling.firstElementChild;
+        document.querySelectorAll("span.text").forEach(function (item) {
+            item.parentElement.classList.remove("selected");
+        });
+        // add selected class to the aya element
+        next_aya_text.parentElement.classList.add("selected");
+        Player.update_src(next_aya_text);
+        Player.play_audio();
+    }
+
+    static get_nex_audio(next_aya_text) {
+        let sura = next_aya_text.parentElement.parentElement.parentElement;
+
+        let sura_id = String(sura.classList[1]);
+        sura_id = sura_id.padStart(3, "0");
+
+        let text_id = String(next_aya_text.id);
+        text_id = text_id.padStart(3, "0");
+
+        let url = Content.url.concat(sura_id + text_id, ".mp3");
+        Player.cache_audio(url, new Audio(url));
+    }
+
+    static play_audio() {
+        Player.play_logo.classList.remove("active");
+        Player.pause_logo.classList.add("active");
+        Player.audio.play();
     }
 }
