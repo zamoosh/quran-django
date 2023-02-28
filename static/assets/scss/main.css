@@ -594,6 +594,9 @@ body .main__content {
 body .main__content .owl-carousel {
   z-index: 0;
 }
+body .main__content .owl-carousel .owl-stage {
+  padding-top: 15px;
+}
 body .main__content .owl-carousel .item {
   background-color: transparent;
   min-height: 75vh;

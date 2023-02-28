@@ -274,6 +274,9 @@
                         first_aya.parentElement.classList.add("selected");
                         Player.restart_progressbar();
                         Player.update_src(first_aya);
+                        if (Player.playing === true) {
+                            Player.play_audio();
+                        }
                     }
                 });
             });

@@ -5,10 +5,10 @@ export class Player {
     static play_logo;
     static pause_logo;
     static audio = document.querySelector("audio");
-    playing = false;
+    static playing = false;
     static progress_bar = document.querySelector("progress");
-    speed_toolbar;
-    speed_selected;
+    static speed_toolbar;
+    static speed_selected;
     footer_settings;
     footer_settings_logo;
     static font_change;
@@ -19,8 +19,8 @@ export class Player {
         let logos = this.player.querySelectorAll("img.logo");
         Player.play_logo = logos[0];
         Player.pause_logo = logos[1];
-        this.speed_toolbar = this.player.querySelector(".footer__speed-toolbar");
-        this.speed_selected = this.speed_toolbar.querySelector(".footer__speed-selected");
+        Player.speed_toolbar = this.player.querySelector(".footer__speed-toolbar");
+        Player.speed_selected = Player.speed_toolbar.querySelector(".footer__speed-selected");
         this.footer_settings = document.querySelector(".footer__settings");
         this.footer_settings_logo = this.footer_settings.querySelector(".footer__settings");
 
@@ -37,14 +37,14 @@ export class Player {
     }
 
     togglePlay() {
-        this.playing = !Player.audio.paused;
-        if (this.playing) {
+        Player.playing = !Player.audio.paused;
+        if (Player.playing) {
             Player.audio.pause();
-            this.playing = false;
+            Player.playing = false;
             Player.toggle_shape();
         } else {
             Player.audio.play();
-            this.playing = true;
+            Player.playing = true;
             Player.toggle_shape();
         }
     }
@@ -101,8 +101,21 @@ export class Player {
 
         Player.audio.addEventListener("play", function () {
             let current_aya = document.querySelector("span.aya.selected");
-            let next_aya_text = current_aya.nextElementSibling.firstElementChild;
-            Player.get_nex_audio(next_aya_text);
+            let next_aya = current_aya.nextElementSibling;
+            let owl_item = document.querySelector(".owl-item.active");
+            let last_aya_of_page = owl_item.querySelector(".sura:last-child span.aya:last-child");
+            if (next_aya) {
+                // next sibling, exists in current page
+                let next_aya_text = current_aya.nextElementSibling.firstElementChild;
+                Player.get_nex_audio(next_aya_text);
+            } else if (last_aya_of_page === current_aya) {
+                // we're in the last aya of the current page. we should go to next page
+                let next_owl_item = owl_item.nextElementSibling;
+                if (next_owl_item) {
+                    let next_aya_text = next_owl_item.querySelector("span.aya");
+                    Player.get_nex_audio(next_aya_text);
+                }
+            }
         });
 
         Player.audio.addEventListener("ended", function () {
@@ -112,15 +125,15 @@ export class Player {
     }
 
     speedControl() {
-        this.speed_toolbar.addEventListener("click", this.toggleSpeeds.bind(this));
+        Player.speed_toolbar.addEventListener("click", this.toggleSpeeds.bind(this));
     }
 
     toggleSpeeds() {
         let btn_d = 36;
         let d = 45;
-        let buttons = this.speed_toolbar.querySelectorAll("button");
-        this.speed_toolbar.classList.toggle("open");
-        if (this.speed_toolbar.classList.contains("open")) {
+        let buttons = Player.speed_toolbar.querySelectorAll("button");
+        Player.speed_toolbar.classList.toggle("open");
+        if (Player.speed_toolbar.classList.contains("open")) {
             buttons.forEach((btn, index) => {
                 btn.classList.add("open");
                 btn.style.transform = `translate(18px, -${(index * btn_d) + d}px)`;
@@ -132,18 +145,23 @@ export class Player {
             });
         }
         buttons.forEach(btn => {
-            btn.addEventListener("click", this.speedSet.bind(this));
+            btn.addEventListener("click", Player.speedSet);
         });
     }
 
-    speedSet(e) {
-        let buttons = this.speed_toolbar.querySelectorAll("button");
-        buttons.forEach(btn => {
-            btn.classList.remove("active");
-        });
-        e.target.classList.add("active");
-        this.speed_selected.innerHTML = e.target.innerHTML;
-        Player.audio.playbackRate = e.target.value;
+    static speedSet(e) {
+        if (e) {
+            let buttons = Player.speed_toolbar.querySelectorAll("button");
+            buttons.forEach(btn => {
+                btn.classList.remove("active");
+            });
+            e.target.classList.add("active");
+            Player.speed_selected.innerHTML = e.target.innerHTML;
+            Player.audio.playbackRate = e.target.value;
+        } else {
+            let active_speed = Player.speed_toolbar.querySelector("button.active").value;
+            Player.audio.playbackRate = Number(active_speed);
+        }
     }
 
 
@@ -238,14 +256,35 @@ export class Player {
 
     static go_to_next_aya() {
         let current_aya = document.querySelector("span.aya.selected");
-        let next_aya_text = current_aya.nextElementSibling.firstElementChild;
-        document.querySelectorAll("span.text").forEach(function (item) {
-            item.parentElement.classList.remove("selected");
-        });
-        // add selected class to the aya element
-        next_aya_text.parentElement.classList.add("selected");
-        Player.update_src(next_aya_text);
-        Player.play_audio();
+
+        let next_aya = current_aya.nextElementSibling;
+        let owl_item = document.querySelector(".owl-item.active");
+        let last_aya_of_page = owl_item.querySelector(".sura:last-child span.aya:last-child");
+
+        if (next_aya) {
+            Player.playing = false;
+
+            // next aya is exists in current page (owl-item)
+            let next_aya_text = current_aya.nextElementSibling.firstElementChild;
+            document.querySelectorAll("span.text").forEach(function (item) {
+                item.parentElement.classList.remove("selected");
+            });
+            // add selected class to the aya element
+            next_aya_text.parentElement.classList.add("selected");
+            Player.update_src(next_aya_text);
+            Player.play_audio();
+        } else if (current_aya === last_aya_of_page) {
+            console.log("we must go to next page");
+            let next_page = owl_item.nextElementSibling;
+            if (next_page) {
+                next_page = next_page.firstElementChild;
+                let next_item_number = next_page.classList[1];
+                document.querySelectorAll("span.text").forEach(function (item) {
+                    item.parentElement.classList.remove("selected");
+                });
+                Content.go_to_page(next_item_number, undefined, undefined);
+            }
+        }
     }
 
     static get_nex_audio(next_aya_text) {
@@ -264,6 +303,8 @@ export class Player {
     static play_audio() {
         Player.play_logo.classList.remove("active");
         Player.pause_logo.classList.add("active");
+        Player.playing = true;
+        Player.speedSet(null);
         Player.audio.play();
     }
 }
