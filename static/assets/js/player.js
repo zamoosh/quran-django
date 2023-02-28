@@ -39,13 +39,9 @@ export class Player {
     togglePlay() {
         Player.playing = !Player.audio.paused;
         if (Player.playing) {
-            Player.audio.pause();
-            Player.playing = false;
-            Player.toggle_shape();
+            Player.pause_audio();
         } else {
-            Player.audio.play();
-            Player.playing = true;
-            Player.toggle_shape();
+            Player.play_audio();
         }
     }
 
@@ -306,5 +302,12 @@ export class Player {
         Player.playing = true;
         Player.speedSet(null);
         Player.audio.play();
+    }
+
+    static pause_audio() {
+        Player.play_logo.classList.add("active");
+        Player.pause_logo.classList.remove("active");
+        Player.playing = false;
+        Player.audio.pause();
     }
 }
