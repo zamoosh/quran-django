@@ -199,12 +199,8 @@ export class Content {
             document.querySelectorAll("span.text").forEach(function (item) {
                 item.parentElement.classList.remove("selected");
             });
-
             let first_aya = sura.querySelector("span.aya > span.text");
-            if (Player.playing === false) {
-                // if Player.playing === false, means we won't go next page
-                first_aya.parentElement.classList.add("selected");
-            }
+            first_aya.parentElement.classList.add("selected");
             Player.restart_progressbar();
             Player.update_src(first_aya);
 
