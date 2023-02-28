@@ -73,10 +73,20 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 local = False
 if local:
+    # DATABASES = {
+    #     'default': {
+    #         'ENGINE': 'django.db.backends.sqlite3',
+    #         'NAME': BASE_DIR / 'db.sqlite3',
+    #     }
+    # }
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'quran',
+            'USER': 'zamoosh',
+            'PASSWORD': '66569211',
+            'HOST': 'localhost',
+            'PORT': '3306',
         }
     }
 else:
