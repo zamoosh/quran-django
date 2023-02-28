@@ -108,8 +108,17 @@ export class Player {
                 // we're in the last aya of the current page. we should go to next page
                 let next_owl_item = owl_item.nextElementSibling;
                 if (next_owl_item) {
-                    let next_aya_text = next_owl_item.querySelector("span.aya");
+                    let next_aya_text = next_owl_item.querySelector("span.aya").firstElementChild;
                     Player.get_nex_audio(next_aya_text);
+                }
+            } else if (next_aya === null) {
+                // there is something we must cache in current page!
+
+                let current_sura = owl_item.querySelector("span.aya.selected").parentElement.parentElement;
+                let next_sura = current_sura.nextSibling;
+                if (next_sura) {
+                    let next_aya_text = next_sura.querySelector("span.aya > span.text");
+                    Player.get_nex_audio(next_aya_text)
                 }
             }
         });
@@ -294,6 +303,7 @@ export class Player {
                     item.parentElement.classList.remove("selected");
                 });
                 // add selected class to the aya element
+                Player.get_nex_audio(next_aya_text)
                 next_aya_text.parentElement.classList.add("selected");
                 Player.update_src(next_aya_text);
                 Player.play_audio();
