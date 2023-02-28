@@ -243,6 +243,10 @@ export class Content {
             // if sura_name is passed, then we're going to replace it.
             Content.update_page_sura(sura_name);
         }
+        //
+        // Tab.update_sura_list(page_number);
+        //
+        // Tab.sura_list_updated = false;
         // else if (page_number !== undefined) {
         //     // getting the page
         //     let page = document.getElementsByClassName(`item ${page_number}`)[0];

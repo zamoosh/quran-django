@@ -107,6 +107,7 @@ export class Tab {
         // row: id of sura in side menu, sura list
         let row = event.target;
         row.classList.toggle("selected");
+        // Tab.sura_list_updated = true;
         if (Tab.rows.includes(Number(row.id))) {
             Tab.side_menu.closeMenu();
             let sura = document.getElementsByClassName(`sura ${row.id}`)[0];
@@ -256,15 +257,16 @@ export class Tab {
     }
 
     static update_sura_list(page_number) {
-        if (page_number === undefined)
-            return;
+        let owl_item = document.querySelector(".owl-item.active");
+        let first_aya = owl_item.querySelector("span.aya.selected");
+        let sura_id = first_aya.parentElement.parentElement.classList[1];
+
         let rows = document.querySelector("div#sura").querySelectorAll("a");
         rows.forEach(row => {
             row.classList.remove("selected");
         });
-        let page = document.getElementsByClassName(`item ${page_number}`)[0];
-        let sura_id_index = page.firstElementChild.classList[1];
-        let row = rows[sura_id_index - 1];
+
+        let row = rows[sura_id - 1];
         row.classList.add("selected");
         row.scrollIntoView({
             behavior: "smooth",

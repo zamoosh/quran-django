@@ -108,7 +108,7 @@
                 </div>
                 <div role="button" class="footer__singer">
                     <div>
-                        مداح
+                        قاري
                     </div>
                 </div>
                 <div role="button" class="footer__more">
@@ -242,20 +242,20 @@
                     // update the sura name at top of the page
                     Content.update_page_sura(sura_name);
 
-                    // changing the sura_list, page_list and juz_list in Tab
-                    if (event.item.index + 1 <= 604) {
-                        Tab.update_sura_list(event.item.index + 1);
-                        Tab.update_page_list(event.item.index + 1)
-                        Tab.update_juz_list(event.item.index + 1)
-                    } else if (event.item.index - 1 > 604) {
-                        Tab.update_sura_list(event.item.index - 1);
-                        Tab.update_page_list(event.item.index - 1)
-                        Tab.update_juz_list(event.item.index - 1)
-                    } else {
-                        Tab.update_sura_list(event.item.index);
-                        Tab.update_page_list(event.item.index)
-                        Tab.update_juz_list(event.item.index)
-                    }
+                    // // changing the sura_list, page_list and juz_list in Tab
+                    // if (event.item.index + 1 <= 604) {
+                    //     Tab.update_sura_list();
+                    //     Tab.update_page_list(event.item.index + 1)
+                    //     Tab.update_juz_list(event.item.index + 1)
+                    // } else if (event.item.index - 1 > 604) {
+                    //     Tab.update_sura_list();
+                    //     Tab.update_page_list(event.item.index - 1)
+                    //     Tab.update_juz_list(event.item.index - 1)
+                    // } else {
+                    //     Tab.update_sura_list();
+                    //     Tab.update_page_list(event.item.index)
+                    //     Tab.update_juz_list(event.item.index)
+                    // }
 
                     prev_id = event.item.index;
                 });
@@ -278,7 +278,28 @@
                             Player.play_audio();
                         }
                     }
+
+                    // changing the sura_list, page_list and juz_list in Tab
+                    if (event.item.index + 1 <= 604) {
+                        Tab.update_sura_list();
+                        Tab.update_page_list(event.item.index + 1)
+                        Tab.update_juz_list(event.item.index + 1)
+                    } else if (event.item.index - 1 > 604) {
+                        Tab.update_sura_list();
+                        Tab.update_page_list(event.item.index - 1)
+                        Tab.update_juz_list(event.item.index - 1)
+                    } else {
+                        Tab.update_sura_list();
+                        Tab.update_page_list(event.item.index)
+                        Tab.update_juz_list(event.item.index)
+                    }
+                    // window.history.pushState("", "", event.item.index);
+
                 });
+
+                // window.location.replace("1")
+            
+
             });
         </script>
     </body>
