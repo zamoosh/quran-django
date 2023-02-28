@@ -62,7 +62,7 @@ export class Player {
                 Player.cache_audio(src, new Audio(src));
                 Player.audio.firstElementChild.src = src;
             }
-            Player.audio.load();
+            // Player.audio.load();
         } else {
             // src itself is the first aya (span.text) of the current page
             let sura = src.parentElement.parentElement.parentElement;
@@ -258,6 +258,7 @@ export class Player {
         let last_aya_of_page = owl_item.querySelector(".sura:last-child span.aya:last-child");
 
         if (next_aya) {
+            // aya is in current page, in current sura
             Player.playing = false;
 
             // next aya is exists in current page (owl-item)
@@ -270,7 +271,8 @@ export class Player {
             Player.update_src(next_aya_text);
             Player.play_audio();
         } else if (current_aya === last_aya_of_page) {
-            console.log("we must go to next page");
+            // aya is in current sura, but in different page
+            // we must go to next page
             let next_page = owl_item.nextElementSibling;
             if (next_page) {
                 next_page = next_page.firstElementChild;
@@ -279,6 +281,22 @@ export class Player {
                     item.parentElement.classList.remove("selected");
                 });
                 Content.go_to_page(next_item_number, undefined, undefined);
+            }
+        } else if (next_aya === null) {
+            console.log("there is something we must read in current page!");
+
+            let current_sura = owl_item.querySelector("span.aya.selected").parentElement.parentElement;
+            let next_sura = current_sura.nextSibling;
+            if (next_sura) {
+                let next_aya_text = next_sura.querySelector("span.aya > span.text");
+
+                document.querySelectorAll("span.text").forEach(function (item) {
+                    item.parentElement.classList.remove("selected");
+                });
+                // add selected class to the aya element
+                next_aya_text.parentElement.classList.add("selected");
+                Player.update_src(next_aya_text);
+                Player.play_audio();
             }
         }
     }
@@ -300,6 +318,7 @@ export class Player {
         Player.play_logo.classList.remove("active");
         Player.pause_logo.classList.add("active");
         Player.playing = true;
+        Player.audio.load();
         Player.speedSet(null);
         Player.audio.play();
     }
