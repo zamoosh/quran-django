@@ -71,7 +71,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-local = True
+local = False
 if local:
     # DATABASES = {
     #     'default': {
