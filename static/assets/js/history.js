@@ -1,7 +1,8 @@
 export class History {
     constructor() {
         this.storage = window.localStorage;
-        this.check();
+        this.history = {};
+        // this.check();
     }
     static get_instance() {
         if (!History.instance) {
@@ -17,10 +18,18 @@ export class History {
         }
     }
     set_item(item, value) {
-        return this.storage.setItem(item, value);
+        this.history[item] = value;
+        this.storage.setItem("history", JSON.stringify(this.history));
     }
     get_item(item) {
         return this.storage.getItem(item);
+    }
+    save_position(aya) {
+        // authenticated ? renderApp() : renderLogin();
+        let sura_is = aya.parentElement.parentElement.classList[1];
+        let page_number = aya.parentElement.parentElement.parentElement.classList[1];
+        this.set_item("page", page_number);
+        this.set_item("sura", sura_is);
     }
 }
 //# sourceMappingURL=history.js.map

@@ -53,7 +53,6 @@ export class Player {
     static update_src(src) {
         // src is an url for an aya
         if (typeof src === "string") {
-            console.log(Player.cached_audio);
             if (Player.get_cache_audio(src)) {
                 // audio is cached before
                 Player.audio.firstElementChild.src = src;
