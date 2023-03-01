@@ -179,6 +179,9 @@
             import {Tab} from "{% static 'assets/js/tab.js' %}";
             import {Content} from "{% static 'assets/js/content.js' %}";
             import {Player} from "{% static 'assets/js/player.js' %}";
+            import {History} from  "{% static 'assets/js/history.js' %}";
+
+            let history = History.get_instance();
 
             document.addEventListener("DOMContentLoaded", function () {
 
@@ -297,7 +300,6 @@
 
                 });
 
-                // window.location.replace("1")
             
 
             });
