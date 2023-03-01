@@ -1,6 +1,7 @@
 import {toArabicNumber} from "./utils.js";
 import {Tab} from "./tab.js";
 import {Player} from "./player.js";
+import {History} from "./history.js";
 
 export class Content {
     static carousel = $(".owl-carousel");
@@ -129,6 +130,10 @@ export class Content {
                     let text = event.target;
                     text.parentElement.classList.add("selected");
 
+                    // save position
+                    History.get_instance().save_position(text.parentElement);
+
+
                     let sura = text.parentElement.parentElement.parentElement;
 
                     let sura_id = String(sura.classList[1]);
@@ -204,6 +209,9 @@ export class Content {
             if (Player.playing === false) {
                 // if Player.playing === false, means we won't go next page
                 first_aya.parentElement.classList.add("selected");
+
+                // save position
+                History.get_instance().save_position(first_aya.parentElement);
             }
             Player.restart_progressbar();
             Player.update_src(first_aya);

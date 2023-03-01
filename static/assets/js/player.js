@@ -1,4 +1,5 @@
 import {Content} from "./content.js";
+import {History} from "./history.js";
 
 export class Player {
     player;
@@ -117,7 +118,7 @@ export class Player {
                 let next_sura = current_sura.nextSibling;
                 if (next_sura) {
                     let next_aya_text = next_sura.querySelector("span.aya > span.text");
-                    Player.get_nex_audio(next_aya_text)
+                    Player.get_nex_audio(next_aya_text);
                 }
             }
         });
@@ -276,6 +277,10 @@ export class Player {
             });
             // add selected class to the aya element
             next_aya_text.parentElement.classList.add("selected");
+
+            // save position
+            History.get_instance().save_position(next_aya_text.parentElement);
+
             Player.update_src(next_aya_text);
             Player.play_audio();
         } else if (current_aya === last_aya_of_page) {
@@ -302,8 +307,12 @@ export class Player {
                     item.parentElement.classList.remove("selected");
                 });
                 // add selected class to the aya element
-                Player.get_nex_audio(next_aya_text)
+                Player.get_nex_audio(next_aya_text);
                 next_aya_text.parentElement.classList.add("selected");
+
+                // save position
+                History.get_instance().save_position(next_aya_text.parentElement);
+
                 Player.update_src(next_aya_text);
                 Player.play_audio();
             }
