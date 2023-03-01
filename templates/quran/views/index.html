@@ -181,8 +181,6 @@
             import {Player} from "{% static 'assets/js/player.js' %}";
             import {History} from  "{% static 'assets/js/history.js' %}";
 
-            let history = History.get_instance();
-
             document.addEventListener("DOMContentLoaded", function () {
 
                 let side_menu = new SideMenu(".side-menu");
@@ -208,6 +206,9 @@
                     carousel.trigger("add.owl.carousel", item);
                 }
                 carousel.trigger("refresh.owl.carousel");
+
+                let history = History.get_instance();
+                history.goto_position();
 
 
                 let prev_id;
