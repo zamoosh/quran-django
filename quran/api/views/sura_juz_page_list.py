@@ -9,4 +9,4 @@ def sura_juz_page_list(request):
         'juz_list': list(juz.keys()),
         'page_list': list(page.keys()),
     }
-    return JsonResponse(context)
+    return JsonResponse(context, status=200)

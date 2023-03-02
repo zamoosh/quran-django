@@ -2,6 +2,8 @@ import {Content} from "./content.js";
 import {Tab} from "./tab.js";
 
 export class History {
+    static instance;
+
     constructor() {
         this.storage = window.localStorage;
         this.history = {};
@@ -10,7 +12,11 @@ export class History {
     static get_instance() {
         if (!History.instance) {
             History.instance = new History();
-            History.instance.history = JSON.parse(History.instance.storage.getItem("history"));
+            if (window.localStorage.getItem("history")) {
+                History.instance.history = JSON.parse(History.instance.storage.getItem("history"));
+            } else {
+                window.localStorage.setItem("history", JSON.stringify(History.instance.history));
+            }
         }
         return History.instance;
     }
@@ -40,10 +46,10 @@ export class History {
         let page_number = aya.parentElement.parentElement.parentElement.classList[1];
         let sura_is = aya.parentElement.parentElement.classList[1];
         let aya_id = aya.firstElementChild.id;
-        // this.set_item("page", page_number);
-        // this.set_item("sura", sura_is);
-        // this.set_item("aya", aya_id);
-        // this.save();
+        this.set_item("page", page_number);
+        this.set_item("sura", sura_is);
+        this.set_item("aya", aya_id);
+        this.save();
     }
 
     goto_position() {
