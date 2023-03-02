@@ -277,8 +277,9 @@
                         let first_aya = current_page.querySelector("span.aya > span.text");
                         first_aya.parentElement.classList.add("selected");
                         Player.restart_progressbar();
-                        Player.update_src(first_aya);
+                        // Player.update_src(first_aya);
                         if (Player.playing === true) {
+                            Player.update_src(first_aya);
                             Player.play_audio();
                         }
                     }
