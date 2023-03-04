@@ -260,6 +260,8 @@ export class Player {
     }
 
     static go_to_next_aya() {
+        let history = History.get_instance();
+
         let current_aya = document.querySelector("span.aya.selected");
 
         let next_aya = current_aya.nextElementSibling;
@@ -279,9 +281,16 @@ export class Player {
             next_aya_text.parentElement.classList.add("selected");
 
             // save position
-            History.get_instance().save_position(next_aya_text.parentElement);
+            history.save_position(next_aya_text.parentElement);
 
             Player.update_src(next_aya_text);
+
+            // we should scroll into the next aya
+            next_aya_text.scrollIntoView({
+                block: "center",
+                behavior: "smooth"
+            });
+
             Player.play_audio();
         } else if (current_aya === last_aya_of_page) {
             // aya is in current sura, but in different page
@@ -311,9 +320,16 @@ export class Player {
                 next_aya_text.parentElement.classList.add("selected");
 
                 // save position
-                History.get_instance().save_position(next_aya_text.parentElement);
+                history.save_position(next_aya_text.parentElement);
 
                 Player.update_src(next_aya_text);
+
+                // we should scroll into the next aya
+                next_aya_text.scrollIntoView({
+                    block: "center",
+                    behavior: "smooth"
+                });
+
                 Player.play_audio();
             }
         }

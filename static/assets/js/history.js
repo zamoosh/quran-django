@@ -34,7 +34,8 @@ export class History {
     }
 
     get_item(item) {
-        return this.storage.getItem(item);
+        let history = JSON.parse(this.storage.getItem("history"));
+        return history[item];
     }
 
     save() {

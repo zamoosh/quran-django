@@ -113,7 +113,14 @@ export class Content {
 
         Content.update_carousel();
 
-        Content.go_to_page(page_number, sura_id, undefined);
+        // save position
+        let history = History.get_instance();
+        let aya = history.get_item("aya");
+        if (aya) {
+            Content.go_to_page(page_number, sura_id, undefined, aya);
+        } else {
+            Content.go_to_page(page_number, sura_id, undefined);
+        }
 
         // add event listener for every span.text in pages
         let pages = document.querySelectorAll(".owl-carousel .owl-item");
@@ -131,8 +138,7 @@ export class Content {
                     text.parentElement.classList.add("selected");
 
                     // save position
-                    History.get_instance().save_position(text.parentElement);
-
+                    history.save_position(text.parentElement);
 
                     let sura = text.parentElement.parentElement.parentElement;
 
@@ -185,7 +191,7 @@ export class Content {
         Content.pages_added = [];
     }
 
-    static go_to_page(page_number, sura_id, sura_name) {
+    static go_to_page(page_number, sura_id, sura_name, selected_aya) {
         // if sura_id is null, then it won't scroll in to the sura
         if (sura_id !== null) {
             // when we have sura_id (get sura api)
@@ -219,9 +225,25 @@ export class Content {
             let sura_name = sura.dataset.sura;
             page_number = sura.parentElement.classList[1];
 
+            let scroll_element = first_aya;
+            if (selected_aya) {
+                let page_ayas = sura.querySelectorAll("span.text");
+                for (const aya of page_ayas) {
+                    if (aya.id === selected_aya) {
+                        scroll_element = aya;
+                        first_aya.parentElement.classList.remove("selected");
+                        scroll_element.parentElement.classList.add("selected");
+                        Player.update_src(scroll_element);
+                        break;
+                    }
+                }
+                // let selected_aya = sura.querySelector(`span.text#${selected_aya}`);
+                // scroll_element = selected_aya;
+            }
+
             if (page_number === Content.page_number.dataset.number) {
                 // in the same page
-                sura.scrollIntoView({
+                scroll_element.scrollIntoView({
                     behavior: "smooth",
                     block: "center",
                     inline: "center"
@@ -237,7 +259,7 @@ export class Content {
                 Content.update_page_sura(sura_name);
                 promise.then(function (result) {
                     if (result) {
-                        sura.scrollIntoView({
+                        scroll_element.scrollIntoView({
                             behavior: "smooth",
                             block: "center",
                             inline: "center"
