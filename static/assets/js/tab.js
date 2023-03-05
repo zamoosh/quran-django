@@ -134,6 +134,7 @@ export class Tab {
                 // row.id, is sura.id
                 Content.update_content(context, page_number, row.id);
                 Content.update_page_number(page_number);
+                Content.go_to_page(page_number);
 
                 // check if next page is empty of not
                 let next_page = document.getElementsByClassName(`item ${page_number + 1}`)[0];
@@ -172,9 +173,12 @@ export class Tab {
         row.classList.toggle("selected");
         if (Tab.pages.includes(Number(row.id))) {
             Tab.side_menu.closeMenu();
-            let sura = document.getElementsByClassName(`sura ${row.id}`)[0];
+
+            // item is page
+            let sura = document.getElementsByClassName(`item ${row.id}`)[0].firstElementChild;
+            console.log(sura);
             let sura_name = sura.dataset.sura;
-            Content.go_to_page(undefined, row.id, sura_name);
+            Content.go_to_page(row.id, undefined, sura_name);
             return;
         }
         $.ajax({
@@ -195,6 +199,7 @@ export class Tab {
                 // page_number is the page sura starts
                 Content.update_content(context, page_number, undefined);
                 Content.update_page_number(page_number);
+                Content.go_to_page(page_number);
 
                 // check if next page is empty of not
                 let next_page = document.getElementsByClassName(`item ${page_number + 1}`)[0];
@@ -256,6 +261,7 @@ export class Tab {
                 // page_number is the page sura starts
                 Content.update_content(context, page_number, row.id);
                 Content.update_page_number(page_number);
+                Content.go_to_page(page_number);
 
                 // check if next page is empty of not
                 let next_page = document.getElementsByClassName(`item ${page_number + 1}`)[0];

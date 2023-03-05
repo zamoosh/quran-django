@@ -11,7 +11,7 @@ export class Content {
     static page_sura = document.querySelector(".header__surah > span");
     static url = "https://tanzil.net/res/audio/afasy/";
 
-    static update_content(content, page_number, sura_id) {
+    static update_content(content, page_number, sura_id, dont_update) {
         page_number = String(page_number--);
         let current_page = 0;
         let current_page_number = 1;
@@ -113,17 +113,20 @@ export class Content {
 
         Content.update_carousel();
 
-        // save position
-        let history = History.get_instance();
-        let aya = history.get_item("aya");
-        if (aya) {
-            Content.go_to_page(page_number, sura_id, undefined, aya);
-        } else {
-            Content.go_to_page(page_number, sura_id, undefined);
-        }
+        // if (dont_update === false) {
+        //     // save position
+        //     let history = History.get_instance();
+        //     let aya = history.get_item("aya");
+        //     if (aya) {
+        //         Content.go_to_page(page_number, sura_id, undefined, aya);
+        //     } else {
+        //         Content.go_to_page(page_number, sura_id, undefined);
+        //     }
+        // }
 
-        // add event listener for every span.text in pages
+        // add event listener for every span.text in pages to play audio
         let pages = document.querySelectorAll(".owl-carousel .owl-item");
+        let history = History.get_instance();
         for (const page of pages) {
             if (page.getAttribute("clickable"))
                 continue;
@@ -148,9 +151,17 @@ export class Content {
                     let text_id = String(text.id);
                     text_id = text_id.padStart(3, "0");
 
+                    text.parentElement.scrollIntoView({
+                        behavior: "smooth",
+                        block: "center",
+                    });
+
                     let url = Content.url.concat(sura_id + text_id, ".mp3");
                     Player.restart_progressbar();
                     Player.update_src(url);
+                    if (Player.playing) {
+                        Player.play_audio();
+                    }
                 }
             });
             page.setAttribute("clickable", true);
@@ -246,7 +257,6 @@ export class Content {
                 scroll_element.scrollIntoView({
                     behavior: "smooth",
                     block: "center",
-                    inline: "center"
                 });
             } else {
                 // not in the same page
@@ -262,17 +272,16 @@ export class Content {
                         scroll_element.scrollIntoView({
                             behavior: "smooth",
                             block: "center",
-                            inline: "center"
                         });
                     }
                 });
             }
         }
 
-        if (sura_name !== undefined) {
-            // if sura_name is passed, then we're going to replace it.
-            Content.update_page_sura(sura_name);
-        }
+        // if (sura_name !== undefined) {
+        //     // if sura_name is passed, then we're going to replace it.
+        //     Content.update_page_sura(sura_name);
+        // }
         //
         // Tab.update_sura_list(page_number);
         //
@@ -352,7 +361,7 @@ export class Content {
                 Tab.rows = Tab.rows.concat(sura_ids);
 
                 // is the third parameter (sura_id) is null, then it won't scroll in to the sura
-                Content.update_content(context, page_number, null);
+                Content.update_content(context, page_number, null, false);
             },
             error: function () {
                 console.log("error");

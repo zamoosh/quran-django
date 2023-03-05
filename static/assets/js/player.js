@@ -52,8 +52,11 @@ export class Player {
     }
 
     static update_src(src) {
+        Player.audio.setAttribute("loaded", false);
+
         // src is an url for an aya
         if (typeof src === "string") {
+            console.log(src);
             if (Player.get_cache_audio(src)) {
                 // audio is cached before
                 Player.audio.firstElementChild.src = src;
@@ -62,6 +65,7 @@ export class Player {
                 Player.cache_audio(src, new Audio(src));
                 Player.audio.firstElementChild.src = src;
             }
+            Player.audio.setAttribute("loaded", true);
             // Player.audio.load();
         } else {
             // src itself is the first aya (span.text) of the current page
@@ -97,6 +101,11 @@ export class Player {
 
         Player.audio.addEventListener("play", function () {
             let current_aya = document.querySelector("span.aya.selected");
+            current_aya.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+
             let next_aya = current_aya.nextElementSibling;
             let owl_item = document.querySelector(".owl-item.active");
             let last_aya_of_page = owl_item.querySelector(".sura:last-child span.aya:last-child");
@@ -352,7 +361,9 @@ export class Player {
         Player.play_logo.classList.remove("active");
         Player.pause_logo.classList.add("active");
         Player.playing = true;
-        Player.audio.load();
+        if (!Player.audio.getAttribute("loaded")) {
+            Player.audio.load();
+        }
         Player.speedSet(null);
         Player.audio.play();
     }
