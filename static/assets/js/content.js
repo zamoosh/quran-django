@@ -221,29 +221,29 @@ export class Content {
                 item.parentElement.classList.remove("selected");
             });
 
-            let first_aya = sura.querySelector("span.aya > span.text");
+            let aya_text = sura.querySelector("span.aya > span.text");
             if (Player.playing === false) {
                 // if Player.playing === false, means we won't go next page
-                first_aya.parentElement.classList.add("selected");
+                aya_text.parentElement.classList.add("selected");
 
                 // save position
-                // history.save_position(first_aya.parentElement);
+                // history.save_position(aya_text.parentElement);
             }
             Player.restart_progressbar();
-            // Player.update_src(first_aya);
+            Player.update_src(aya_text);
 
             let sura_name = sura.dataset.sura;
             page_number = sura.parentElement.classList[1];
             Content.carousel.trigger("to.owl.carousel", [page_number - 1, 0]);
             Content.page_updated = true;
 
-            let scroll_element = first_aya;
+            let scroll_element = aya_text;
             let src_updated = false;
             if (selected_aya) {
                 let page_ayas = sura.querySelectorAll("span.text");
                 for (const aya of page_ayas) {
                     if (aya.id === selected_aya) {
-                        first_aya.parentElement.classList.remove("selected");
+                        aya_text.parentElement.classList.remove("selected");
                         scroll_element.parentElement.classList.add("selected");
                         Player.update_src(scroll_element);
                         if (Player.playing) {

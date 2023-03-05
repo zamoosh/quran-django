@@ -14,6 +14,7 @@ export class Player {
     footer_settings_logo;
     static font_change;
     static cached_audio = {};
+    static loaded_src = false;
 
     constructor(selector) {
         this.player = document.getElementById(selector);
@@ -52,32 +53,29 @@ export class Player {
     }
 
     static update_src(src) {
-        Player.audio.setAttribute("loaded", false);
+        let sura = src.parentElement.parentElement.parentElement;
+        let sura_id = String(sura.classList[1]);
+        sura_id = sura_id.padStart(3, "0");
 
-        // src is an url for an aya
-        if (typeof src === "string") {
-            console.log(src);
-            if (Player.get_cache_audio(src)) {
-                // audio is cached before
-                Player.audio.firstElementChild.src = src;
-            } else {
-                // we need to get the audio
-                Player.cache_audio(src, new Audio(src));
-                Player.audio.firstElementChild.src = src;
-            }
-            Player.audio.load();
+        let text_id = String(src.id);
+        text_id = text_id.padStart(3, "0");
+
+        let url = Content.url.concat(sura_id + text_id, ".mp3");
+        Player.download_src(url);
+
+        Player.loaded_src = false;
+    }
+
+    static download_src(url) {
+        if (Player.get_cache_audio(url)) {
+            // audio is cached before
+            Player.audio.firstElementChild.src = url;
         } else {
-            // src itself is the first aya (span.text) of the current page
-            let sura = src.parentElement.parentElement.parentElement;
-            let sura_id = String(sura.classList[1]);
-            sura_id = sura_id.padStart(3, "0");
-
-            let text_id = String(src.id);
-            text_id = text_id.padStart(3, "0");
-
-            let url = Content.url.concat(sura_id + text_id, ".mp3");
-            this.update_src(url);
+            // we need to get the audio
+            Player.cache_audio(url, new Audio(url));
+            Player.audio.firstElementChild.src = url;
         }
+        // Player.audio.load();
     }
 
     static cache_audio(url, audio) {
@@ -360,6 +358,11 @@ export class Player {
         Player.play_logo.classList.remove("active");
         Player.pause_logo.classList.add("active");
         Player.playing = true;
+        console.log(Player.loaded_src);
+        if (!Player.loaded_src) {
+            Player.loaded_src = true;
+            Player.audio.load();
+        }
         Player.speedSet(null);
         Player.audio.play();
     }
