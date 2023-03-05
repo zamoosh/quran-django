@@ -256,10 +256,9 @@ export class Player {
     }
 
     static restart_progressbar() {
+        Player.pause_audio();
         Player.audio.currentTime = 0;
         Player.progress_bar.value = 0;
-        Player.audio.pause();
-        Player.pause_shape();
     }
 
     static pause_shape() {
@@ -361,11 +360,6 @@ export class Player {
         Player.play_logo.classList.remove("active");
         Player.pause_logo.classList.add("active");
         Player.playing = true;
-        let loaded = Boolean(Player.audio.getAttribute("loaded"));
-        if (!loaded) {
-            Player.audio.load();
-            Player.audio.setAttribute("loaded", true);
-        }
         Player.speedSet(null);
         Player.audio.play();
     }

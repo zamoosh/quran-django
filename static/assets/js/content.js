@@ -147,20 +147,14 @@ export class Content {
                     let sura = text.parentElement.parentElement.parentElement;
                     Content.update_page_sura(sura.dataset.sura);
 
-                    let sura_id = String(sura.classList[1]);
-                    sura_id = sura_id.padStart(3, "0");
-
-                    let text_id = String(text.id);
-                    text_id = text_id.padStart(3, "0");
-
                     text.parentElement.scrollIntoView({
                         behavior: "smooth",
                         block: "center",
                     });
 
-                    let url = Content.url.concat(sura_id + text_id, ".mp3");
+                    // let url = Content.url.concat(sura_id + text_id, ".mp3");
                     Player.restart_progressbar();
-                    Player.update_src(url);
+                    Player.update_src(text);
                     if (Player.playing) {
                         Player.play_audio();
                     }
@@ -168,8 +162,6 @@ export class Content {
             });
             page.setAttribute("clickable", true);
         }
-
-        // Content.update_page_sura();
     }
 
     static update_page_number(page_number) {
@@ -251,7 +243,6 @@ export class Content {
                 let page_ayas = sura.querySelectorAll("span.text");
                 for (const aya of page_ayas) {
                     if (aya.id === selected_aya) {
-                        scroll_element = aya;
                         first_aya.parentElement.classList.remove("selected");
                         scroll_element.parentElement.classList.add("selected");
                         Player.update_src(scroll_element);
@@ -320,18 +311,9 @@ export class Content {
         // }
     }
 
-    static go_page(page_number) {
-        document.querySelectorAll("span.text").forEach(function (item) {
-            item.parentElement.classList.remove("selected");
-        });
-
-        let page = document.getElementsByClassName(`item ${page_number}`);
-        Content.carousel.trigger("to.owl.carousel", [page_number - 1, 0]);
-    }
-
-    static got_to_aya(aya_number) {
-
-    }
+    // static got_to_aya(aya_number) {
+    //
+    // }
 
     static add_page(row) {
         let page;
