@@ -42,6 +42,7 @@ export class Player {
         Player.playing = !Player.audio.paused;
         if (Player.playing) {
             Player.pause_audio();
+            Player.playing = false;
         } else {
             Player.play_audio();
         }
@@ -304,9 +305,9 @@ export class Player {
             if (next_page) {
                 next_page = next_page.firstElementChild;
                 let next_item_number = next_page.classList[1];
-                document.querySelectorAll("span.text").forEach(function (item) {
-                    item.parentElement.classList.remove("selected");
-                });
+                // document.querySelectorAll("span.text").forEach(function (item) {
+                //     item.parentElement.classList.remove("selected");
+                // });
                 let selected_aya = next_page.querySelector("span.text").id;
                 Content.go_to_page(next_item_number, undefined, undefined, selected_aya);
             }
@@ -370,7 +371,7 @@ export class Player {
     static pause_audio() {
         Player.play_logo.classList.add("active");
         Player.pause_logo.classList.remove("active");
-        Player.playing = false;
+        // Player.playing = false;
         Player.audio.pause();
     }
 }
