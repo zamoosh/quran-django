@@ -9,6 +9,7 @@ export class Content {
     static pages_added = [];
     static page_number = document.querySelector("span#page_number");
     static page_sura = document.querySelector(".header__surah > span");
+    static page_updated = false;
     static url = "https://tanzil.net/res/audio/afasy/";
 
     static update_content(content, page_number, sura_id, dont_update) {
@@ -144,6 +145,7 @@ export class Content {
                     history.save_position(text.parentElement);
 
                     let sura = text.parentElement.parentElement.parentElement;
+                    Content.update_page_sura(sura.dataset.sura);
 
                     let sura_id = String(sura.classList[1]);
                     sura_id = sura_id.padStart(3, "0");
@@ -203,6 +205,7 @@ export class Content {
     }
 
     static go_to_page(page_number, sura_id, sura_name, selected_aya) {
+        Content.page_updated = false;
         let history = History.get_instance();
 
         // if sura_id is null, then it won't scroll in to the sura
@@ -219,6 +222,8 @@ export class Content {
             if (sura === undefined || sura === null) {
                 sura = document.getElementsByClassName(`item ${page_number}`)[0].firstElementChild;
             }
+
+            Content.update_page_sura(sura.dataset.sura);
 
             document.querySelectorAll("span.text").forEach(function (item) {
                 item.parentElement.classList.remove("selected");
@@ -237,6 +242,8 @@ export class Content {
 
             let sura_name = sura.dataset.sura;
             page_number = sura.parentElement.classList[1];
+            Content.carousel.trigger("to.owl.carousel", [page_number - 1, 0]);
+            Content.page_updated = true;
 
             let scroll_element = first_aya;
             let src_updated = false;
@@ -248,6 +255,9 @@ export class Content {
                         first_aya.parentElement.classList.remove("selected");
                         scroll_element.parentElement.classList.add("selected");
                         Player.update_src(scroll_element);
+                        if (Player.playing) {
+                            Player.play_audio();
+                        }
                         src_updated = true;
                         break;
                     }
@@ -308,6 +318,19 @@ export class Content {
         //     }
         //     Content.update_page_sura(sura_name);
         // }
+    }
+
+    static go_page(page_number) {
+        document.querySelectorAll("span.text").forEach(function (item) {
+            item.parentElement.classList.remove("selected");
+        });
+
+        let page = document.getElementsByClassName(`item ${page_number}`);
+        Content.carousel.trigger("to.owl.carousel", [page_number - 1, 0]);
+    }
+
+    static got_to_aya(aya_number) {
+
     }
 
     static add_page(row) {
