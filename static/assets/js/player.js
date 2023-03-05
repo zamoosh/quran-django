@@ -290,7 +290,7 @@ export class Player {
             next_aya_text.parentElement.classList.add("selected");
 
             // save position
-            history.save_position(next_aya_text.parentElement);
+            // history.save_position(next_aya_text.parentElement);
 
             Player.update_src(next_aya_text);
 
@@ -329,7 +329,7 @@ export class Player {
                 next_aya_text.parentElement.classList.add("selected");
 
                 // save position
-                history.save_position(next_aya_text.parentElement);
+                // history.save_position(next_aya_text.parentElement);
 
                 Player.update_src(next_aya_text);
 

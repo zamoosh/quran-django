@@ -203,6 +203,8 @@ export class Content {
     }
 
     static go_to_page(page_number, sura_id, sura_name, selected_aya) {
+        let history = History.get_instance();
+
         // if sura_id is null, then it won't scroll in to the sura
         if (sura_id !== null) {
             // when we have sura_id (get sura api)
@@ -228,15 +230,16 @@ export class Content {
                 first_aya.parentElement.classList.add("selected");
 
                 // save position
-                History.get_instance().save_position(first_aya.parentElement);
+                // history.save_position(first_aya.parentElement);
             }
             Player.restart_progressbar();
-            Player.update_src(first_aya);
+            // Player.update_src(first_aya);
 
             let sura_name = sura.dataset.sura;
             page_number = sura.parentElement.classList[1];
 
             let scroll_element = first_aya;
+            let src_updated = false;
             if (selected_aya) {
                 let page_ayas = sura.querySelectorAll("span.text");
                 for (const aya of page_ayas) {
@@ -245,11 +248,16 @@ export class Content {
                         first_aya.parentElement.classList.remove("selected");
                         scroll_element.parentElement.classList.add("selected");
                         Player.update_src(scroll_element);
+                        src_updated = true;
                         break;
                     }
                 }
                 // let selected_aya = sura.querySelector(`span.text#${selected_aya}`);
                 // scroll_element = selected_aya;
+            }
+
+            if (src_updated === false) {
+                Player.update_src(scroll_element);
             }
 
             if (page_number === Content.page_number.dataset.number) {
@@ -258,6 +266,7 @@ export class Content {
                     behavior: "smooth",
                     block: "center",
                 });
+                history.save_position(scroll_element.parentElement);
             } else {
                 // not in the same page
                 Content.carousel.trigger("to.owl.carousel", page_number - 1);
@@ -273,6 +282,7 @@ export class Content {
                             behavior: "smooth",
                             block: "center",
                         });
+                        history.save_position(scroll_element.parentElement);
                     }
                 });
             }

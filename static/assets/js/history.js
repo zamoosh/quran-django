@@ -54,6 +54,7 @@ export class History {
     }
 
     goto_position() {
+        let obj = this;
         if (this.history) {
             let page = Number(this.history["page"]);
             let sura_id = Number(this.history["sura"]);
@@ -82,8 +83,7 @@ export class History {
                     // page_number is the page sura starts
                     Content.update_content(context, page_number, undefined);
                     Content.update_page_number(page_number);
-                    console.log(History.get_instance().get_item("aya"));
-                    Content.go_to_page(page_number, undefined, undefined, History.get_instance().get_item("aya"));
+                    Content.go_to_page(page_number, undefined, undefined, obj.get_item("aya"));
 
                     // check if next page is empty of not
                     let next_page = document.getElementsByClassName(`item ${page_number + 1}`)[0];
