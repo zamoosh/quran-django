@@ -112,7 +112,12 @@ export class Tab {
             Tab.side_menu.closeMenu();
             let sura = document.getElementsByClassName(`sura ${row.id}`)[0];
             let sura_name = sura.dataset.sura;
-            Content.go_to_page(undefined, row.id, sura_name);
+
+            let page_number = sura.parentElement.classList[1];
+
+            let aya_selected = sura.querySelector("span.text").id;
+
+            Content.go_to_page(page_number, row.id, sura_name, aya_selected);
             return;
         }
         $.ajax({
@@ -134,7 +139,12 @@ export class Tab {
                 // row.id, is sura.id
                 Content.update_content(context, page_number, row.id);
                 Content.update_page_number(page_number);
-                Content.go_to_page(page_number);
+
+                let page = document.getElementsByClassName(`item ${page_number}`)[0];
+                let sura = page.getElementsByClassName(`sura ${row.id}`)[0];
+                let first_aya = sura.querySelector("span.text");
+
+                Content.go_to_page(page_number, row.id, sura.dataset.sura, first_aya);
 
                 // check if next page is empty of not
                 let next_page = document.getElementsByClassName(`item ${page_number + 1}`)[0];
@@ -261,7 +271,7 @@ export class Tab {
                 // page_number is the page sura starts
                 Content.update_content(context, page_number, row.id);
                 Content.update_page_number(page_number);
-                Content.go_to_page(page_number);
+                Content.go_to_page(page_number, row.id);
 
                 // check if next page is empty of not
                 let next_page = document.getElementsByClassName(`item ${page_number + 1}`)[0];

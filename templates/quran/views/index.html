@@ -220,7 +220,7 @@
                     let sura_name;
                     if (prev_id > event.item.index) {
                         // going back
-                        prev_item = event.target.getElementsByClassName(`item ${prev_id - 2}`)[0];
+                        prev_item = event.target.getElementsByClassName(`item ${prev_id - 3}`)[0];
                         if (prev_item && prev_item.innerHTML === "") {
                             let pack_number = Number(prev_item.classList[1]);
                             pack_number = Math.ceil(pack_number / 10);
@@ -231,7 +231,7 @@
                         console.log("going back", prev_item);
                     } else if (prev_id < event.item.index) {
                         // going forward
-                        next_item = event.target.getElementsByClassName(`item ${event.item.index + 2}`)[0];
+                        next_item = event.target.getElementsByClassName(`item ${event.item.index + 3}`)[0];
                         if (next_item && next_item.innerHTML === "") {
                             let pack_number = Number(next_item.classList[1]);
                             pack_number = Math.ceil(pack_number / 10);
@@ -276,6 +276,10 @@
                         });
                         let first_aya = current_page.querySelector("span.aya > span.text");
                         first_aya.parentElement.classList.add("selected");
+
+                        let sura = first_aya.parentElement.parentElement.parentElement;
+                        Content.update_page_sura(sura.dataset.sura);
+
                         Player.restart_progressbar();
                         // Player.update_src(first_aya);
 

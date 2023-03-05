@@ -104,7 +104,7 @@ export class History {
                             }
                             clearTimeout(this);
                         }
-                    }, 500);
+                    }, 200);
 
                     // check if next page is empty of not
                     let next_page = document.getElementsByClassName(`item ${page_number + 1}`)[0];

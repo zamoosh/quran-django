@@ -11,8 +11,10 @@ export class Content {
     static page_sura = document.querySelector(".header__surah > span");
     static page_updated = false;
     static url = "https://tanzil.net/res/audio/afasy/";
+    static content_added = false;
 
     static update_content(content, page_number, sura_id, dont_update) {
+        Content.content_added = false;
         page_number = String(page_number--);
         let current_page = 0;
         let current_page_number = 1;
@@ -162,6 +164,8 @@ export class Content {
             });
             page.setAttribute("clickable", true);
         }
+
+        Content.content_added = true;
     }
 
     static update_page_number(page_number) {
@@ -243,6 +247,7 @@ export class Content {
                 let page_ayas = sura.querySelectorAll("span.text");
                 for (const aya of page_ayas) {
                     if (aya.id === selected_aya) {
+                        scroll_element = aya;
                         aya_text.parentElement.classList.remove("selected");
                         scroll_element.parentElement.classList.add("selected");
                         Player.update_src(scroll_element);
