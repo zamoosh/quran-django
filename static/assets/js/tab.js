@@ -134,7 +134,6 @@ export class Tab {
                 // page_number is the page sura starts
                 // row.id, is sura.id
                 Content.update_content(context, page_number, row.id);
-                Content.update_page_number(page_number);
 
                 let page = document.getElementsByClassName(`item ${page_number}`)[0];
                 let sura = page.getElementsByClassName(`sura ${row.id}`)[0];

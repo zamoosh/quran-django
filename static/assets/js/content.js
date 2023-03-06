@@ -27,6 +27,10 @@ export class Content {
             if (row.page === 502)
                 console.log(" ali ali ali ");
 
+            if (row.index === 4736) {
+                console.log(row.index);
+            }
+
             // updating existing page
             if (current_page === row.page) {
 
@@ -64,7 +68,7 @@ export class Content {
                     // this peace of code, update the content for the operating sura
                     // if you look at the code, you will understand that we're updating content using '+='
                     if (page.getElementsByClassName(row.sura)) {
-                        let content = page.getElementsByClassName(row.sura)[0].querySelector(".content");
+                        let content = page.getElementsByClassName(`sura ${row.sura}`)[0].querySelector(".content");
                         // content.innerHTML += ayahs;
                         content.appendChild(ayahs);
                     } else {
