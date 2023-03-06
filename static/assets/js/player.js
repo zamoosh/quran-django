@@ -286,9 +286,6 @@ export class Player {
             // add selected class to the aya element
             next_aya_text.parentElement.classList.add("selected");
 
-            // save position
-            // history.save_position(next_aya_text.parentElement);
-
             Player.update_src(next_aya_text);
 
             // we should scroll into the next aya
@@ -298,6 +295,9 @@ export class Player {
             });
 
             Player.play_audio();
+
+            // save position
+            history.save_position(next_aya_text.parentElement);
         } else if (current_aya === last_aya_of_page) {
             // aya is in current sura or not, but in different page
             // we must go to next page
@@ -308,8 +308,14 @@ export class Player {
                 // document.querySelectorAll("span.text").forEach(function (item) {
                 //     item.parentElement.classList.remove("selected");
                 // });
-                let selected_aya = next_page.querySelector("span.text").id;
-                Content.go_to_page(next_item_number, undefined, undefined, selected_aya);
+                let selected_aya = next_page.querySelector("span.text");
+                let sura = selected_aya.parentElement.parentElement.parentElement;
+                // Content.go_to_page(next_item_number, undefined, undefined, selected_aya.id);
+                Content.go_to_page2(next_item_number);
+                Content.got_to_aya(sura.classList[1], selected_aya.id);
+
+                // save position
+                history.save_position(selected_aya);
             }
         } else if (next_aya === null) {
             console.log("there is something we must read in current page!");
@@ -338,6 +344,9 @@ export class Player {
                 });
 
                 Player.play_audio();
+
+                // save position
+                history.save_position(next_aya_text.parentElement);
             }
         }
     }
@@ -359,7 +368,6 @@ export class Player {
         Player.play_logo.classList.remove("active");
         Player.pause_logo.classList.add("active");
         Player.playing = true;
-        console.log(Player.loaded_src);
         if (!Player.loaded_src) {
             Player.loaded_src = true;
             Player.audio.load();

@@ -198,6 +198,8 @@ export class Content {
     }
 
     static go_to_page2(page_number) {
+        Player.restart_progressbar();
+        Player.pause_audio();
         Content.carousel.trigger("to.owl.carousel", [page_number - 1, 0]);
         Content.update_page_number(page_number);
 
@@ -217,7 +219,13 @@ export class Content {
             behavior: "smooth",
             block: "center"
         });
+        Player.update_src(text);
+        if (Player.playing) {
+            Player.play_audio();
+        }
+
         Content.update_page_sura(sura.dataset.sura);
+
         Tab.update_sura_list();
         Tab.update_juz_list(page.classList[1]);
 

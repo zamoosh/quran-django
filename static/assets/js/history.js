@@ -45,10 +45,10 @@ export class History {
     save_position(aya) {
         // authenticated ? renderApp() : renderLogin();
         let page_number = aya.parentElement.parentElement.parentElement.classList[1];
-        let sura_is = aya.parentElement.parentElement.classList[1];
+        let sura_id = aya.parentElement.parentElement.classList[1];
         let aya_id = aya.firstElementChild.id;
         this.set_item("page", page_number);
-        this.set_item("sura", sura_is);
+        this.set_item("sura", sura_id);
         this.set_item("aya", aya_id);
         this.save();
     }
