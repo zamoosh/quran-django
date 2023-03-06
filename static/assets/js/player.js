@@ -7,6 +7,7 @@ export class Player {
     static pause_logo;
     static audio = document.querySelector("audio");
     static playing = false;
+    static is_play_besm = false;
     static progress_bar = document.querySelector("progress");
     static speed_toolbar;
     static speed_selected;
@@ -51,32 +52,6 @@ export class Player {
     static toggle_shape() {
         Player.play_logo.classList.toggle("active");
         Player.pause_logo.classList.toggle("active");
-    }
-
-    static update_src(src) {
-        let sura = src.parentElement.parentElement.parentElement;
-        let sura_id = String(sura.classList[1]);
-        sura_id = sura_id.padStart(3, "0");
-
-        let text_id = String(src.id);
-        text_id = text_id.padStart(3, "0");
-
-        let url = Content.url.concat(sura_id + text_id, ".mp3");
-        Player.download_src(url);
-
-        Player.loaded_src = false;
-    }
-
-    static download_src(url) {
-        if (Player.get_cache_audio(url)) {
-            // audio is cached before
-            Player.audio.firstElementChild.src = url;
-        } else {
-            // we need to get the audio
-            Player.cache_audio(url, new Audio(url));
-            Player.audio.firstElementChild.src = url;
-        }
-        // Player.audio.load();
     }
 
     static cache_audio(url, audio) {
@@ -132,7 +107,11 @@ export class Player {
 
         Player.audio.addEventListener("ended", function () {
             Player.restart_progressbar();
-            Player.go_to_next_aya();
+            if (Player.is_play_besm) {
+                Player.is_play_besm = false;
+                Player.play_besm();
+            } else
+                Player.go_to_next_aya();
         });
     }
 
@@ -365,6 +344,67 @@ export class Player {
     }
 
     static play_audio() {
+        if (Player.is_play_besm) {
+            Player.play_besm();
+        } else {
+            let src = Player.audio.firstElementChild.src;
+            let url = String(src);
+            let audio_id = src.slice(src.length - 10).split(".mp3")[0];
+            if (audio_id[audio_id.length - 1] === "0") {
+                let url_array = url.split("");
+                url_array[url.length - 5] = "1";
+                url = url_array.join("");
+                Player.download_src(url);
+            }
+            Player.play_aya();
+        }
+    }
+
+    static update_src(src) {
+        let sura = src.parentElement.parentElement.parentElement;
+        let sura_id = String(sura.classList[1]);
+        sura_id = sura_id.padStart(3, "0");
+
+        let text_id = String(src.id);
+        text_id = text_id.padStart(3, "0");
+
+        let url = Content.url.concat(sura_id + text_id, ".mp3");
+        Player.download_src(url);
+
+        if (text_id === "001") {
+            Player.is_play_besm = true;
+            let besm_url = Content.url.concat(sura_id + "000", ".mp3");
+            Player.download_src(besm_url);
+        }
+
+        Player.loaded_src = false;
+    }
+
+    static download_src(url) {
+        if (Player.get_cache_audio(url)) {
+            // audio is cached before
+            Player.audio.firstElementChild.src = url;
+        } else {
+            // we need to get the audio
+            Player.cache_audio(url, new Audio(url));
+            Player.audio.firstElementChild.src = url;
+        }
+        // Player.audio.load();
+    }
+
+    static play_besm() {
+        Player.play_logo.classList.remove("active");
+        Player.pause_logo.classList.add("active");
+        Player.playing = true;
+        if (Player.is_play_besm) {
+            // Player.audio.firstElementChild.src = Player.cached_audio["besm"];
+            Player.audio.load();
+            Player.speedSet(null);
+            Player.audio.play();
+        }
+    }
+
+    static play_aya() {
         Player.play_logo.classList.remove("active");
         Player.pause_logo.classList.add("active");
         Player.playing = true;
