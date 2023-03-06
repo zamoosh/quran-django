@@ -315,7 +315,7 @@ export class Player {
                 Content.got_to_aya(sura.classList[1], selected_aya.id);
 
                 // save position
-                history.save_position(selected_aya);
+                history.save_position(selected_aya.parentElement);
             }
         } else if (next_aya === null) {
             console.log("there is something we must read in current page!");
