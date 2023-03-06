@@ -237,7 +237,7 @@ export class Content {
             Player.update_src(aya_text);
 
             let sura_name = sura.dataset.sura;
-            page_number = sura.parentElement.classList[1];
+            // page_number = sura.parentElement.classList[1];
             Content.carousel.trigger("to.owl.carousel", [page_number - 1, 0]);
             Content.page_updated = true;
 
@@ -316,9 +316,34 @@ export class Content {
         // }
     }
 
-    // static got_to_aya(aya_number) {
-    //
-    // }
+    static go_to_page2(page_number) {
+        Content.carousel.trigger("to.owl.carousel", page_number - 1);
+        Content.page_updated = false;
+        Content.update_page_number(page_number);
+
+        Tab.update_page_list(page_number);
+    }
+
+    static got_to_aya(sura_id, aya_id) {
+        let page = document.getElementsByClassName(`owl-item active`)[0].firstElementChild;
+        let sura = page.getElementsByClassName(`sura ${sura_id}`)[0];
+        let text = sura.getElementsByClassName(`text ${aya_id}`)[0];
+
+        Content.update_page_sura(sura.dataset.sura);
+
+        document.querySelectorAll("span.text").forEach(function (item) {
+            item.parentElement.classList.remove("selected");
+        });
+        text.parentElement.classList.add("selected");
+        // if (Content.page_updated) {
+        //     text.parentElement.scrollIntoView({
+        //         behavior: "smooth",
+        //         block: "center"
+        //     });
+        // }
+
+        Tab.update_sura_list();
+    }
 
     static add_page(row) {
         let page;
@@ -344,6 +369,7 @@ export class Content {
         let text = document.createElement("span");
         text.id = row.aya;
         text.classList.add("text");
+        text.classList.add(row.aya);
         text.innerText += aya_text;
 
         let number = document.createElement("span");

@@ -111,13 +111,12 @@ export class Tab {
         if (Tab.rows.includes(Number(row.id))) {
             Tab.side_menu.closeMenu();
             let sura = document.getElementsByClassName(`sura ${row.id}`)[0];
-            let sura_name = sura.dataset.sura;
-
             let page_number = sura.parentElement.classList[1];
+            let first_aya = sura.querySelector("span.text");
+            console.log(sura);
 
-            let aya_selected = sura.querySelector("span.text").id;
-
-            Content.go_to_page(page_number, row.id, sura_name, aya_selected);
+            Content.go_to_page2(page_number);
+            Content.got_to_aya(sura.classList[1], first_aya.id);
             return;
         }
         $.ajax({
@@ -144,7 +143,8 @@ export class Tab {
                 let sura = page.getElementsByClassName(`sura ${row.id}`)[0];
                 let first_aya = sura.querySelector("span.text");
 
-                Content.go_to_page(page_number, row.id, sura.dataset.sura, first_aya);
+                Content.go_to_page2(page_number);
+                Content.got_to_aya(sura.dataset.id, first_aya);
 
                 // check if next page is empty of not
                 let next_page = document.getElementsByClassName(`item ${page_number + 1}`)[0];
@@ -173,6 +173,7 @@ export class Tab {
     }
 
     get_page(event) {
+        // row is page (row.id == page.id)
         let rows = document.querySelector("div#page").querySelectorAll("a");
         rows.forEach(row => {
             row.classList.remove("selected");
@@ -183,12 +184,7 @@ export class Tab {
         row.classList.toggle("selected");
         if (Tab.pages.includes(Number(row.id))) {
             Tab.side_menu.closeMenu();
-
-            // item is page
-            let sura = document.getElementsByClassName(`item ${row.id}`)[0].firstElementChild;
-            console.log(sura);
-            let sura_name = sura.dataset.sura;
-            Content.go_to_page(row.id, undefined, sura_name);
+            Content.go_to_page2(row.id);
             return;
         }
         $.ajax({
@@ -208,7 +204,11 @@ export class Tab {
 
                 // page_number is the page sura starts
                 Content.update_content(context, page_number, undefined);
-                Content.update_page_number(page_number);
+
+                // let page = document.getElementsByClassName(`item ${page_number}`)[0];
+                // let sura = page.getElementsByClassName("sura")[0];
+                // let first_aya = sura.querySelector("span.text");
+
                 Content.go_to_page(page_number);
 
                 // check if next page is empty of not
@@ -271,7 +271,15 @@ export class Tab {
                 // page_number is the page sura starts
                 Content.update_content(context, page_number, row.id);
                 Content.update_page_number(page_number);
-                Content.go_to_page(page_number, row.id);
+
+                let page = document.getElementsByClassName(`item ${page_number}`)[0];
+                let sura = page.getElementsByClassName(`sura ${row.id}`)[0];
+                let first_aya = sura.querySelector("span.text");
+
+                Content.go_to_page(page_number, sura.id, sura.dataset.sura, first_aya);
+
+
+                // Content.go_to_page(page_number, row.id);
 
                 // check if next page is empty of not
                 let next_page = document.getElementsByClassName(`item ${page_number + 1}`)[0];

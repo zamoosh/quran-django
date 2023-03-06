@@ -62,9 +62,6 @@ export class History {
             if (!page || !sura_id)
                 return;
 
-            let pack_number = Math.ceil(page / 10);
-            // let aya_id: number = Number(this.history["aya"]);
-
             $.ajax({
                 method: "GET",
                 url: page_details_url.replace("0", page),
@@ -72,39 +69,54 @@ export class History {
                 success: function (context) {
                     let page_number = context["page_number"];
                     let pack = context["pack"];
+                    let sura_ids = pack.map(function (item) {
+                        return item["sura"];
+                    });
+                    sura_ids = [...new Set(sura_ids)];
+                    Tab.rows = Tab.rows.concat(sura_ids);
+                    Tab.rows = [...new Set(Tab.rows)];
+
                     let page_ids = pack.map(function (item) {
                         return item["page"];
                     });
                     page_ids = [...new Set(page_ids)];
-                    Tab.pages = Tab.rows.concat(page_ids);
+                    Tab.pages = Tab.pages.concat(page_ids);
+                    Tab.pages = [...new Set(Tab.pages)];
+
+                    let juz_ids = pack.map(function (item) {
+                        return item["juz"];
+                    });
+                    juz_ids = [...new Set(juz_ids)];
+                    Tab.juzs = Tab.juzs.concat(juz_ids);
+                    Tab.juzs = [...new Set(Tab.juzs)];
 
                     Tab.side_menu.closeMenu();
 
                     // page_number is the page sura starts
                     Content.update_content(context, page_number, undefined);
-                    Content.update_page_number(page_number);
-                    Content.go_to_page(page_number, obj.get_item("sura"), undefined, obj.get_item("aya"));
+                    Content.go_to_page2(page_number);
+                    Content.got_to_aya(obj.get_item("sura"), obj.get_item("aya"));
 
-                    setTimeout(function () {
-                        if (Content.page_updated) {
-                            // update tab menu
-                            page_number = Number(page_number);
-                            if (page_number <= 604) {
-                                Tab.update_sura_list();
-                                Tab.update_page_list(page_number);
-                                Tab.update_juz_list(page_number);
-                            } else if (page_number > 604) {
-                                Tab.update_sura_list();
-                                Tab.update_page_list(page_number);
-                                Tab.update_juz_list(page_number);
-                            } else {
-                                Tab.update_sura_list();
-                                Tab.update_page_list(page_number);
-                                Tab.update_juz_list(page_number);
-                            }
-                            clearTimeout(this);
-                        }
-                    }, 200);
+                    // setTimeout(function () {
+                    //     if (Content.page_updated) {
+                    //         // update tab menu
+                    //         page_number = Number(page_number);
+                    //         if (page_number <= 604) {
+                    //             Tab.update_sura_list();
+                    //             Tab.update_page_list(page_number);
+                    //             Tab.update_juz_list(page_number);
+                    //         } else if (page_number > 604) {
+                    //             Tab.update_sura_list();
+                    //             Tab.update_page_list(page_number);
+                    //             Tab.update_juz_list(page_number);
+                    //         } else {
+                    //             Tab.update_sura_list();
+                    //             Tab.update_page_list(page_number);
+                    //             Tab.update_juz_list(page_number);
+                    //         }
+                    //         clearTimeout(this);
+                    //     }
+                    // }, 200);
 
                     // check if next page is empty of not
                     let next_page = document.getElementsByClassName(`item ${page_number + 1}`)[0];
@@ -131,7 +143,5 @@ export class History {
                 }
             });
         }
-
-        // Content.go_to_page(page, sura_id, undefined);
     }
 }
