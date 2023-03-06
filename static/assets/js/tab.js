@@ -4,9 +4,7 @@ import {Content} from "./content.js";
 export class Tab {
     static main_content;
     static side_menu;
-    static rows = [];
-    static pages = [];
-    static juzs = [];
+    static packs = [];
 
 
     constructor(side_menu) {
@@ -107,14 +105,17 @@ export class Tab {
         // row: id of sura in side menu, sura list
         let row = event.target;
         row.classList.toggle("selected");
-        // Tab.sura_list_updated = true;
-        if (Tab.rows.includes(Number(row.id))) {
-            Tab.side_menu.closeMenu();
-            let sura = document.getElementsByClassName(`sura ${row.id}`)[0];
-            let page_number = sura.parentElement.classList[1];
-            let first_aya = sura.querySelector("span.text");
-            console.log(sura);
 
+        // if (Tab.rows.includes(Number(row.id))) {
+        let sura, page_number, pack_id;
+        sura = document.getElementsByClassName(`sura ${row.id}`)[0];
+        if (sura)
+            page_number = sura.parentElement.classList[1];
+        if (page_number)
+            pack_id = Math.ceil(Number(page_number) / 10);
+        if (Tab.packs.includes(pack_id)) {
+            Tab.side_menu.closeMenu();
+            let first_aya = sura.querySelector("span.text");
             Content.go_to_page2(page_number);
             Content.got_to_aya(sura.classList[1], first_aya.id);
             return;
@@ -125,12 +126,8 @@ export class Tab {
             cache: true,
             success: function (context) {
                 let page_number = context["page_number"];
-                let pack = context["pack"];
-                let sura_ids = pack.map(function (item) {
-                    return item["sura"];
-                });
-                sura_ids = [...new Set(sura_ids)];
-                Tab.rows = Tab.rows.concat(sura_ids);
+                if (!Tab.packs.includes(context["pack_id"]))
+                    Tab.packs.push(context["pack_id"]);
 
                 Tab.side_menu.closeMenu();
 
@@ -144,7 +141,7 @@ export class Tab {
                 let first_aya = sura.querySelector("span.text");
 
                 Content.go_to_page2(page_number);
-                Content.got_to_aya(sura.dataset.id, first_aya);
+                Content.got_to_aya(sura.classList[1], first_aya.id);
 
                 // check if next page is empty of not
                 let next_page = document.getElementsByClassName(`item ${page_number + 1}`)[0];
@@ -182,9 +179,20 @@ export class Tab {
         // row: id of juz in side menu, juz list
         let row = event.target;
         row.classList.toggle("selected");
-        if (Tab.pages.includes(Number(row.id))) {
+
+        let sura, page, page_number, pack_id;
+        page = document.getElementsByClassName(`item ${row.id}`)[0];
+        if (page) {
+            page_number = page.classList[1];
+            sura = page.querySelector(".sura");
+        }
+        if (page_number)
+            pack_id = Math.ceil(Number(page_number) / 10);
+        if (Tab.packs.includes(pack_id)) {
             Tab.side_menu.closeMenu();
-            Content.go_to_page2(row.id);
+            let first_aya = sura.querySelector("span.text");
+            Content.go_to_page2(page_number);
+            Content.got_to_aya(sura.classList[1], first_aya.id);
             return;
         }
         $.ajax({
@@ -193,12 +201,8 @@ export class Tab {
             cache: true,
             success: function (context) {
                 let page_number = context["page_number"];
-                let pack = context["pack"];
-                let page_ids = pack.map(function (item) {
-                    return item["page"];
-                });
-                page_ids = [...new Set(page_ids)];
-                Tab.pages = Tab.rows.concat(page_ids);
+                if (!Tab.packs.includes(context["pack_id"]))
+                    Tab.packs.push(context["pack_id"]);
 
                 Tab.side_menu.closeMenu();
 
@@ -209,7 +213,12 @@ export class Tab {
                 // let sura = page.getElementsByClassName("sura")[0];
                 // let first_aya = sura.querySelector("span.text");
 
-                Content.go_to_page(page_number);
+                Content.go_to_page2(page_number);
+
+                page = document.getElementsByClassName(`item ${row.id}`)[0];
+                sura = page.querySelector(".sura");
+                let first_aya = sura.querySelector("span.text");
+                Content.got_to_aya(sura.classList[1], first_aya.id);
 
                 // check if next page is empty of not
                 let next_page = document.getElementsByClassName(`item ${page_number + 1}`)[0];
@@ -246,11 +255,19 @@ export class Tab {
         // row: id of juz in side menu, juz list
         let row = event.target;
         row.classList.toggle("selected");
-        if (Tab.juzs.includes(Number(row.id))) {
+
+
+        let sura, page_number, pack_id;
+        sura = document.querySelector(`[data-juz="${row.id}"]`);
+        if (sura)
+            page_number = sura.parentElement.classList[1];
+        if (page_number)
+            pack_id = Math.ceil(Number(page_number) / 10);
+        if (Tab.packs.includes(pack_id)) {
             Tab.side_menu.closeMenu();
-            let sura = document.getElementsByClassName(`sura ${row.id}`)[0];
-            let sura_name = sura.dataset.sura;
-            Content.go_to_page(undefined, row.id, sura_name);
+            let first_aya = sura.querySelector("span.text");
+            Content.go_to_page2(page_number);
+            Content.got_to_aya(sura.classList[1], first_aya.id);
             return;
         }
         $.ajax({
@@ -259,12 +276,8 @@ export class Tab {
             cache: true,
             success: function (context) {
                 let page_number = context["page_number"];
-                let pack = context["pack"];
-                let juz_ids = pack.map(function (item) {
-                    return item["juz"];
-                });
-                juz_ids = [...new Set(juz_ids)];
-                Tab.juzs = Tab.rows.concat(juz_ids);
+                if (!Tab.packs.includes(context["pack_id"]))
+                    Tab.packs.push(context["pack_id"]);
 
                 Tab.side_menu.closeMenu();
 
@@ -272,14 +285,10 @@ export class Tab {
                 Content.update_content(context, page_number, row.id);
                 Content.update_page_number(page_number);
 
-                let page = document.getElementsByClassName(`item ${page_number}`)[0];
-                let sura = page.getElementsByClassName(`sura ${row.id}`)[0];
+                Content.go_to_page2(page_number);
+                sura = document.querySelector(`[data-juz="${row.id}"]`);
                 let first_aya = sura.querySelector("span.text");
-
-                Content.go_to_page(page_number, sura.id, sura.dataset.sura, first_aya);
-
-
-                // Content.go_to_page(page_number, row.id);
+                Content.got_to_aya(sura.classList[1], first_aya.id);
 
                 // check if next page is empty of not
                 let next_page = document.getElementsByClassName(`item ${page_number + 1}`)[0];

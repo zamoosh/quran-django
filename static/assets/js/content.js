@@ -116,17 +116,6 @@ export class Content {
 
         Content.update_carousel();
 
-        // if (dont_update === false) {
-        //     // save position
-        //     let history = History.get_instance();
-        //     let aya = history.get_item("aya");
-        //     if (aya) {
-        //         Content.go_to_page(page_number, sura_id, undefined, aya);
-        //     } else {
-        //         Content.go_to_page(page_number, sura_id, undefined);
-        //     }
-        // }
-
         // add event listener for every span.text in pages to play audio
         let pages = document.querySelectorAll(".owl-carousel .owl-item");
         let history = History.get_instance();
@@ -168,6 +157,10 @@ export class Content {
         Content.content_added = true;
     }
 
+    static listener_for_text() {
+
+    }
+
     static update_page_number(page_number) {
         if (!isNaN(page_number)) {
             Content.page_number.innerHTML = toArabicNumber(page_number);
@@ -200,125 +193,8 @@ export class Content {
         Content.pages_added = [];
     }
 
-    static go_to_page(page_number, sura_id, sura_name, selected_aya) {
-        Content.page_updated = false;
-        let history = History.get_instance();
-
-        // if sura_id is null, then it won't scroll in to the sura
-        if (sura_id !== null) {
-            // when we have sura_id (get sura api)
-            let sura = document.getElementsByClassName(`sura ${sura_id}`)[0];
-
-            // get sura using juz id (get juz api)
-            if (sura === undefined) {
-                sura = document.querySelector(`[data-juz='${sura_id}']`);
-            }
-
-            // get sura using only page number (get page api)
-            if (sura === undefined || sura === null) {
-                sura = document.getElementsByClassName(`item ${page_number}`)[0].firstElementChild;
-            }
-
-            Content.update_page_sura(sura.dataset.sura);
-
-            document.querySelectorAll("span.text").forEach(function (item) {
-                item.parentElement.classList.remove("selected");
-            });
-
-            let aya_text = sura.querySelector("span.aya > span.text");
-            if (Player.playing === false) {
-                // if Player.playing === false, means we won't go next page
-                aya_text.parentElement.classList.add("selected");
-
-                // save position
-                // history.save_position(aya_text.parentElement);
-            }
-            Player.restart_progressbar();
-            Player.update_src(aya_text);
-
-            let sura_name = sura.dataset.sura;
-            // page_number = sura.parentElement.classList[1];
-            Content.carousel.trigger("to.owl.carousel", [page_number - 1, 0]);
-            Content.page_updated = true;
-
-            let scroll_element = aya_text;
-            let src_updated = false;
-            if (selected_aya) {
-                let page_ayas = sura.querySelectorAll("span.text");
-                for (const aya of page_ayas) {
-                    if (aya.id === selected_aya) {
-                        scroll_element = aya;
-                        aya_text.parentElement.classList.remove("selected");
-                        scroll_element.parentElement.classList.add("selected");
-                        Player.update_src(scroll_element);
-                        if (Player.playing) {
-                            Player.play_audio();
-                        }
-                        src_updated = true;
-                        break;
-                    }
-                }
-                // let selected_aya = sura.querySelector(`span.text#${selected_aya}`);
-                // scroll_element = selected_aya;
-            }
-
-            if (src_updated === false) {
-                Player.update_src(scroll_element);
-            }
-
-            if (page_number === Content.page_number.dataset.number) {
-                // in the same page
-                scroll_element.scrollIntoView({
-                    behavior: "smooth",
-                    block: "center",
-                });
-                history.save_position(scroll_element.parentElement);
-            } else {
-                // not in the same page
-                Content.carousel.trigger("to.owl.carousel", page_number - 1);
-                let promise = new Promise(function (resolve, reject) {
-                    Content.carousel.on("translated.owl.carousel", function (event) {
-                        resolve(true);
-                    });
-                });
-                Content.update_page_sura(sura_name);
-                promise.then(function (result) {
-                    if (result) {
-                        scroll_element.scrollIntoView({
-                            behavior: "smooth",
-                            block: "center",
-                        });
-                        history.save_position(scroll_element.parentElement);
-                    }
-                });
-            }
-        }
-
-        // if (sura_name !== undefined) {
-        //     // if sura_name is passed, then we're going to replace it.
-        //     Content.update_page_sura(sura_name);
-        // }
-        //
-        // Tab.update_sura_list(page_number);
-        //
-        // Tab.sura_list_updated = false;
-        // else if (page_number !== undefined) {
-        //     // getting the page
-        //     let page = document.getElementsByClassName(`item ${page_number}`)[0];
-        //     if (sura_id) {
-        //         // if sura_id is exists, then the sura_name, should be the sura_id's name.
-        //         sura_name = page.getElementsByClassName(`sura ${sura_id}`)[0].dataset.sura;
-        //     } else {
-        //         // else, we're going to calculate the sura name. (first sura of page)
-        //         sura_name = page.firstElementChild.dataset.sura;
-        //     }
-        //     Content.update_page_sura(sura_name);
-        // }
-    }
-
     static go_to_page2(page_number) {
-        Content.carousel.trigger("to.owl.carousel", page_number - 1);
-        Content.page_updated = false;
+        Content.carousel.trigger("to.owl.carousel", [page_number - 1, 0]);
         Content.update_page_number(page_number);
 
         Tab.update_page_list(page_number);
@@ -329,20 +205,19 @@ export class Content {
         let sura = page.getElementsByClassName(`sura ${sura_id}`)[0];
         let text = sura.getElementsByClassName(`text ${aya_id}`)[0];
 
-        Content.update_page_sura(sura.dataset.sura);
-
         document.querySelectorAll("span.text").forEach(function (item) {
             item.parentElement.classList.remove("selected");
         });
         text.parentElement.classList.add("selected");
-        // if (Content.page_updated) {
-        //     text.parentElement.scrollIntoView({
-        //         behavior: "smooth",
-        //         block: "center"
-        //     });
-        // }
-
+        text.parentElement.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+        Content.update_page_sura(sura.dataset.sura);
         Tab.update_sura_list();
+        Tab.update_juz_list(page.classList[1]);
+
+        History.get_instance().save_position(text.parentElement);
     }
 
     static add_page(row) {
@@ -399,12 +274,8 @@ export class Content {
             cache: true,
             success: function (context) {
                 let page_number = context["page_number"];
-                let pack = context["pack"];
-                let sura_ids = pack.map(function (item) {
-                    return item["sura"];
-                });
-                sura_ids = [...new Set(sura_ids)];
-                Tab.rows = Tab.rows.concat(sura_ids);
+                if (!Tab.packs.includes(context["pack_id"]))
+                    Tab.packs.push(context["pack_id"]);
 
                 // is the third parameter (sura_id) is null, then it won't scroll in to the sura
                 Content.update_content(context, page_number, null, false);

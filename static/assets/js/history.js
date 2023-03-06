@@ -68,27 +68,8 @@ export class History {
                 cache: true,
                 success: function (context) {
                     let page_number = context["page_number"];
-                    let pack = context["pack"];
-                    let sura_ids = pack.map(function (item) {
-                        return item["sura"];
-                    });
-                    sura_ids = [...new Set(sura_ids)];
-                    Tab.rows = Tab.rows.concat(sura_ids);
-                    Tab.rows = [...new Set(Tab.rows)];
-
-                    let page_ids = pack.map(function (item) {
-                        return item["page"];
-                    });
-                    page_ids = [...new Set(page_ids)];
-                    Tab.pages = Tab.pages.concat(page_ids);
-                    Tab.pages = [...new Set(Tab.pages)];
-
-                    let juz_ids = pack.map(function (item) {
-                        return item["juz"];
-                    });
-                    juz_ids = [...new Set(juz_ids)];
-                    Tab.juzs = Tab.juzs.concat(juz_ids);
-                    Tab.juzs = [...new Set(Tab.juzs)];
+                    if (!Tab.packs.includes(context["pack_id"]))
+                        Tab.packs.push(context["pack_id"]);
 
                     Tab.side_menu.closeMenu();
 

@@ -213,11 +213,24 @@
 
                 let prev_id;
                 carousel.on("translate.owl.carousel", function (event) {
-                    let next_item;
-                    let prev_item;
+                    let next_item, prev_item, sura, sura_name;
 
-                    let sura;
-                    let sura_name;
+                    if (!prev_id) {
+                        console.log("prev_id is not exists!");
+                        prev_item = event.target.getElementsByClassName(`item ${prev_id - 3}`)[0];
+                        if (prev_item && prev_item.innerHTML === "") {
+                            let pack_number = Number(prev_item.classList[1]);
+                            pack_number = Math.ceil(pack_number / 10);
+                            Content.ajax_next_page(pack_number);
+                        }
+                        next_item = event.target.getElementsByClassName(`item ${event.item.index + 3}`)[0];
+                        if (next_item && next_item.innerHTML === "") {
+                            let pack_number = Number(next_item.classList[1]);
+                            pack_number = Math.ceil(pack_number / 10);
+                            Content.ajax_next_page(pack_number);
+                        }
+                    }
+
                     if (prev_id > event.item.index) {
                         // going back
                         prev_item = event.target.getElementsByClassName(`item ${prev_id - 3}`)[0];
@@ -241,26 +254,10 @@
                         sura_name = sura.dataset.sura;
                         // console.log("going forward", next_item);
                     }
-                    Content.update_page_number(event.item.index + 1);
 
                     // update the sura name at top of the page
                     Content.update_page_sura(sura_name);
-
-                    // // changing the sura_list, page_list and juz_list in Tab
-                    // if (event.item.index + 1 <= 604) {
-                    //     Tab.update_sura_list();
-                    //     Tab.update_page_list(event.item.index + 1)
-                    //     Tab.update_juz_list(event.item.index + 1)
-                    // } else if (event.item.index - 1 > 604) {
-                    //     Tab.update_sura_list();
-                    //     Tab.update_page_list(event.item.index - 1)
-                    //     Tab.update_juz_list(event.item.index - 1)
-                    // } else {
-                    //     Tab.update_sura_list();
-                    //     Tab.update_page_list(event.item.index)
-                    //     Tab.update_juz_list(event.item.index)
-                    // }
-
+                    Content.update_page_number(event.item.index + 1);
                     prev_id = event.item.index;
                 });
 
@@ -269,7 +266,7 @@
                     Content.page_updated = true;
                     let current_page_index = event.item.index + 1;
                     let current_page = document.getElementsByClassName(`item ${current_page_index}`)[0];
-                    let aya = current_page.querySelector('span.aya.selected');
+                    let aya = current_page.querySelector("span.aya.selected");
                     if (!aya) {
                         // console.log("enter");
                         document.querySelectorAll("span.text").forEach(function (item) {
