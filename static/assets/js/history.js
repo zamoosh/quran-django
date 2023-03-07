@@ -93,6 +93,10 @@ export class History {
                             }
                         }
 
+                        if (!first_aya) {
+                            Content.ajax_sura_aya(sura_id, aya_id);
+                        }
+
                         Content.go_to_page2(page_number);
                         Content.got_to_aya(sura_selected.classList[1], first_aya.id);
 
