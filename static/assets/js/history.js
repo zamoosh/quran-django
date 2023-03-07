@@ -66,6 +66,7 @@ export class History {
                 return;
             if (sura_aya_url !== "") {
                 let sura_id = sura_aya_url.split(":")[0];
+                let aya_id = sura_aya_url.split(":")[1];
                 $.ajax({
                     method: "GET",
                     url: sura_details_url.replace("0", sura_id),
@@ -77,16 +78,23 @@ export class History {
 
                         Tab.side_menu.closeMenu();
 
-                        // page_number is the page sura starts
-                        // row.id, is sura.id
                         Content.update_content(context, page_number, sura_id);
 
-                        let page = document.getElementsByClassName(`item ${page_number}`)[0];
-                        let sura = page.getElementsByClassName(`sura ${sura_id}`)[0];
-                        let first_aya = sura.querySelector("span.text");
+                        // we can go to specific aya of sura, on condition that the aya, is in current pack!
+                        let suras = document.getElementsByClassName(`sura ${sura_id}`);
+                        let sura_selected;
+                        let first_aya;
+                        for (const sura of suras) {
+                            first_aya = sura.getElementsByClassName(`text ${aya_id}`)[0];
+                            if (first_aya) {
+                                sura_selected = sura;
+                                page_number = sura_selected.parentElement.classList[1];
+                                break;
+                            }
+                        }
 
                         Content.go_to_page2(page_number);
-                        Content.got_to_aya(sura.classList[1], first_aya.id);
+                        Content.got_to_aya(sura_selected.classList[1], first_aya.id);
 
                         // check if next page is empty of not
                         let next_page = document.getElementsByClassName(`item ${page_number + 1}`)[0];
