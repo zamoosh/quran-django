@@ -23,10 +23,16 @@ export class Path {
     }
 
     save_url() {
-        console.log("saving the url");
         let history = History.get_instance().history;
         let sura = history["sura"];
         let aya = history["aya"];
-        window.history.pushState(history, `sura/${sura}:${aya}`, `sura/${sura}:${aya}`);
+
+        console.log(sura_aya_url);
+
+        if (this.url.pathname === "/") {
+            window.history.pushState(history, `sura/${sura}:${aya}`, `sura/${sura}:${aya}`);
+        } else {
+            this.history.pushState(history, `sura/${sura}:${aya}`, `${sura}:${aya}`);
+        }
     }
 }

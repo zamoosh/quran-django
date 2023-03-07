@@ -59,11 +59,61 @@ export class History {
     goto_position() {
         let obj = this;
         if (this.history) {
-            let page = Number(this.history["page"]);
-            let sura_id = Number(this.history["sura"]);
+            let page = this.history["page"];
+            let sura_id = this.history["sura"];
 
-            if (!page || !sura_id)
+            if ((!page || !sura_id) && sura_aya_url === "")
                 return;
+            if (sura_aya_url !== "") {
+                let sura_id = sura_aya_url.split(":")[0];
+                $.ajax({
+                    method: "GET",
+                    url: sura_details_url.replace("0", sura_id),
+                    cache: true,
+                    success: function (context) {
+                        let page_number = context["page_number"];
+                        if (!Tab.packs.includes(context["pack_id"]))
+                            Tab.packs.push(context["pack_id"]);
+
+                        Tab.side_menu.closeMenu();
+
+                        // page_number is the page sura starts
+                        // row.id, is sura.id
+                        Content.update_content(context, page_number, sura_id);
+
+                        let page = document.getElementsByClassName(`item ${page_number}`)[0];
+                        let sura = page.getElementsByClassName(`sura ${sura_id}`)[0];
+                        let first_aya = sura.querySelector("span.text");
+
+                        Content.go_to_page2(page_number);
+                        Content.got_to_aya(sura.classList[1], first_aya.id);
+
+                        // check if next page is empty of not
+                        let next_page = document.getElementsByClassName(`item ${page_number + 1}`)[0];
+                        let prev_page = document.getElementsByClassName(`item ${page_number - 1}`)[0];
+                        if (next_page && next_page.innerHTML === "") {
+                            // if true, then we're in the last page of current pack
+                            let pack_number = Math.ceil((page_number + 1) / 10);
+                            if (pack_number <= 61)
+                                Content.ajax_next_page(pack_number);
+                            else if (pack_number > 61)
+                                Content.ajax_next_page(61);
+                        }
+                        if (prev_page && prev_page.innerHTML === "") {
+                            // if true, then we're in the last page of current pack
+                            let pack_number = Math.ceil((page_number - 1) / 10);
+                            if (pack_number <= 61)
+                                Content.ajax_next_page(pack_number);
+                            else if (pack_number > 61)
+                                Content.ajax_next_page(61);
+                        }
+                    },
+                    error: function () {
+                        console.log("error");
+                    }
+                });
+                return;
+            }
 
             $.ajax({
                 method: "GET",
