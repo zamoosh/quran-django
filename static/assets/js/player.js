@@ -1,4 +1,5 @@
 import {Content} from "./content.js";
+import {History} from "./history.js";
 
 export class Player {
     player;
@@ -6,6 +7,7 @@ export class Player {
     static pause_logo;
     static audio = document.querySelector("audio");
     static playing = false;
+    static is_play_besm = false;
     static progress_bar = document.querySelector("progress");
     static speed_toolbar;
     static speed_selected;
@@ -13,6 +15,7 @@ export class Player {
     footer_settings_logo;
     static font_change;
     static cached_audio = {};
+    static loaded_src = false;
 
     constructor(selector) {
         this.player = document.getElementById(selector);
@@ -40,6 +43,7 @@ export class Player {
         Player.playing = !Player.audio.paused;
         if (Player.playing) {
             Player.pause_audio();
+            Player.playing = false;
         } else {
             Player.play_audio();
         }
@@ -48,33 +52,6 @@ export class Player {
     static toggle_shape() {
         Player.play_logo.classList.toggle("active");
         Player.pause_logo.classList.toggle("active");
-    }
-
-    static update_src(src) {
-        // src is an url for an aya
-        if (typeof src === "string") {
-            console.log(Player.cached_audio);
-            if (Player.get_cache_audio(src)) {
-                // audio is cached before
-                Player.audio.firstElementChild.src = src;
-            } else {
-                // we need to get the audio
-                Player.cache_audio(src, new Audio(src));
-                Player.audio.firstElementChild.src = src;
-            }
-            Player.audio.load();
-        } else {
-            // src itself is the first aya (span.text) of the current page
-            let sura = src.parentElement.parentElement.parentElement;
-            let sura_id = String(sura.classList[1]);
-            sura_id = sura_id.padStart(3, "0");
-
-            let text_id = String(src.id);
-            text_id = text_id.padStart(3, "0");
-
-            let url = Content.url.concat(sura_id + text_id, ".mp3");
-            this.update_src(url);
-        }
     }
 
     static cache_audio(url, audio) {
@@ -97,6 +74,11 @@ export class Player {
 
         Player.audio.addEventListener("play", function () {
             let current_aya = document.querySelector("span.aya.selected");
+            current_aya.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+
             let next_aya = current_aya.nextElementSibling;
             let owl_item = document.querySelector(".owl-item.active");
             let last_aya_of_page = owl_item.querySelector(".sura:last-child span.aya:last-child");
@@ -108,7 +90,16 @@ export class Player {
                 // we're in the last aya of the current page. we should go to next page
                 let next_owl_item = owl_item.nextElementSibling;
                 if (next_owl_item) {
-                    let next_aya_text = next_owl_item.querySelector("span.aya");
+                    let next_aya_text = next_owl_item.querySelector("span.aya").firstElementChild;
+                    Player.get_nex_audio(next_aya_text);
+                }
+            } else if (next_aya === null) {
+                // there is something we must cache in current page!
+
+                let current_sura = owl_item.querySelector("span.aya.selected").parentElement.parentElement;
+                let next_sura = current_sura.nextSibling;
+                if (next_sura) {
+                    let next_aya_text = next_sura.querySelector("span.aya > span.text");
                     Player.get_nex_audio(next_aya_text);
                 }
             }
@@ -116,7 +107,11 @@ export class Player {
 
         Player.audio.addEventListener("ended", function () {
             Player.restart_progressbar();
-            Player.go_to_next_aya();
+            if (Player.is_play_besm) {
+                Player.is_play_besm = false;
+                Player.play_besm();
+            } else
+                Player.go_to_next_aya();
         });
     }
 
@@ -239,10 +234,9 @@ export class Player {
     }
 
     static restart_progressbar() {
+        Player.pause_audio();
         Player.audio.currentTime = 0;
         Player.progress_bar.value = 0;
-        Player.audio.pause();
-        Player.pause_shape();
     }
 
     static pause_shape() {
@@ -251,6 +245,8 @@ export class Player {
     }
 
     static go_to_next_aya() {
+        let history = History.get_instance();
+
         let current_aya = document.querySelector("span.aya.selected");
 
         let next_aya = current_aya.nextElementSibling;
@@ -258,6 +254,7 @@ export class Player {
         let last_aya_of_page = owl_item.querySelector(".sura:last-child span.aya:last-child");
 
         if (next_aya) {
+            // aya is in current page, in current sura
             Player.playing = false;
 
             // next aya is exists in current page (owl-item)
@@ -267,18 +264,68 @@ export class Player {
             });
             // add selected class to the aya element
             next_aya_text.parentElement.classList.add("selected");
+
             Player.update_src(next_aya_text);
+
+            // we should scroll into the next aya
+            next_aya_text.scrollIntoView({
+                block: "center",
+                behavior: "smooth"
+            });
+
             Player.play_audio();
+
+            // save position
+            history.save_position(next_aya_text.parentElement);
         } else if (current_aya === last_aya_of_page) {
-            console.log("we must go to next page");
+            // aya is in current sura or not, but in different page
+            // we must go to next page
             let next_page = owl_item.nextElementSibling;
             if (next_page) {
                 next_page = next_page.firstElementChild;
                 let next_item_number = next_page.classList[1];
+                // document.querySelectorAll("span.text").forEach(function (item) {
+                //     item.parentElement.classList.remove("selected");
+                // });
+                let selected_aya = next_page.querySelector("span.text");
+                let sura = selected_aya.parentElement.parentElement.parentElement;
+                // Content.go_to_page(next_item_number, undefined, undefined, selected_aya.id);
+                Content.go_to_page2(next_item_number);
+                Content.got_to_aya(sura.classList[1], selected_aya.id);
+
+                // save position
+                history.save_position(selected_aya.parentElement);
+            }
+        } else if (next_aya === null) {
+            console.log("there is something we must read in current page!");
+
+            let current_sura = owl_item.querySelector("span.aya.selected").parentElement.parentElement;
+            let next_sura = current_sura.nextSibling;
+            if (next_sura) {
+                let next_aya_text = next_sura.querySelector("span.aya > span.text");
+
                 document.querySelectorAll("span.text").forEach(function (item) {
                     item.parentElement.classList.remove("selected");
                 });
-                Content.go_to_page(next_item_number, undefined, undefined);
+                // add selected class to the aya element
+                Player.get_nex_audio(next_aya_text);
+                next_aya_text.parentElement.classList.add("selected");
+
+                // save position
+                // history.save_position(next_aya_text.parentElement);
+
+                Player.update_src(next_aya_text);
+
+                // we should scroll into the next aya
+                next_aya_text.scrollIntoView({
+                    block: "center",
+                    behavior: "smooth"
+                });
+
+                Player.play_audio();
+
+                // save position
+                history.save_position(next_aya_text.parentElement);
             }
         }
     }
@@ -297,9 +344,74 @@ export class Player {
     }
 
     static play_audio() {
+        if (Player.is_play_besm) {
+            Player.play_besm();
+        } else {
+            let src = Player.audio.firstElementChild.src;
+            let url = String(src);
+            let audio_id = src.slice(src.length - 10).split(".mp3")[0];
+            if (audio_id[audio_id.length - 1] === "0") {
+                let url_array = url.split("");
+                url_array[url.length - 5] = "1";
+                url = url_array.join("");
+                Player.download_src(url);
+            }
+            Player.play_aya();
+        }
+    }
+
+    static update_src(src) {
+        let sura = src.parentElement.parentElement.parentElement;
+        let sura_id = String(sura.classList[1]);
+        sura_id = sura_id.padStart(3, "0");
+
+        let text_id = String(src.id);
+        text_id = text_id.padStart(3, "0");
+
+        let url = Content.url.concat(sura_id + text_id, ".mp3");
+        Player.download_src(url);
+
+        if (text_id === "001") {
+            Player.is_play_besm = true;
+            let besm_url = Content.url.concat(sura_id + "000", ".mp3");
+            Player.download_src(besm_url);
+        }
+
+        Player.loaded_src = false;
+    }
+
+    static download_src(url) {
+        if (Player.get_cache_audio(url)) {
+            // audio is cached before
+            Player.audio.firstElementChild.src = url;
+        } else {
+            // we need to get the audio
+            Player.cache_audio(url, new Audio(url));
+            Player.audio.firstElementChild.src = url;
+        }
+        // Player.audio.load();
+    }
+
+    static play_besm() {
         Player.play_logo.classList.remove("active");
         Player.pause_logo.classList.add("active");
         Player.playing = true;
+        if (Player.is_play_besm) {
+            // Player.audio.firstElementChild.src = Player.cached_audio["besm"];
+            Player.audio.load();
+            Player.speedSet(null);
+            Player.audio.play();
+        }
+    }
+
+    static play_aya() {
+        Player.play_logo.classList.remove("active");
+        Player.pause_logo.classList.add("active");
+        Player.playing = true;
+        if (!Player.loaded_src) {
+            Player.loaded_src = true;
+            Player.audio.load();
+        }
         Player.speedSet(null);
         Player.audio.play();
     }
@@ -307,7 +419,7 @@ export class Player {
     static pause_audio() {
         Player.play_logo.classList.add("active");
         Player.pause_logo.classList.remove("active");
-        Player.playing = false;
+        // Player.playing = false;
         Player.audio.pause();
     }
 }
