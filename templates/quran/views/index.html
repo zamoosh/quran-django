@@ -180,12 +180,15 @@
             import {Content} from "{% static 'assets/js/content.js' %}";
             import {Player} from "{% static 'assets/js/player.js' %}";
             import {History} from  "{% static 'assets/js/history.js' %}";
+            import {Path} from  "{% static 'assets/js/path.js' %}";
 
             document.addEventListener("DOMContentLoaded", function () {
 
                 let side_menu = new SideMenu(".side-menu");
                 let tab = new Tab(side_menu);
                 let player = new Player("player");
+                let history = History.get_instance();
+                let path = Path.get_instance();
 
                 let carousel = $(".owl-carousel");
                 carousel.owlCarousel({
@@ -207,7 +210,6 @@
                 }
                 carousel.trigger("refresh.owl.carousel");
 
-                let history = History.get_instance();
                 history.goto_position();
 
 
@@ -294,16 +296,16 @@
                     // changing the sura_list, page_list and juz_list in Tab
                     if (event.item.index + 1 <= 604) {
                         Tab.update_sura_list();
-                        Tab.update_page_list(event.item.index + 1)
-                        Tab.update_juz_list(event.item.index + 1)
+                        Tab.update_page_list(event.item.index + 1);
+                        Tab.update_juz_list(event.item.index + 1);
                     } else if (event.item.index - 1 > 604) {
                         Tab.update_sura_list();
-                        Tab.update_page_list(event.item.index - 1)
-                        Tab.update_juz_list(event.item.index - 1)
+                        Tab.update_page_list(event.item.index - 1);
+                        Tab.update_juz_list(event.item.index - 1);
                     } else {
                         Tab.update_sura_list();
-                        Tab.update_page_list(event.item.index)
-                        Tab.update_juz_list(event.item.index)
+                        Tab.update_page_list(event.item.index);
+                        Tab.update_juz_list(event.item.index);
                     }
                     // window.history.pushState("", "", event.item.index);
 

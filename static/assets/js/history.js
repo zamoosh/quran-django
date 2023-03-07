@@ -1,5 +1,6 @@
 import {Content} from "./content.js";
 import {Tab} from "./tab.js";
+import {Path} from "./path.js";
 
 export class History {
     static instance;
@@ -51,6 +52,8 @@ export class History {
         this.set_item("sura", sura_id);
         this.set_item("aya", aya_id);
         this.save();
+
+        Path.get_instance().save_url();
     }
 
     goto_position() {
@@ -77,27 +80,6 @@ export class History {
                     Content.update_content(context, page_number, undefined);
                     Content.go_to_page2(page_number);
                     Content.got_to_aya(obj.get_item("sura"), obj.get_item("aya"));
-
-                    // setTimeout(function () {
-                    //     if (Content.page_updated) {
-                    //         // update tab menu
-                    //         page_number = Number(page_number);
-                    //         if (page_number <= 604) {
-                    //             Tab.update_sura_list();
-                    //             Tab.update_page_list(page_number);
-                    //             Tab.update_juz_list(page_number);
-                    //         } else if (page_number > 604) {
-                    //             Tab.update_sura_list();
-                    //             Tab.update_page_list(page_number);
-                    //             Tab.update_juz_list(page_number);
-                    //         } else {
-                    //             Tab.update_sura_list();
-                    //             Tab.update_page_list(page_number);
-                    //             Tab.update_juz_list(page_number);
-                    //         }
-                    //         clearTimeout(this);
-                    //     }
-                    // }, 200);
 
                     // check if next page is empty of not
                     let next_page = document.getElementsByClassName(`item ${page_number + 1}`)[0];

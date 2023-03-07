@@ -1,7 +1,7 @@
 from .imports import *
 
 
-def index(request):
+def index(request, anything=None):
     context = {
         'surah': Text.objects.filter(index=1),
     }
