@@ -482,7 +482,11 @@ export class Player {
         let url_arr = Player.base_url.split("/");
         url_arr[url_arr.length - 2] = singer;
         Player.base_url = url_arr.join("/");
-        console.log(Player.base_url);
+
+        // we must change the current aya src and restart the progressbar
+        let selected_aya_text = document.querySelector("span.aya.selected > span.text");
+        Player.update_src(selected_aya_text);
+        Player.restart_progressbar();
     }
 
     changeSinger() {
