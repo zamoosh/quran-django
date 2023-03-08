@@ -16,6 +16,8 @@ export class Player {
     static font_change;
     static cached_audio = {};
     static loaded_src = false;
+    static current_src = "";
+    static first_aya_played = false;
 
     constructor(selector) {
         this.player = document.getElementById(selector);
@@ -109,6 +111,7 @@ export class Player {
             Player.restart_progressbar();
             if (Player.is_play_besm) {
                 Player.is_play_besm = false;
+                Player.first_aya_played = false;
                 Player.play_besm();
             } else
                 Player.go_to_next_aya();
@@ -257,26 +260,60 @@ export class Player {
             // aya is in current page, in current sura
             Player.playing = false;
 
-            // next aya is exists in current page (owl-item)
-            let next_aya_text = current_aya.nextElementSibling.firstElementChild;
-            document.querySelectorAll("span.text").forEach(function (item) {
-                item.parentElement.classList.remove("selected");
-            });
-            // add selected class to the aya element
-            next_aya_text.parentElement.classList.add("selected");
+            // means was playing before. so we must play the aya number 1
+            if (current_aya.firstElementChild.id === "1" && !Player.first_aya_played) {
+                let current_aya_text = current_aya.firstElementChild;
+                Player.update_src(current_aya_text);
+                Player.is_play_besm = false;
+                current_aya_text.scrollIntoView({
+                    block: "center",
+                    behavior: "smooth"
+                });
+                Player.play_audio();
+                Player.first_aya_played = true;
 
-            Player.update_src(next_aya_text);
+                history.save_position(current_aya);
+            } else if (Player.first_aya_played) {
+                // next aya is exists in current page (owl-item)
+                let next_aya_text = current_aya.nextElementSibling.firstElementChild;
+                document.querySelectorAll("span.text").forEach(function (item) {
+                    item.parentElement.classList.remove("selected");
+                });
+                // add selected class to the aya element
+                next_aya_text.parentElement.classList.add("selected");
 
-            // we should scroll into the next aya
-            next_aya_text.scrollIntoView({
-                block: "center",
-                behavior: "smooth"
-            });
+                Player.update_src(next_aya_text);
 
-            Player.play_audio();
+                // we should scroll into the next aya
+                next_aya_text.scrollIntoView({
+                    block: "center",
+                    behavior: "smooth"
+                });
+                Player.play_audio();
+                history.save_position(next_aya);
+            }
+            Player.playing = true;
+
+            // // next aya is exists in current page (owl-item)
+            // let next_aya_text = current_aya.nextElementSibling.firstElementChild;
+            // document.querySelectorAll("span.text").forEach(function (item) {
+            //     item.parentElement.classList.remove("selected");
+            // });
+            // // add selected class to the aya element
+            // next_aya_text.parentElement.classList.add("selected");
+            //
+            // Player.update_src(next_aya_text);
+            //
+            // // we should scroll into the next aya
+            // next_aya_text.scrollIntoView({
+            //     block: "center",
+            //     behavior: "smooth"
+            // });
+
+            // Player.play_audio();
 
             // save position
-            history.save_position(next_aya_text.parentElement);
+            // history.save_position(next_aya_text.parentElement);
         } else if (current_aya === last_aya_of_page) {
             // aya is in current sura or not, but in different page
             // we must go to next page
@@ -298,6 +335,8 @@ export class Player {
             }
         } else if (next_aya === null) {
             console.log("there is something we must read in current page!");
+
+            Player.is_play_besm = true;
 
             let current_sura = owl_item.querySelector("span.aya.selected").parentElement.parentElement;
             let next_sura = current_sura.nextSibling;
@@ -345,22 +384,30 @@ export class Player {
 
     static play_audio() {
         if (Player.is_play_besm) {
+            // we must play the besm-allah
+            Player.is_play_besm = false;
+            Player.first_aya_played = false;
             Player.play_besm();
         } else {
+            // we must NOT play the besm-allah
             let src = Player.audio.firstElementChild.src;
             let url = String(src);
             let audio_id = src.slice(src.length - 10).split(".mp3")[0];
-            if (audio_id[audio_id.length - 1] === "0") {
+            if (audio_id.slice(-3) === "000") {
                 let url_array = url.split("");
                 url_array[url.length - 5] = "1";
                 url = url_array.join("");
                 Player.download_src(url);
+            } else {
+                Player.is_play_besm = false;
+                Player.first_aya_played = true;
             }
             Player.play_aya();
         }
     }
 
     static update_src(src) {
+        // src is aya_text
         let sura = src.parentElement.parentElement.parentElement;
         let sura_id = String(sura.classList[1]);
         sura_id = sura_id.padStart(3, "0");
@@ -389,19 +436,17 @@ export class Player {
             Player.cache_audio(url, new Audio(url));
             Player.audio.firstElementChild.src = url;
         }
-        // Player.audio.load();
+        Player.current_src = url;
     }
 
     static play_besm() {
+        Player.audio.load();
         Player.play_logo.classList.remove("active");
         Player.pause_logo.classList.add("active");
         Player.playing = true;
-        if (Player.is_play_besm) {
-            // Player.audio.firstElementChild.src = Player.cached_audio["besm"];
-            Player.audio.load();
-            Player.speedSet(null);
-            Player.audio.play();
-        }
+        // Player.audio.firstElementChild.src = Player.cached_audio["besm"];
+        Player.speedSet(null);
+        Player.audio.play();
     }
 
     static play_aya() {
