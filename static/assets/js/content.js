@@ -300,21 +300,25 @@ export class Content {
     }
 
     static ajax_sura_aya(sura_id, aya_id) {
-        $.ajax({
-            method: "GET",
-            url: get_sura_aya_url.replace("0", sura_id).replace("0", aya_id),
-            cache: true,
-            success: function (context) {
-                let page_number = context["page_number"];
-                if (!Tab.packs.includes(context["pack_id"]))
-                    Tab.packs.push(context["pack_id"]);
+        return new Promise(function (resolve, reject) {
+            $.ajax({
+                method: "GET",
+                url: get_sura_aya_url.replace("0", sura_id).replace("0", aya_id),
+                cache: true,
+                success: function (context) {
+                    let page_number = context["page_number"];
+                    if (!Tab.packs.includes(context["pack_id"]))
+                        Tab.packs.push(context["pack_id"]);
 
-                // is the third parameter (sura_id) is null, then it won't scroll in to the sura
-                Content.update_content(context, page_number, null, false);
-            },
-            error: function () {
-                console.log("error");
-            }
+                    // is the third parameter (sura_id) is null, then it won't scroll in to the sura
+                    Content.update_content(context, page_number, null, false);
+                    resolve(true);
+                },
+                error: function () {
+                    console.log("error");
+                    reject(false);
+                }
+            });
         });
     }
 

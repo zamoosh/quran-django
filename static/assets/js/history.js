@@ -62,8 +62,11 @@ export class History {
             let page = this.history["page"];
             let sura_id = this.history["sura"];
 
+            // if nighter page, sura_id and sura_aya_url is not available, we show nothing!
             if ((!page || !sura_id) && sura_aya_url === "")
                 return;
+
+            // if ONLY sura_aya_url is available, we go to the sura using URL
             if (sura_aya_url !== "") {
                 let sura_id = sura_aya_url.split(":")[0];
                 let aya_id = sura_aya_url.split(":")[1];
@@ -82,8 +85,7 @@ export class History {
 
                         // we can go to specific aya of sura, on condition that the aya, is in current pack!
                         let suras = document.getElementsByClassName(`sura ${sura_id}`);
-                        let sura_selected;
-                        let first_aya;
+                        let sura_selected, first_aya;
                         for (const sura of suras) {
                             first_aya = sura.getElementsByClassName(`text ${aya_id}`)[0];
                             if (first_aya) {
@@ -94,11 +96,30 @@ export class History {
                         }
 
                         if (!first_aya) {
-                            Content.ajax_sura_aya(sura_id, aya_id);
-                        }
+                            Content.ajax_sura_aya(sura_id, aya_id)
+                                .then(function (result) {
+                                    if (result) {
+                                        let sura_selected, first_aya;
+                                        for (const sura of suras) {
+                                            first_aya = sura.getElementsByClassName(`text ${aya_id}`)[0];
+                                            if (first_aya) {
+                                                sura_selected = sura;
+                                                page_number = sura_selected.parentElement.classList[1];
+                                                break;
+                                            }
+                                        }
+                                        Content.go_to_page2(page_number);
+                                        Content.got_to_aya(sura_id, aya_id);
+                                    }
+                                })
+                                .catch(function (error) {
 
-                        Content.go_to_page2(page_number);
-                        Content.got_to_aya(sura_selected.classList[1], first_aya.id);
+                                });
+                        } else {
+                            // no need to
+                            Content.go_to_page2(page_number);
+                            Content.got_to_aya(sura_selected.classList[1], first_aya.id);
+                        }
 
                         // check if next page is empty of not
                         let next_page = document.getElementsByClassName(`item ${page_number + 1}`)[0];
@@ -127,6 +148,7 @@ export class History {
                 return;
             }
 
+            // if ONLY sura_aya_url is not available, we can use the local storage to go to the sura
             $.ajax({
                 method: "GET",
                 url: page_details_url.replace("0", page),
