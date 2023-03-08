@@ -61,6 +61,7 @@ export class History {
         if (this.history) {
             let page = this.history["page"];
             let sura_id = this.history["sura"];
+            let aya_id = this.history["aya"];
 
             // if nighter page, sura_id and sura_aya_url is not available, we show nothing!
             if ((!page || !sura_id) && sura_aya_url === "")
@@ -162,7 +163,7 @@ export class History {
             }
 
             // if ONLY sura_aya_url is not available, we can use the local storage to go to the sura
-            $.ajax({
+            /*$.ajax({
                 method: "GET",
                 url: page_details_url.replace("0", page),
                 cache: true,
@@ -206,7 +207,17 @@ export class History {
                 error: function () {
                     console.log("error");
                 }
-            });
+            });*/
+            Content.ajax_sura_aya(sura_id, aya_id)
+                .then(function (result) {
+                    if (result) {
+                        Content.go_to_page2(page);
+                        Content.got_to_aya(sura_id, aya_id);
+                    }
+                })
+                .catch(function (error) {
+
+                });
         }
     }
 }
