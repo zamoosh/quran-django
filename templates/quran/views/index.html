@@ -36,7 +36,7 @@
         <link rel="stylesheet" href="{% static 'assets/scss/main.css' %}"/>
     </head>
 
-    <body class="dark">
+    <body class="sepia">
         <header>
             <div class="header">
                 <div role="button" class="header__menu-btn">
@@ -107,9 +107,11 @@
                     </audio>
                 </div>
                 <div role="button" class="footer__singer">
-                    <div>
-                        قاري
+                    <div class="footer__singer-selected">
+                        العفاسی
                     </div>
+                    <button value="afasy" class="active">العفاسی</button>
+                    <button value="abdulbasit" class="">عبدالباسط</button>
                 </div>
                 <div role="button" class="footer__more">
                     <img src="{% static 'assets/icons/svg/three-dots-vertical.svg' %}" alt="more options">

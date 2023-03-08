@@ -10,6 +10,7 @@ export class Player {
     static is_play_besm = false;
     static progress_bar = document.querySelector("progress");
     static speed_toolbar;
+    singer;
     static speed_selected;
     footer_settings;
     footer_settings_logo;
@@ -18,6 +19,7 @@ export class Player {
     static loaded_src = false;
     static current_src = "";
     static first_aya_played = false;
+    static base_url = "https://tanzil.net/res/audio/afasy/";
 
     constructor(selector) {
         this.player = document.getElementById(selector);
@@ -25,6 +27,7 @@ export class Player {
         Player.play_logo = logos[0];
         Player.pause_logo = logos[1];
         Player.speed_toolbar = this.player.querySelector(".footer__speed-toolbar");
+        this.singer = this.player.querySelector(".footer__singer");
         Player.speed_selected = Player.speed_toolbar.querySelector(".footer__speed-selected");
         this.footer_settings = document.querySelector(".footer__settings");
         this.footer_settings_logo = this.footer_settings.querySelector(".footer__settings");
@@ -34,11 +37,52 @@ export class Player {
         this.speedControl();
         this.fontControl();
         this.themeChange();
+        this.changeSinger();
     }
 
     makePlayable() {
         let play_pause_btn = this.player.querySelector(".footer__player");
         play_pause_btn.addEventListener("click", this.togglePlay.bind(this));
+    }
+
+    speedControl() {
+        Player.speed_toolbar.addEventListener("click", this.toggleSpeeds.bind(this));
+    }
+
+    toggleSpeeds() {
+        let btn_d = 36;
+        let d = 45;
+        let buttons = Player.speed_toolbar.querySelectorAll("button");
+        Player.speed_toolbar.classList.toggle("open");
+        if (Player.speed_toolbar.classList.contains("open")) {
+            buttons.forEach((btn, index) => {
+                btn.classList.add("open");
+                btn.style.transform = `translate(18px, -${(index * btn_d) + d}px)`;
+                // btn.style.transitionDelay = (index * 100) / 2 + 'ms';
+            });
+        } else {
+            buttons.forEach(btn => {
+                btn.classList.remove("open");
+            });
+        }
+        buttons.forEach(btn => {
+            btn.addEventListener("click", Player.speedSet);
+        });
+    }
+
+    static speedSet(e) {
+        if (e) {
+            let buttons = Player.speed_toolbar.querySelectorAll("button");
+            buttons.forEach(btn => {
+                btn.classList.remove("active");
+            });
+            e.target.classList.add("active");
+            Player.speed_selected.innerHTML = e.target.innerHTML;
+            Player.audio.playbackRate = e.target.value;
+        } else {
+            let active_speed = Player.speed_toolbar.querySelector("button.active").value;
+            Player.audio.playbackRate = Number(active_speed);
+        }
     }
 
     togglePlay() {
@@ -117,47 +161,6 @@ export class Player {
                 Player.go_to_next_aya();
         });
     }
-
-    speedControl() {
-        Player.speed_toolbar.addEventListener("click", this.toggleSpeeds.bind(this));
-    }
-
-    toggleSpeeds() {
-        let btn_d = 36;
-        let d = 45;
-        let buttons = Player.speed_toolbar.querySelectorAll("button");
-        Player.speed_toolbar.classList.toggle("open");
-        if (Player.speed_toolbar.classList.contains("open")) {
-            buttons.forEach((btn, index) => {
-                btn.classList.add("open");
-                btn.style.transform = `translate(18px, -${(index * btn_d) + d}px)`;
-                // btn.style.transitionDelay = (index * 100) / 2 + 'ms';
-            });
-        } else {
-            buttons.forEach(btn => {
-                btn.classList.remove("open");
-            });
-        }
-        buttons.forEach(btn => {
-            btn.addEventListener("click", Player.speedSet);
-        });
-    }
-
-    static speedSet(e) {
-        if (e) {
-            let buttons = Player.speed_toolbar.querySelectorAll("button");
-            buttons.forEach(btn => {
-                btn.classList.remove("active");
-            });
-            e.target.classList.add("active");
-            Player.speed_selected.innerHTML = e.target.innerHTML;
-            Player.audio.playbackRate = e.target.value;
-        } else {
-            let active_speed = Player.speed_toolbar.querySelector("button.active").value;
-            Player.audio.playbackRate = Number(active_speed);
-        }
-    }
-
 
     fontControl() {
         this.footer_settings.addEventListener("click", this.toggleSettings.bind(this));
@@ -378,7 +381,7 @@ export class Player {
         let text_id = String(next_aya_text.id);
         text_id = text_id.padStart(3, "0");
 
-        let url = Content.url.concat(sura_id + text_id, ".mp3");
+        let url = Player.base_url.concat(sura_id + text_id, ".mp3");
         Player.cache_audio(url, new Audio(url));
     }
 
@@ -422,12 +425,12 @@ export class Player {
         let text_id = String(src.id);
         text_id = text_id.padStart(3, "0");
 
-        let url = Content.url.concat(sura_id + text_id, ".mp3");
+        let url = Player.base_url.concat(sura_id + text_id, ".mp3");
         Player.download_src(url);
 
         if (text_id === "001") {
             Player.is_play_besm = true;
-            let besm_url = Content.url.concat(sura_id + "000", ".mp3");
+            let besm_url = Player.base_url.concat(sura_id + "000", ".mp3");
             Player.download_src(besm_url);
         }
 
@@ -473,5 +476,48 @@ export class Player {
         Player.pause_logo.classList.remove("active");
         // Player.playing = false;
         Player.audio.pause();
+    }
+
+    static change_base_singer_url(singer) {
+        let url_arr = Player.base_url.split("/");
+        url_arr[url_arr.length - 2] = singer;
+        Player.base_url = url_arr.join("/");
+        console.log(Player.base_url);
+    }
+
+    changeSinger() {
+        const obj = this;
+        const singer_selected = obj.player.querySelector(".footer__singer-selected");
+        const buttons = obj.singer.querySelectorAll("button");
+
+        obj.singer.addEventListener("click", function () {
+            let btn_d = 36;
+            let d = 50;
+            obj.singer.classList.toggle("open");
+            if (obj.singer.classList.contains("open")) {
+                buttons.forEach((btn, index) => {
+                    btn.classList.add("open");
+                    btn.style.transform = `translate(0px, -${(index * btn_d) + d}px)`;
+                    // btn.style.transitionDelay = (index * 100) / 2 + 'ms';
+                });
+            } else {
+                buttons.forEach(btn => {
+                    btn.classList.remove("open");
+                });
+            }
+        });
+        buttons.forEach(btn => {
+            btn.addEventListener("click", function (event) {
+                buttons.forEach(function (btn) {
+                    btn.classList.remove("selected");
+                    btn.classList.remove("active");
+                });
+                event.target.classList.add("selected");
+                event.target.classList.add("active");
+
+                singer_selected.innerHTML = event.target.innerHTML;
+                Player.change_base_singer_url(event.target.value);
+            });
+        });
     }
 }

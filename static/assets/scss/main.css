@@ -327,9 +327,46 @@ footer .footer__singer {
   justify-content: center;
   font-weight: bold;
 }
+footer .footer__singer.open button {
+  opacity: 1;
+  transition: all 50ms;
+  display: flex;
+}
+footer .footer__singer.open button.open {
+  background-color: #E2F0F1;
+  border-radius: 100px;
+}
+footer .footer__singer.open button.active {
+  background-color: #b4924d;
+  color: white;
+}
 footer .footer__singer * {
   display: flex;
   padding-top: 1px;
+}
+footer .footer__singer__selected {
+  height: 100%;
+  width: 100%;
+  font-weight: bold;
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  position: absolute;
+}
+footer .footer__singer button {
+  border: none;
+  font-weight: bold;
+  width: 120px;
+  height: 28px;
+  opacity: 0;
+  display: none;
+  border: 0;
+  padding: 2px 0 0 0;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  transition: all 50ms;
+  background-color: transparent;
 }
 footer .footer__more {
   height: 30px;

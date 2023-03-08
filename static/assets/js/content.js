@@ -2,7 +2,6 @@ import {toArabicNumber} from "./utils.js";
 import {Tab} from "./tab.js";
 import {Player} from "./player.js";
 import {History} from "./history.js";
-import {Path} from "./path.js";
 
 export class Content {
     static carousel = $(".owl-carousel");
