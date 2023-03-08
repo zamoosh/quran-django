@@ -383,6 +383,13 @@ export class Player {
     }
 
     static play_audio() {
+        // check if the sura is "TUBAH" or note (sura with id 9)
+        let sura = document.querySelector("div.owl-item.active .sura");
+        if (sura.classList[1] === "9") {
+            Player.is_play_besm = false;
+            Player.first_aya_played = true;
+        }
+
         if (Player.is_play_besm) {
             // we must play the besm-allah
             Player.is_play_besm = false;

@@ -204,6 +204,39 @@ export class Content {
         Content.carousel.trigger("to.owl.carousel", [page_number - 1, 0]);
         Content.update_page_number(page_number);
 
+        // check if next and prev page is empty or not
+        page_number = Number(page_number);
+        let next_page = document.getElementsByClassName(`item ${page_number + 1}`)[0];
+        let prev_page = document.getElementsByClassName(`item ${page_number - 1}`)[0];
+        if (next_page && next_page.innerHTML === "") {
+            // if true, then we're in the last page of current pack
+            let pack_number = Math.ceil((page_number + 1) / 10);
+            if (!Tab.packs.includes(pack_number)) {
+                if (pack_number <= 61) {
+                    Tab.packs.push(pack_number);
+                    Content.ajax_next_page(pack_number);
+                } else if (pack_number > 61) {
+                    Tab.packs.push(61);
+                    Content.ajax_next_page(61);
+                }
+                Tab.packs = [...new Set(Tab.packs)];
+            }
+        }
+        if (prev_page && prev_page.innerHTML === "") {
+            // if true, then we're in the last page of current pack
+            let pack_number = Math.ceil((page_number - 1) / 10);
+            if (!Tab.packs.includes(pack_number)) {
+                if (pack_number <= 61) {
+                    Tab.packs.push(pack_number);
+                    Content.ajax_next_page(pack_number);
+                } else if (pack_number > 61) {
+                    Tab.packs.push(61);
+                    Content.ajax_next_page(61);
+                }
+                Tab.packs = [...new Set(Tab.packs)];
+            }
+        }
+
         Tab.update_page_list(page_number);
     }
 
