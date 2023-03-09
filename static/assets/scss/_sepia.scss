@@ -32,10 +32,30 @@ body.sepia {
     .main {
         background-color: $body-color-sepia;
         
-        //&.disabled {
-        //    // NOTE: this is a new color must be added to the utils.scss
-        //    background-color: #232324;
-        //}
+        &__content {
+            
+            .owl-carousel {
+                
+                .item {
+                    
+                    .sura {
+                        
+                        .content {
+                            span.aya {
+                                &.selected, &.selected:hover {
+                                    background-color: $highlight-color-sepia-select;
+                                }
+    
+                                &:hover {
+                                    background-color: $highlight-color-sepia-hover;
+                                }
+                                
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
     
     footer {

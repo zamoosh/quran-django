@@ -15,9 +15,11 @@ $side-menu-color: rgb(184, 219, 217);
 $text-light: #0c1f34;
 
 // sepia theme
-$body-color-sepia: #f8ebd5;
+$body-color-sepia: #FAEBD4;
 $text-sepia: #0c1f34;
-$header-color-sepia: #fff7ea;
+$highlight-color-sepia-select: #D7C7B0;
+$highlight-color-sepia-hover: #D7C7B0;
+$header-color-sepia: #FFFDF3;
 
 *[role='button'] {
     cursor: pointer;

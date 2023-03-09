@@ -294,7 +294,7 @@ export class Content {
 
         let number = document.createElement("span");
         number.classList.add("number");
-        number.innerText += toArabicNumber(row.aya);
+        number.innerText += ` ${toArabicNumber(row.aya)} `;
 
         text.append(number);
 

@@ -544,7 +544,7 @@ body.sepia {
   color: #0c1f34;
 }
 body.sepia header {
-  background-color: #fff7ea;
+  background-color: #FFFDF3;
 }
 body.sepia header .header__menu-btn__burger {
   background-color: #0c1f34;
@@ -559,10 +559,16 @@ body.sepia header .header__back__icon::before, body.sepia header .header__back__
   background-color: #0c1f34;
 }
 body.sepia .main {
-  background-color: #f8ebd5;
+  background-color: #FAEBD4;
+}
+body.sepia .main__content .owl-carousel .item .sura .content span.aya.selected, body.sepia .main__content .owl-carousel .item .sura .content span.aya.selected:hover {
+  background-color: #D7C7B0;
+}
+body.sepia .main__content .owl-carousel .item .sura .content span.aya:hover {
+  background-color: #D7C7B0;
 }
 body.sepia footer {
-  background-color: #fff7ea;
+  background-color: #FFFDF3;
 }
 body.sepia footer .footer__settings > div .dark {
   display: none;
@@ -579,7 +585,7 @@ body.sepia footer .footer__more * {
   height: 100%;
 }
 body.sepia .side-menu {
-  background-color: #fff7ea;
+  background-color: #FFFDF3;
 }
 
 @font-face {
@@ -665,12 +671,12 @@ body .main__content .owl-carousel .item .sura .besm-allah {
 }
 body .main__content .owl-carousel .item .sura .content span.aya {
   font-size: 30px;
-  line-height: 1.8em;
+  line-height: 1.9em;
   letter-spacing: -0.025em;
   cursor: pointer;
   transition: background-color 120ms;
   border-radius: 5px;
-  margin-left: 10px;
+  margin-left: 5px;
 }
 body .main__content .owl-carousel .item .sura .content span.aya.selected, body .main__content .owl-carousel .item .sura .content span.aya.selected:hover {
   background-color: rgba(184, 219, 217, 0.33);

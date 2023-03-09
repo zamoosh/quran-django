@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ar" dir="rtl">
+
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width"/>
+        <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+        <!--<meta name="description" content="The Quran is the holy book of Islam and a source of guidance for over 1 billion Muslims around the world. Explore its teachings and history here.">
+        <meta name="keywords" content="Quran, Islam, holy book, teachings, history">
+        <meta name="robots" content="index, follow">
+        <meta name="author" content="[Your Website Name]">
+        <link rel="canonical" href="https://www.yourwebsite.com/quran/">
+        <meta property="og:title" content="The Quran: Explore its Teachings and History">
+        <meta property="og:description" content="The Quran is the holy book of Islam and a source of guidance for over 1 billion Muslims around the world. Explore its teachings and history here.">
+        <meta property="og:image" content="https://www.yourwebsite.com/quran/cover.jpg">
+        <meta property="og:url" content="https://www.yourwebsite.com/quran/">
+        <meta property="og:type" content="website">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:site_name" content="[Your Website Name]">-->
+
+        <title>Quran</title>
+
+        <!--  favicon  -->
+        <link rel="shortcut icon" href="{% static 'assets/img/tanzil.svg' %}" type="image/x-icon"/>
+
+        <!--  Normalize  -->
+        <link rel="stylesheet" href="{% static 'assets/css/normalize.css' %}"/>
+
+        <!--  OWL  -->
+        <link rel="stylesheet" href="{% static 'assets/plugins/owl/owl.carousel.min.css' %}"/>
+        <link rel="stylesheet" href="{% static 'assets/plugins/owl/owl.theme.default.min.css' %}"/>
+
+        <!--  Custom  -->
+        <link rel="stylesheet" href="{% static 'assets/scss/main.css' %}"/>
+
+        {% block css %}{% endblock %}
+    </head>
+
+    <body class="dark">
+        {% block header %}{% endblock %}
+
+        {% block body %}{% endblock %}
+
+        {% block footer %}{% endblock %}
+
+
+        <!-- jquery -->
+        <script src="{% static 'assets/plugins/jquery.js' %}"></script>
+
+        <!-- OWL js -->
+        <script src="{% static 'assets/plugins/owl/owl.carousel.min.js' %}"></script>
+        {% block js %}{% endblock %}
+    </body>
+
+</html>

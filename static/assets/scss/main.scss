@@ -106,12 +106,12 @@ body {
                             
                             span.aya {
                                 font-size: 30px;
-                                line-height: 1.8em;
+                                line-height: 1.9em;
                                 letter-spacing: -0.025em;
                                 cursor: pointer;
                                 transition: background-color 120ms;
                                 border-radius: 5px;
-                                margin-left: 10px;
+                                margin-left: 5px;
                                 
                                 &.selected, &.selected:hover {
                                     background-color: $highlight-color-light-select;
