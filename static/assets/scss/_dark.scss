@@ -32,6 +32,37 @@ body.dark {
     .main {
         background-color: $body-color;
         
+        &__content {
+            
+            .owl-carousel {
+                
+                .item {
+                    
+                    .sura {
+                        
+                        .content {
+                            
+                            span.aya {
+                                color: $text-dark;
+                                
+                                &.selected, &.selected:hover {
+                                    background-color: $highlight-color-dark-select;
+                                    
+                                    span.number {
+                                        color: $number-color;
+                                    }
+                                }
+                                
+                                &:hover {
+                                    background-color: $highlight-color-dark-hover;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
         &.disabled {
             // NOTE: this is a new color must be added to the utils.scss
             background-color: #232324;
@@ -70,10 +101,10 @@ body.dark {
                     }
                 }
             }
-    
+            
             &__more {
                 filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(112deg) brightness(103%) contrast(104%);
-        
+                
                 & * {
                     width: 100%;
                     height: 100%;
@@ -93,13 +124,13 @@ body.dark {
                 background-color: $highlight-color;
             }
         }
-
+        
         &__tab-content {
             &__tab {
                 &.active {
                     * {
                         color: $text-dark;
-
+                        
                         &.selected {
                             background-color: rgba(142, 192, 189, 0.49);
                         }

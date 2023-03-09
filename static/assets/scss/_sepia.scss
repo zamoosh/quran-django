@@ -44,8 +44,16 @@ body.sepia {
                             span.aya {
                                 &.selected, &.selected:hover {
                                     background-color: $highlight-color-sepia-select;
+                                    
+                                    span.text {
+                                        color: $text-sepia;
+                                    }
+                                    
+                                    span.number {
+                                        color: $number-color;
+                                    }
                                 }
-    
+                                
                                 &:hover {
                                     background-color: $highlight-color-sepia-hover;
                                 }

@@ -115,6 +115,14 @@ body {
                                 
                                 &.selected, &.selected:hover {
                                     background-color: $highlight-color-light-select;
+                                    
+                                    span.text {
+                                        color: $text-light-inside-select;
+                                    }
+                                    
+                                    span.number {
+                                        color: $text-light-inside-select;
+                                    }
                                 }
                                 
                                 &:hover {
@@ -126,7 +134,7 @@ body {
                                     
                                     .number {
                                         font-size: 35px;
-                                        color: #2b712b;
+                                        color: $number-color;
                                         cursor: text;
                                     }
                                 }
