@@ -1,3 +1,4 @@
+// header
 header {
     
     & .header {
@@ -22,6 +23,43 @@ header {
     }
 }
 
+// main
+.main {
+    
+    .pattern {
+        height: 500px;
+        background-image: url("../img/pattern.svg");
+        background-size: cover;
+        background-position: center top;
+        margin-top: 65px;
+        width: 100vw;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-repeat: space;
+        
+        &__quran {
+            width: 200px;
+            height: 200px;
+            background-image: url("../img/sepia/quran.svg");
+            position: absolute;
+            background-repeat: no-repeat;
+            background-size: cover;
+            top: 60px;
+        }
+    }
+    
+    .container {
+        
+        .main__content {
+            padding: 65px 0;
+            
+        }
+    }
+}
+
+// side menu
 .side-menu {
     bottom: 0;
 }
