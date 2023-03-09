@@ -559,16 +559,16 @@ body.sepia header {
   background-color: #FFFDF3;
 }
 body.sepia header .header__menu-btn__burger {
-  background-color: #0c1f34;
+  background-color: #A99374;
 }
 body.sepia header .header__menu-btn__burger.open {
   background-color: transparent;
 }
 body.sepia header .header__menu-btn__burger::before, body.sepia header .header__menu-btn__burger::after {
-  background-color: #0c1f34;
+  background-color: #A99374;
 }
 body.sepia header .header__back__icon::before, body.sepia header .header__back__icon::after {
-  background-color: #0c1f34;
+  background-color: #A99374;
 }
 body.sepia .main {
   background-color: #FAEBD4;
@@ -604,6 +604,26 @@ body.sepia footer .footer__more * {
 }
 body.sepia .side-menu {
   background-color: #FFFDF3;
+}
+
+header .header__logo {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+}
+header .header__language {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+}
+header .header__language path {
+  fill: #A99374;
+}
+
+.side-menu {
+  bottom: 0;
 }
 
 @font-face {

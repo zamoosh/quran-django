@@ -1,0 +1,27 @@
+header {
+    
+    & .header {
+        
+        &__logo {
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        &__language {
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+            justify-content: center;
+            
+            path {
+                fill: $icon-color-sepia;
+            }
+        }
+    }
+}
+
+.side-menu {
+    bottom: 0;
+}

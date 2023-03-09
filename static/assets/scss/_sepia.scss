@@ -7,14 +7,14 @@ body.sepia {
         .header {
             &__menu-btn {
                 &__burger {
-                    background-color: $text-sepia;
+                    background-color: $icon-color-sepia;
                     
                     &.open {
                         background-color: transparent;
                     }
                     
                     &::before, &::after {
-                        background-color: $text-sepia;
+                        background-color: $icon-color-sepia;
                     }
                 }
             }
@@ -22,7 +22,7 @@ body.sepia {
             &__back {
                 &__icon {
                     &::before, &::after {
-                        background-color: $text-sepia;
+                        background-color: $icon-color-sepia;
                     }
                 }
             }
