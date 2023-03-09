@@ -125,7 +125,6 @@
 
 {% block js %}
     <script>
-        let sura_juz_page_list_url = "{% url 'quran:api:sura_juz_page_list' %}";
         let sura_details_url = "{% url 'quran:api:sura_details' 0 %}";
         let page_details_url = "{% url 'quran:api:page_details' 0 %}";
         let juz_details_url = "{% url 'quran:api:juz_details' 0 %}";
@@ -133,9 +132,6 @@
         let get_sura_aya_url = "{% url 'quran:api:sura_aya' 0 0 %}";
         let sura_aya_url = "{{ sura_aya }}";
     </script>
-
-    <!-- side menu -->
-    <script src="{% static 'assets/js/side_menu.js' %}"></script>
 
     <!-- page js -->
     <script type="module">
@@ -147,8 +143,6 @@
 
         document.addEventListener("DOMContentLoaded", function () {
 
-            let side_menu = new SideMenu(".side-menu");
-            let tab = new Tab(side_menu);
             let player = new Player("player");
             let history = History.get_instance();
             let path = Path.get_instance();
