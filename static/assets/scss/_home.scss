@@ -48,7 +48,8 @@ header {
         }
     }
     
-    .container {
+    .container-fluid {
+        padding: 0;
         
         //.main {
         
@@ -67,9 +68,11 @@ header {
                 }
                 
                 &__content {
+                    padding-bottom: 40px;
                     
                     .sura-name {
                         font-size: 2rem;
+                        text-decoration: none;
                         font-weight: bold;
                         background-size: contain;
                         background-image: url("../img/sepia/sura-name-container-sepia.svg");
@@ -80,6 +83,54 @@ header {
                         color: $sura-carousel-color-sepia;
                         background-position: center;
                         background-repeat: no-repeat;
+                    }
+                }
+            }
+            
+            .juz_list {
+                background-color: $juz-list-background-sepia;
+                
+                &__title {
+                    color: $icon-color-sepia;
+                    font-weight: bold;
+                    font-size: 1.4rem;
+                    letter-spacing: -1px;
+                    font-family: vazirmatn, sans-serif;
+                    padding: 60px 7px 30px;
+                }
+                
+                &__content {
+    
+                    .juz-name {
+                        font-size: 2rem;
+                        text-decoration: none;
+                        font-weight: bold;
+                        background-size: contain;
+                        background-image: url("../img/sepia/juz-name-container-sepia.svg");
+                        padding: 35px 0 30px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        color: $sura-carousel-color-sepia;
+                        background-position: center;
+                        background-repeat: no-repeat;
+                    }
+                    
+                    &__title {
+                        display: grid;
+                        grid-template-columns: auto auto auto;
+                        padding-bottom: 25px;
+                    }
+                    
+                    &__body {
+                        display: grid;
+                        grid-template-columns: auto auto;
+                        padding-top: 25px;
+                        row-gap: 40px;
+    
+                        .juz-name {
+                            padding: 55px 0 50px;
+                        }
                     }
                 }
             }

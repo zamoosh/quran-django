@@ -642,10 +642,13 @@ header .header__language path {
   background-size: cover;
   top: 60px;
 }
-.main .container .main__content {
+.main .container-fluid {
+  padding: 0;
+}
+.main .container-fluid .main__content {
   padding: 65px 0;
 }
-.main .container .main__content .sura_list__title {
+.main .container-fluid .main__content .sura_list__title {
   font-weight: bold;
   font-size: 1.4rem;
   letter-spacing: -1px;
@@ -653,8 +656,12 @@ header .header__language path {
   padding: 13px 7px;
   color: #094A37;
 }
-.main .container .main__content .sura_list__content .sura-name {
+.main .container-fluid .main__content .sura_list__content {
+  padding-bottom: 40px;
+}
+.main .container-fluid .main__content .sura_list__content .sura-name {
   font-size: 2rem;
+  text-decoration: none;
   font-weight: bold;
   background-size: contain;
   background-image: url("../img/sepia/sura-name-container-sepia.svg");
@@ -665,6 +672,45 @@ header .header__language path {
   color: #FAEBD4;
   background-position: center;
   background-repeat: no-repeat;
+}
+.main .container-fluid .main__content .juz_list {
+  background-color: #efe1cb;
+}
+.main .container-fluid .main__content .juz_list__title {
+  color: #A99374;
+  font-weight: bold;
+  font-size: 1.4rem;
+  letter-spacing: -1px;
+  font-family: vazirmatn, sans-serif;
+  padding: 60px 7px 30px;
+}
+.main .container-fluid .main__content .juz_list__content .juz-name {
+  font-size: 2rem;
+  text-decoration: none;
+  font-weight: bold;
+  background-size: contain;
+  background-image: url("../img/sepia/juz-name-container-sepia.svg");
+  padding: 35px 0 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #FAEBD4;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.main .container-fluid .main__content .juz_list__content__title {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  padding-bottom: 25px;
+}
+.main .container-fluid .main__content .juz_list__content__body {
+  display: grid;
+  grid-template-columns: auto auto;
+  padding-top: 25px;
+  row-gap: 40px;
+}
+.main .container-fluid .main__content .juz_list__content__body .juz-name {
+  padding: 55px 0 50px;
 }
 
 .side-menu {

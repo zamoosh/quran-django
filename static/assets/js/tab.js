@@ -71,9 +71,11 @@ export class Tab {
                     resolve(true);
                 })
                     .then(function (result) {
-                        if (result)
+                        if (result) {
                             home.prepare_sura_list_carousel();
-                            // console.log("loaded");
+                            // home.prepare_juz_list();
+                        }
+                        // console.log("loaded");
                     });
                 for (const sura of context["sura_list"]) {
                     let item = document.createElement("a");
