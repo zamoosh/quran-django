@@ -1,6 +1,8 @@
 {% extends 'quran/views/base.html' %}
 {% load static %}
 
+{% block title %}Reader{% endblock %}
+
 {% block header %}
     <header>
         <div class="header">
@@ -11,9 +13,9 @@
                 <span>سورَة</span>
                 <span id="page_number">صَفحَة</span>
             </div>
-            <div role="button" class="header__back">
+            <a href="{% url 'quran:home' %}" role="button" class="header__back">
                 <span class="header__back__icon"></span>
-            </div>
+            </a>
         </div>
     </header>
 {% endblock %}

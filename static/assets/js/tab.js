@@ -63,10 +63,11 @@ export class Tab {
             data: {},
             cache: true,
             success: function (context) {
+                console.log(document.title);
                 for (const sura of context["sura_list"]) {
                     let item = document.createElement("a");
                     item.id = sura.sura;
-                    item.href = "javascript:void(0)";
+                    document.title.includes("Home") ? item.href = `/sura/${sura.sura}:1` : item.href = "javascript:void(0)";
                     item.innerHTML = toArabicNumber(String(sura.sura)) + ". " + sura.sura_name;
                     item.addEventListener("click", obj.get_sura.bind(item.id));
                     sura_tab.appendChild(item);
@@ -74,7 +75,7 @@ export class Tab {
                 for (const juz_id of context["juz_list"]) {
                     let item = document.createElement("a");
                     item.id = juz_id;
-                    item.href = "javascript:void(0)";
+                    document.title.includes("Home") ? item.href = `/juz/${juz_id}` : item.href = "javascript:void(0)";
                     item.innerHTML = toArabicNumber(String(juz_id)) + ". " + "الجزء";
                     item.addEventListener("click", obj.get_juz.bind(item.id));
                     juz_tab.appendChild(item);
@@ -82,7 +83,7 @@ export class Tab {
                 for (const page_id of context["page_list"]) {
                     let item = document.createElement("a");
                     item.id = page_id;
-                    item.href = "javascript:void(0)";
+                    document.title.includes("Home") ? item.href = `/page/${page_id}` : item.href = "javascript:void(0)";
                     item.innerHTML = toArabicNumber(String(page_id)) + ". " + "الصفحة";
                     item.addEventListener("click", obj.get_page.bind(item.id));
                     juz_tab.appendChild(item);

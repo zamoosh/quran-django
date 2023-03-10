@@ -623,9 +623,8 @@ header .header__language path {
 }
 
 .main .pattern {
-  height: 500px;
-  background-image: url("../img/pattern.svg");
-  background-size: cover;
+  height: 342px;
+  background-image: url("../img/sepia/pattern-sepia.svg");
   background-position: center top;
   margin-top: 65px;
   width: 100vw;
@@ -633,7 +632,6 @@ header .header__language path {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-repeat: space;
 }
 .main .pattern__quran {
   width: 200px;
