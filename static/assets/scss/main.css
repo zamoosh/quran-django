@@ -645,6 +645,27 @@ header .header__language path {
 .main .container .main__content {
   padding: 65px 0;
 }
+.main .container .main__content .sura_list__title {
+  font-weight: bold;
+  font-size: 1.4rem;
+  letter-spacing: -1px;
+  font-family: vazirmatn, sans-serif;
+  padding: 13px 7px;
+  color: #094A37;
+}
+.main .container .main__content .sura_list__content .sura-name {
+  font-size: 2rem;
+  font-weight: bold;
+  background-size: contain;
+  background-image: url("../img/sepia/sura-name-container-sepia.svg");
+  padding: 15px 0 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #FAEBD4;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 
 .side-menu {
   bottom: 0;

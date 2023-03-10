@@ -38,7 +38,7 @@
         {% block css %}{% endblock %}
     </head>
 
-    <body class="sepia">
+    <body class="sepia {% block body_class %}{% endblock %}">
         {% block header %}{% endblock %}
 
         {% block body %}{% endblock %}

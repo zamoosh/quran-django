@@ -1,5 +1,6 @@
 import {toArabicNumber} from "./utils.js";
 import {Content} from "./content.js";
+import {Home} from "./home.js";
 
 export class Tab {
     static main_content;
@@ -63,7 +64,17 @@ export class Tab {
             data: {},
             cache: true,
             success: function (context) {
-                console.log(document.title);
+                let home = Home.get_instance();
+                home.promise = new Promise(function (resolve) {
+                    home.sura_list = context["sura_list"];
+                    home.juz_list = context["juz_list"];
+                    resolve(true);
+                })
+                    .then(function (result) {
+                        if (result)
+                            home.prepare_sura_list_carousel();
+                            // console.log("loaded");
+                    });
                 for (const sura of context["sura_list"]) {
                     let item = document.createElement("a");
                     item.id = sura.sura;

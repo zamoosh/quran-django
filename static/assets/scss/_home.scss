@@ -50,10 +50,43 @@ header {
     
     .container {
         
+        //.main {
+        
         .main__content {
             padding: 65px 0;
             
+            .sura_list {
+                
+                &__title {
+                    font-weight: bold;
+                    font-size: 1.4rem;
+                    letter-spacing: -1px;
+                    font-family: vazirmatn, sans-serif;
+                    padding: 13px 7px;
+                    color: $title-color-sepia;
+                }
+                
+                &__content {
+                    
+                    .sura-name {
+                        font-size: 2rem;
+                        font-weight: bold;
+                        background-size: contain;
+                        background-image: url("../img/sepia/sura-name-container-sepia.svg");
+                        padding: 15px 0 20px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        color: $sura-carousel-color-sepia;
+                        background-position: center;
+                        background-repeat: no-repeat;
+                    }
+                }
+            }
+            
         }
+        
+        //}
     }
 }
 
