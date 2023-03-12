@@ -675,20 +675,28 @@ header .header__language path {
 }
 .main .container-fluid .main__content .juz_list {
   background-color: #efe1cb;
+  padding: 60px 20px 30px;
 }
 .main .container-fluid .main__content .juz_list__title {
   color: #A99374;
   font-weight: bold;
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   letter-spacing: -1px;
   font-family: vazirmatn, sans-serif;
-  padding: 60px 7px 30px;
+  margin-bottom: 30px;
+}
+.main .container-fluid .main__content .juz_list__content {
+  height: 7rem;
+  transition: height 0.5s ease-in-out;
+  overflow: hidden;
+}
+.main .container-fluid .main__content .juz_list__content.expanded {
+  height: 157.5rem;
 }
 .main .container-fluid .main__content .juz_list__content .juz-name {
-  font-size: 2rem;
+  font-size: 1.5rem;
   text-decoration: none;
   font-weight: bold;
-  background-size: contain;
   background-image: url("../img/sepia/juz-name-container-sepia.svg");
   padding: 35px 0 30px;
   display: flex;
@@ -696,12 +704,13 @@ header .header__language path {
   align-items: center;
   color: #FAEBD4;
   background-position: center;
+  background-size: 100% 100%;
   background-repeat: no-repeat;
 }
 .main .container-fluid .main__content .juz_list__content__title {
   display: grid;
   grid-template-columns: auto auto auto;
-  padding-bottom: 25px;
+  margin-bottom: 25px;
 }
 .main .container-fluid .main__content .juz_list__content__body {
   display: grid;
@@ -710,7 +719,27 @@ header .header__language path {
   row-gap: 40px;
 }
 .main .container-fluid .main__content .juz_list__content__body .juz-name {
-  padding: 55px 0 50px;
+  padding: 55px 10px 50px 10px;
+  margin: 0 10px 0 0;
+}
+.main .container-fluid .main__content .juz_list__button {
+  display: flex;
+  justify-content: center;
+  margin: 30px 0;
+}
+.main .container-fluid .main__content .juz_list__button button {
+  background-color: #A99374;
+  border-radius: 6px !important;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  width: 100%;
+  font-size: 1.5rem;
+  color: #FAEBD4;
+  font-family: "vazirmatn", sans-serif;
 }
 
 .side-menu {

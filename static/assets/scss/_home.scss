@@ -51,8 +51,6 @@ header {
     .container-fluid {
         padding: 0;
         
-        //.main {
-        
         .main__content {
             padding: 65px 0;
             
@@ -89,23 +87,31 @@ header {
             
             .juz_list {
                 background-color: $juz-list-background-sepia;
+                padding: 60px 20px 30px;
                 
                 &__title {
                     color: $icon-color-sepia;
                     font-weight: bold;
-                    font-size: 1.4rem;
+                    font-size: 1.3rem;
                     letter-spacing: -1px;
                     font-family: vazirmatn, sans-serif;
-                    padding: 60px 7px 30px;
+                    margin-bottom: 30px;
                 }
                 
                 &__content {
-    
+                    height: 7rem;
+                    transition: height 0.5s ease-in-out;
+                    overflow: hidden;
+                    
+                    &.expanded {
+                        height: 157.5rem;
+                    }
+                    
                     .juz-name {
-                        font-size: 2rem;
+                        font-size: 1.5rem;
                         text-decoration: none;
                         font-weight: bold;
-                        background-size: contain;
+                        //background-size: contain;
                         background-image: url("../img/sepia/juz-name-container-sepia.svg");
                         padding: 35px 0 30px;
                         display: flex;
@@ -113,13 +119,14 @@ header {
                         align-items: center;
                         color: $sura-carousel-color-sepia;
                         background-position: center;
+                        background-size: 100% 100%;
                         background-repeat: no-repeat;
                     }
                     
                     &__title {
                         display: grid;
                         grid-template-columns: auto auto auto;
-                        padding-bottom: 25px;
+                        margin-bottom: 25px;
                     }
                     
                     &__body {
@@ -127,17 +134,36 @@ header {
                         grid-template-columns: auto auto;
                         padding-top: 25px;
                         row-gap: 40px;
-    
+                        
                         .juz-name {
-                            padding: 55px 0 50px;
+                            padding: 55px 10px 50px 10px;
+                            margin: 0 10px 0 0;
                         }
+                    }
+                }
+                &__button {
+                    display: flex;
+                    justify-content: center;
+                    margin: 30px 0;
+                    
+                    button {
+                        background-color: $icon-color-sepia;
+                        border-radius: 6px !important;
+                        border: none;
+                        cursor: pointer;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        padding: 15px;
+                        width: 100%;
+                        font-size: 1.5rem;
+                        color: $sura-carousel-color-sepia;
+                        font-family: "vazirmatn", sans-serif;
                     }
                 }
             }
             
         }
-        
-        //}
     }
 }
 
