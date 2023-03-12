@@ -738,6 +738,96 @@ header .header__language path {
   color: #FAEBD4;
   font-family: "vazirmatn", sans-serif;
 }
+.main .container-fluid .main__content .sura_list {
+  padding: 60px 20px 30px;
+}
+.main .container-fluid .main__content .sura_list__title {
+  font-weight: bold;
+  font-size: 1.4rem;
+  letter-spacing: -1px;
+  font-family: vazirmatn, sans-serif;
+  margin-top: 20px;
+  padding: 15px 20px;
+  color: #72603F;
+}
+.main .container-fluid .main__content .sura_list .show {
+  height: 0;
+  transition: height 300ms;
+}
+.main .container-fluid .main__content .sura_list__content__title {
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+.main .container-fluid .main__content .sura_list__content__title .sura-name {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  padding: 5px 17% 20px 0;
+  height: 100px;
+  text-decoration: none;
+  margin: 5px 0;
+}
+.main .container-fluid .main__content .sura_list__content__title .sura-name__number {
+  width: 55px;
+  background-image: url("../img/sepia/sura-number-sepia.svg");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.7rem;
+  padding: 5px 20px 5px;
+  color: #FAEBD4;
+  font-family: KFG, sans-serif;
+}
+.main .container-fluid .main__content .sura_list__content__title .sura-name__name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.7rem;
+  color: #094A37;
+}
+.main .container-fluid .main__content .sura_list__content .show {
+  overflow: hidden;
+  height: 0;
+  transition: height 300ms;
+}
+.main .container-fluid .main__content .sura_list__content .show .content {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  overflow: hidden;
+}
+.main .container-fluid .main__content .sura_list__content .show .content .sura-name {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  padding: 5px 17% 20px 0;
+  height: 100px;
+  text-decoration: none;
+  margin: 5px 0;
+}
+.main .container-fluid .main__content .sura_list__content .show .content .sura-name__number {
+  width: 55px;
+  background-image: url("../img/sepia/sura-number-sepia.svg");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.7rem;
+  padding: 5px 20px 5px;
+  color: #FAEBD4;
+  font-family: KFG, sans-serif;
+}
+.main .container-fluid .main__content .sura_list__content .show .content .sura-name__name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.7rem;
+  color: #094A37;
+}
 
 .side-menu {
   bottom: 0;

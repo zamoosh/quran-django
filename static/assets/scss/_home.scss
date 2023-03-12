@@ -163,6 +163,112 @@ header {
                 }
             }
             
+            .sura_list {
+                padding: 60px 20px 30px;
+                
+                &__title {
+                    font-weight: bold;
+                    font-size: 1.4rem;
+                    letter-spacing: -1px;
+                    font-family: vazirmatn, sans-serif;
+                    margin-top: 20px;
+                    padding: 15px 20px;
+                    color: #72603F;
+                }
+                
+                .show {
+                    height: 0;
+                    transition: height 300ms;
+                }
+                
+                &__content {
+                    
+                    &__title {
+                        display: grid;
+                        grid-template-columns: auto auto auto;
+                        
+                        .sura-name {
+                            display: flex;
+                            flex-direction: row;
+                            justify-content: start;
+                            padding: 5px 17% 20px 0;
+                            height: 100px;
+                            text-decoration: none;
+                            margin: 5px 0;
+                            
+                            &__number {
+                                width: 55px;
+                                background-image: url("../img/sepia/sura-number-sepia.svg");
+                                background-repeat: no-repeat;
+                                background-size: 100% 100%;
+                                background-position: center;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                font-size: 1.7rem;
+                                padding: 5px 20px 5px;
+                                color: $sura-carousel-color-sepia;
+                                font-family: KFG, sans-serif;
+                            }
+                            
+                            &__name {
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                font-size: 1.7rem;
+                                color: $title-color-sepia;
+                            }
+                        }
+                    }
+                    
+                    .show {
+                        overflow: hidden;
+                        height: 0;
+                        transition: height 300ms;
+                        
+                        .content {
+                            display: grid;
+                            grid-template-columns: auto auto auto;
+                            overflow: hidden;
+                            
+                            .sura-name {
+                                display: flex;
+                                flex-direction: row;
+                                justify-content: start;
+                                padding: 5px 17% 20px 0;
+                                height: 100px;
+                                text-decoration: none;
+                                margin: 5px 0;
+                                
+                                &__number {
+                                    width: 55px;
+                                    background-image: url("../img/sepia/sura-number-sepia.svg");
+                                    background-repeat: no-repeat;
+                                    background-size: 100% 100%;
+                                    background-position: center;
+                                    display: flex;
+                                    justify-content: center;
+                                    align-items: center;
+                                    font-size: 1.7rem;
+                                    padding: 5px 20px 5px;
+                                    color: $sura-carousel-color-sepia;
+                                    font-family: KFG, sans-serif;
+                                }
+                                
+                                &__name {
+                                    display: flex;
+                                    justify-content: center;
+                                    align-items: center;
+                                    font-size: 1.7rem;
+                                    color: $title-color-sepia;
+                                }
+                            }
+                        }
+                        
+                    }
+                }
+            }
+            
         }
     }
 }

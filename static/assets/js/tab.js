@@ -73,6 +73,7 @@ export class Tab {
                     .then(function (result) {
                         if (result) {
                             home.prepare_sura_list_carousel();
+                            home.prepare_sura_list();
                             // home.prepare_juz_list();
                         }
                         // console.log("loaded");
