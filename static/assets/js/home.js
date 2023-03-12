@@ -107,10 +107,10 @@ export class Home {
             let h = this.sura_list_collapse.firstElementChild.getBoundingClientRect().height;
             this.sura_list_collapse.classList.toggle("expanded");
             if (this.sura_list_collapse.classList.contains("expanded")) {
-                this.expand_button_juz.innerHTML = "الكم";
+                this.expand_button_sura.innerHTML = "الكم";
                 this.sura_list_collapse.style.height = `${h}px`;
             } else {
-                this.expand_button_juz.innerHTML = "المزيد";
+                this.expand_button_sura.innerHTML = "المزيد";
                 this.sura_list_collapse.style.height = "0px";
             }
         }.bind(this));
