@@ -6,7 +6,7 @@ export class Home {
     constructor() {
         this.sura_list = [];
         this.juz_list = [];
-        this.sura_list_carousel = document.querySelector(".sura_list__content");
+        this.sura_list_carousel = document.querySelector(".sura_list_carousel__content");
         this.juz_list_container = document.querySelector(".juz_list__content");
         this.juz_list_body = document.querySelector(".juz_list__content__body");
         this.juz_list_body_collapse = this.juz_list_container.querySelector(".show");

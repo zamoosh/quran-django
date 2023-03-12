@@ -648,18 +648,18 @@ header .header__language path {
 .main .container-fluid .main__content {
   padding: 65px 0;
 }
-.main .container-fluid .main__content .sura_list__title {
+.main .container-fluid .main__content .sura_list_carousel__title {
   font-weight: bold;
   font-size: 1.4rem;
   letter-spacing: -1px;
   font-family: vazirmatn, sans-serif;
-  padding: 13px 7px;
+  padding: 15px 20px;
   color: #094A37;
 }
-.main .container-fluid .main__content .sura_list__content {
-  padding-bottom: 40px;
+.main .container-fluid .main__content .sura_list_carousel__content {
+  padding: 0 20px 40px 0;
 }
-.main .container-fluid .main__content .sura_list__content .sura-name {
+.main .container-fluid .main__content .sura_list_carousel__content .sura-name {
   font-size: 2rem;
   text-decoration: none;
   font-weight: bold;

@@ -54,19 +54,19 @@ header {
         .main__content {
             padding: 65px 0;
             
-            .sura_list {
+            .sura_list_carousel {
                 
                 &__title {
                     font-weight: bold;
                     font-size: 1.4rem;
                     letter-spacing: -1px;
                     font-family: vazirmatn, sans-serif;
-                    padding: 13px 7px;
+                    padding: 15px 20px;
                     color: $title-color-sepia;
                 }
                 
                 &__content {
-                    padding-bottom: 40px;
+                    padding: 0 20px 40px 0;
                     
                     .sura-name {
                         font-size: 2rem;
