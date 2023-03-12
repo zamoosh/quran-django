@@ -474,6 +474,9 @@ footer .footer audio {
 .side-menu__tab-content__tab.active *.selected {
   background-color: #8ec0bd;
 }
+.side-menu__tab-content__tab.active *:hover {
+  background-color: rgba(142, 192, 189, 0.51);
+}
 
 body.dark {
   color: #e2f0f1;
@@ -605,6 +608,12 @@ body.sepia footer .footer__more * {
 body.sepia .side-menu {
   background-color: #FFFDF3;
 }
+body.sepia .side-menu__tab-content__tab.active *.selected {
+  background-color: #D7C7B0;
+}
+body.sepia .side-menu__tab-content__tab.active *:hover {
+  background-color: #E9D9C4;
+}
 
 header .header__logo {
   display: flex;
@@ -672,6 +681,7 @@ header .header__language path {
   color: #FAEBD4;
   background-position: center;
   background-repeat: no-repeat;
+  min-width: 8rem;
 }
 .main .container-fluid .main__content .juz_list {
   background-color: #efe1cb;
@@ -859,8 +869,8 @@ footer .description .social-media {
 }
 footer .description .social-media img {
   display: block;
-  height: 60.5px;
-  width: 60.5px;
+  height: 50.5px;
+  width: 50.5px;
 }
 footer .description .contact-us {
   display: flex;
@@ -868,11 +878,12 @@ footer .description .contact-us {
   justify-content: space-between;
   align-items: center;
   margin: 40px 0;
+  padding: 20px 4.5%;
 }
 footer .description .contact-us span {
   font-family: "vazirmatn", sans-serif;
-  font-size: 1.7rem;
-  padding: 20px 6%;
+  font-size: 1.5rem;
+  letter-spacing: -1px;
   color: #FAEBD4;
 }
 footer .copyright {

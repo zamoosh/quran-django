@@ -101,6 +101,10 @@
                     &.selected {
                         background-color: #8ec0bd;
                     }
+                    
+                    &:hover {
+                        background-color: rgba(142, 192, 189, 0.51);
+                    }
                 }
             }
         }

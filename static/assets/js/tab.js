@@ -64,20 +64,20 @@ export class Tab {
             data: {},
             cache: true,
             success: function (context) {
-                let home = Home.get_instance();
-                home.promise = new Promise(function (resolve) {
-                    home.sura_list = context["sura_list"];
-                    home.juz_list = context["juz_list"];
-                    resolve(true);
-                })
-                    .then(function (result) {
-                        if (result) {
-                            home.prepare_sura_list_carousel();
-                            home.prepare_sura_list();
-                            // home.prepare_juz_list();
-                        }
-                        // console.log("loaded");
-                    });
+                if (document.title.includes("Home")) {
+                    let home = Home.get_instance();
+                    home.promise = new Promise(function (resolve) {
+                        home.sura_list = context["sura_list"];
+                        home.juz_list = context["juz_list"];
+                        resolve(true);
+                    })
+                        .then(function (result) {
+                            if (result) {
+                                home.prepare_sura_list_carousel();
+                                home.prepare_sura_list();
+                            }
+                        });
+                }
                 for (const sura of context["sura_list"]) {
                     let item = document.createElement("a");
                     item.id = sura.sura;

@@ -81,6 +81,7 @@ header {
                         color: $sura-carousel-color-sepia;
                         background-position: center;
                         background-repeat: no-repeat;
+                        min-width: 8rem;
                     }
                 }
             }
@@ -305,8 +306,8 @@ footer {
             
             img {
                 display: block;
-                height: 60.5px;
-                width: 60.5px;
+                height: 50.5px;
+                width: 50.5px;
             }
         }
         
@@ -316,11 +317,12 @@ footer {
             justify-content: space-between;
             align-items: center;
             margin: 40px 0;
+            padding: 20px 4.5%;
             
             span {
                 font-family: "vazirmatn", sans-serif;
-                font-size: 1.7rem;
-                padding: 20px 6%;
+                font-size: 1.5rem;
+                letter-spacing: -1px;
                 color: $sura-carousel-color-sepia;
             }
             

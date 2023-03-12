@@ -107,5 +107,25 @@ body.sepia {
     
     .side-menu {
         background-color: $header-color-sepia;
+        
+        &__tab-content {
+            
+            &__tab {
+                
+                &.active {
+                    
+                    & * {
+                        
+                        &.selected {
+                            background-color: $highlight-color-sepia-select;
+                        }
+    
+                        &:hover {
+                            background-color: $highlight-color-sepia-hover;
+                        }
+                    }
+                }
+            }
+        }
     }
 }

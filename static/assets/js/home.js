@@ -44,23 +44,26 @@ export class Home {
             autoplaySpeed: 400,
             loop: true,
             rtl: true,
-            margin: 20,
+            margin: 30,
             dotsData: false,
             dots: false,
             paginationSpeed: 300,
             smartSpeed: 100,
             responsive: {
                 0: {
-                    items: 2.7,
+                    items: 2.2,
                 },
                 480: {
-                    items: 3.8,
+                    items: 3.3,
                 },
                 768: {
                     items: 5.5,
                 },
                 992: {
                     items: 7.5,
+                },
+                1200: {
+                    items: 9.5
                 }
             }
         });
