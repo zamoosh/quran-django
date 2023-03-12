@@ -8,6 +8,8 @@ export class Home {
         this.juz_list = [];
         this.sura_list_carousel = document.querySelector(".sura_list__content");
         this.juz_list_container = document.querySelector(".juz_list__content");
+        this.juz_list_body = document.querySelector(".juz_list__content__body");
+        this.juz_list_body_collapse = this.juz_list_container.querySelector(".show");
         this.expand_button = document.getElementById("expand");
 
         this.expand_juz_list();
@@ -72,15 +74,16 @@ export class Home {
     }
 
     expand_juz_list() {
-        console.log("expanding the juz list");
-        // this.expand_button.addEventListener("click", expand_collapse.bind(this));
+        let h = this.juz_list_body.getBoundingClientRect().height;
+        console.log(h);
         this.expand_button.addEventListener("click", function () {
-            if (this.juz_list_container.classList.contains("expanded")) {
-                this.juz_list_container.classList.remove("expanded");
+            this.juz_list_body_collapse.classList.toggle("expanded");
+            if (this.juz_list_body_collapse.classList.contains("expanded")) {
                 this.expand_button.innerHTML = "الكم";
+                this.juz_list_body_collapse.style.height = `${h}px`;
             } else {
-                this.juz_list_container.classList.add("expanded");
                 this.expand_button.innerHTML = "المزيد";
+                this.juz_list_body_collapse.style.height = "0px";
             }
         }.bind(this));
     }

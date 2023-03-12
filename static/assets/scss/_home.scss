@@ -99,13 +99,6 @@ header {
                 }
                 
                 &__content {
-                    height: 7rem;
-                    transition: height 0.5s ease-in-out;
-                    overflow: hidden;
-                    
-                    &.expanded {
-                        height: 157.5rem;
-                    }
                     
                     .juz-name {
                         font-size: 1.5rem;
@@ -129,6 +122,12 @@ header {
                         margin-bottom: 25px;
                     }
                     
+                    .show {
+                        overflow: hidden;
+                        height: 0;
+                        transition: height 300ms;
+                    }
+                    
                     &__body {
                         display: grid;
                         grid-template-columns: auto auto;
@@ -141,6 +140,7 @@ header {
                         }
                     }
                 }
+                
                 &__button {
                     display: flex;
                     justify-content: center;

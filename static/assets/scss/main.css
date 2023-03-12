@@ -685,14 +685,6 @@ header .header__language path {
   font-family: vazirmatn, sans-serif;
   margin-bottom: 30px;
 }
-.main .container-fluid .main__content .juz_list__content {
-  height: 7rem;
-  transition: height 0.5s ease-in-out;
-  overflow: hidden;
-}
-.main .container-fluid .main__content .juz_list__content.expanded {
-  height: 157.5rem;
-}
 .main .container-fluid .main__content .juz_list__content .juz-name {
   font-size: 1.5rem;
   text-decoration: none;
@@ -711,6 +703,11 @@ header .header__language path {
   display: grid;
   grid-template-columns: auto auto auto;
   margin-bottom: 25px;
+}
+.main .container-fluid .main__content .juz_list__content .show {
+  overflow: hidden;
+  height: 0;
+  transition: height 300ms;
 }
 .main .container-fluid .main__content .juz_list__content__body {
   display: grid;
