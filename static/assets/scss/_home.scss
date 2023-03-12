@@ -52,7 +52,7 @@ header {
         padding: 0;
         
         .main__content {
-            padding: 65px 0;
+            padding: 65px 0 0 0;
             
             .sura_list_carousel {
                 
@@ -276,4 +276,75 @@ header {
 // side menu
 .side-menu {
     bottom: 0;
+}
+
+footer {
+    position: unset;
+    width: unset;
+    height: unset;
+    
+    .description {
+        background-color: #043124;
+        display: flex;
+        flex-flow: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 200px;
+        padding: 30px;
+        
+        .rafed-container {
+            width: 100%;
+            margin-bottom: 30px;
+        }
+        
+        .social-media {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            width: 100%;
+            
+            img {
+                display: block;
+                height: 60.5px;
+                width: 60.5px;
+            }
+        }
+        
+        .contact-us {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            align-items: center;
+            margin: 40px 0;
+            
+            span {
+                font-family: "vazirmatn", sans-serif;
+                font-size: 1.7rem;
+                padding: 20px 6%;
+                color: $sura-carousel-color-sepia;
+            }
+            
+        }
+        
+    }
+    
+    .copyright {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: $sura-carousel-color-sepia;
+        
+        .text {
+            display: block;
+            text-align: center;
+            font-size: 1.4rem;
+            font-family: "vazirmatn", sans-serif;
+            user-select: text;
+            cursor: text;
+            padding: 0 10%;
+            line-height: 2.4rem;
+        }
+    }
 }

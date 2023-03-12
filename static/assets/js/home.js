@@ -68,7 +68,6 @@ export class Home {
 
     prepare_sura_list() {
         for (let i = 8; i < this.sura_list.length; i++) {
-            console.log(this.sura_list[i]);
             let sura_name_element = document.createElement("a");
             sura_name_element.classList.add("sura-name");
             sura_name_element.href = `/sura/${this.sura_list[i].sura}:1`;
