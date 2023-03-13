@@ -414,7 +414,7 @@ footer {
     padding: 30px;
     width: 50%;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     height: 100px;
   }
   footer .sites .right, footer .sites .left {
