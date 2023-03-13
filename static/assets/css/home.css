@@ -380,17 +380,24 @@ header .header__language path {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  height: 100px;
+  height: 50px;
   text-decoration: none;
   margin: 5px 0;
 }
 @media (min-width: 300px) {
   .main .container-fluid .main__content .sura_list__content__title .sura-name {
+    justify-content: space-evenly;
     padding: 5px 7% 20px 0;
+    height: 80px;
+  }
+}
+@media (min-width: 576px) {
+  .main .container-fluid .main__content .sura_list__content__title .sura-name {
+    height: 100px;
   }
 }
 .main .container-fluid .main__content .sura_list__content__title .sura-name__number {
-  width: 55px;
+  width: 45px;
   background-image: url("../img/sepia/sura-number-sepia.svg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -398,18 +405,42 @@ header .header__language path {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.7rem;
-  padding: 5px 20px 5px;
   color: #FAEBD4;
   font-family: KFG, sans-serif;
+  font-size: 1.7rem;
+}
+@media (min-width: 300px) {
+  .main .container-fluid .main__content .sura_list__content__title .sura-name__number {
+    width: 11vw;
+  }
+}
+@media (min-width: 576px) {
+  .main .container-fluid .main__content .sura_list__content__title .sura-name__number {
+    font-size: 2rem;
+    width: 55px;
+  }
 }
 .main .container-fluid .main__content .sura_list__content__title .sura-name__name {
-  width: 82px;
+  width: 85px;
   display: flex;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
-  font-size: 1.7rem;
+  font-size: 1.8rem;
   color: #094A37;
+  margin-right: 15px;
+  word-spacing: -4px;
+}
+@media (min-width: 300px) {
+  .main .container-fluid .main__content .sura_list__content__title .sura-name__name {
+    margin-right: 5px;
+    font-size: 1.7rem;
+  }
+}
+@media (min-width: 576px) {
+  .main .container-fluid .main__content .sura_list__content__title .sura-name__name {
+    font-size: 1.8rem;
+    word-spacing: -4px;
+  }
 }
 .main .container-fluid .main__content .sura_list__content .show {
   overflow: hidden;
@@ -444,17 +475,24 @@ header .header__language path {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  height: 100px;
+  height: 50px;
   text-decoration: none;
   margin: 5px 0;
 }
 @media (min-width: 300px) {
   .main .container-fluid .main__content .sura_list__content .show .content .sura-name {
+    justify-content: space-evenly;
     padding: 5px 7% 20px 0;
+    height: 80px;
+  }
+}
+@media (min-width: 576px) {
+  .main .container-fluid .main__content .sura_list__content .show .content .sura-name {
+    height: 100px;
   }
 }
 .main .container-fluid .main__content .sura_list__content .show .content .sura-name__number {
-  width: 55px;
+  width: 45px;
   background-image: url("../img/sepia/sura-number-sepia.svg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -462,18 +500,42 @@ header .header__language path {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.7rem;
-  padding: 5px 20px 5px;
   color: #FAEBD4;
   font-family: KFG, sans-serif;
+  font-size: 1.7rem;
+}
+@media (min-width: 300px) {
+  .main .container-fluid .main__content .sura_list__content .show .content .sura-name__number {
+    width: 11vw;
+  }
+}
+@media (min-width: 576px) {
+  .main .container-fluid .main__content .sura_list__content .show .content .sura-name__number {
+    font-size: 2rem;
+    width: 55px;
+  }
 }
 .main .container-fluid .main__content .sura_list__content .show .content .sura-name__name {
-  width: 82px;
+  width: 85px;
   display: flex;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
-  font-size: 1.7rem;
+  font-size: 1.8rem;
   color: #094A37;
+  margin-right: 15px;
+  word-spacing: -4px;
+}
+@media (min-width: 300px) {
+  .main .container-fluid .main__content .sura_list__content .show .content .sura-name__name {
+    margin-right: 5px;
+    font-size: 1.7rem;
+  }
+}
+@media (min-width: 576px) {
+  .main .container-fluid .main__content .sura_list__content .show .content .sura-name__name {
+    font-size: 1.8rem;
+    word-spacing: -4px;
+  }
 }
 
 .side-menu {

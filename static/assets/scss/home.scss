@@ -166,12 +166,12 @@ header {
                         display: grid;
                         grid-template-columns: auto;
                         row-gap: 40px;
-    
+                        
                         @include mobile {
                             grid-template-columns: auto auto auto;
                             //gap: 1%;
                         }
-    
+                        
                         @include tablet {
                             grid-template-columns: auto auto auto;
                             column-gap: 10%;
@@ -192,13 +192,13 @@ header {
                             font-size: 1.6rem;
                             padding: 10px 0;
                             word-spacing: -4px;
-    
+                            
                             @include mobile {
                                 font-size: 4.5vw;
                                 padding: 25px 1px;
                                 width: 28vw;
                             }
-    
+                            
                             @include tablet {
                                 font-size: 4vw;
                                 padding: 30px 0;
@@ -283,19 +283,23 @@ header {
                             display: flex;
                             flex-direction: row;
                             justify-content: center;
-                            //padding: 5px 17% 20px 0;
+                            height: 50px;
                             
                             @include mobile {
+                                justify-content: space-evenly;
                                 padding: 5px 7% 20px 0;
+                                height: 80px;
                             }
                             
+                            @include tablet {
+                                height: 100px;
+                            }
                             
-                            height: 100px;
                             text-decoration: none;
                             margin: 5px 0;
                             
                             &__number {
-                                width: 55px;
+                                width: 45px;
                                 background-image: url("../img/sepia/sura-number-sepia.svg");
                                 background-repeat: no-repeat;
                                 background-size: 100% 100%;
@@ -303,19 +307,40 @@ header {
                                 display: flex;
                                 justify-content: center;
                                 align-items: center;
-                                font-size: 1.7rem;
-                                padding: 5px 20px 5px;
+                                //padding: 5px 20px 5px;
                                 color: $sura-carousel-color-sepia;
                                 font-family: KFG, sans-serif;
+                                font-size: 1.7rem;
+                                
+                                @include mobile {
+                                    width: 11vw;
+                                }
+                                
+                                @include tablet {
+                                    font-size: 2rem;
+                                    width: 55px;
+                                }
                             }
                             
                             &__name {
-                                width: 82px;
+                                width: 85px;
                                 display: flex;
-                                justify-content: center;
+                                justify-content: start;
                                 align-items: center;
-                                font-size: 1.7rem;
+                                font-size: 1.8rem;
                                 color: $title-color-sepia;
+                                margin-right: 15px;
+                                word-spacing: -4px;
+                                
+                                @include mobile {
+                                    margin-right: 5px;
+                                    font-size: 1.7rem;
+                                }
+                                
+                                @include tablet {
+                                    font-size: 1.8rem;
+                                    word-spacing: -4px;
+                                }
                             }
                         }
                     }
@@ -349,19 +374,23 @@ header {
                                 display: flex;
                                 flex-direction: row;
                                 justify-content: center;
-                                //padding: 5px 17% 20px 0;
+                                height: 50px;
                                 
                                 @include mobile {
+                                    justify-content: space-evenly;
                                     padding: 5px 7% 20px 0;
+                                    height: 80px;
                                 }
                                 
+                                @include tablet {
+                                    height: 100px;
+                                }
                                 
-                                height: 100px;
                                 text-decoration: none;
                                 margin: 5px 0;
                                 
                                 &__number {
-                                    width: 55px;
+                                    width: 45px;
                                     background-image: url("../img/sepia/sura-number-sepia.svg");
                                     background-repeat: no-repeat;
                                     background-size: 100% 100%;
@@ -369,19 +398,40 @@ header {
                                     display: flex;
                                     justify-content: center;
                                     align-items: center;
-                                    font-size: 1.7rem;
-                                    padding: 5px 20px 5px;
+                                    //padding: 5px 20px 5px;
                                     color: $sura-carousel-color-sepia;
                                     font-family: KFG, sans-serif;
+                                    font-size: 1.7rem;
+                                    
+                                    @include mobile {
+                                        width: 11vw;
+                                    }
+                                    
+                                    @include tablet {
+                                        font-size: 2rem;
+                                        width: 55px;
+                                    }
                                 }
                                 
                                 &__name {
-                                    width: 82px;
+                                    width: 85px;
                                     display: flex;
-                                    justify-content: center;
+                                    justify-content: start;
                                     align-items: center;
-                                    font-size: 1.7rem;
+                                    font-size: 1.8rem;
                                     color: $title-color-sepia;
+                                    margin-right: 15px;
+                                    word-spacing: -4px;
+                                    
+                                    @include mobile {
+                                        margin-right: 5px;
+                                        font-size: 1.7rem;
+                                    }
+                                    
+                                    @include tablet {
+                                        font-size: 1.8rem;
+                                        word-spacing: -4px;
+                                    }
                                 }
                             }
                         }
