@@ -3,7 +3,9 @@
 
 {% block title %}Home page{% endblock %}
 
-{% block css %}{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'assets/css/home.css' %}">
+{% endblock %}
 
 {% block header %}
 <header>
@@ -184,31 +186,55 @@
                 </div>
 
                 <footer>
-                    <div class="description">
-                        <div class="rafed-container">
-                            <img src="{% static 'assets/img/rafed-network.svg' %}" alt="rafed network">
+                    <div class="">
+                        <div class="description">
+                            <div class="rafed-container">
+                                <img src="{% static 'assets/img/rafed-network.svg' %}" alt="rafed network">
+                            </div>
+                            <div class="social-media">
+                                <a href="javascript:void(0)">
+                                    <img src="{% static 'assets/img/social-media/instagram.svg' %}" alt="link to instagram">
+                                </a>
+                                <a href="javascript:void(0)">
+                                    <img src="{% static 'assets/img/social-media/facebook.svg' %}" alt="link to facebook">
+                                </a>
+                                <a href="javascript:void(0)">
+                                    <img src="{% static 'assets/img/social-media/whatsup.svg' %}" alt="link to whatsup">
+                                </a>
+                                <a href="javascript:void(0)">
+                                    <img src="{% static 'assets/img/social-media/twitter.svg' %}" alt="link to twitter">
+                                </a>
+                                <a href="javascript:void(0)">
+                                    <img src="{% static 'assets/img/social-media/skype.svg' %}" alt="link to skype">
+                                </a>
+                            </div>
+                            <div class="contact-us">
+                                <a href="javascript:void(0)">اتصل بنا</a>
+                                <a href="javascript:void(0)">معلومات عنا</a>
+                                <a href="javascript:void(0)">عربي</a>
+                            </div>
                         </div>
-                        <div class="social-media">
-                            <a href="javascript:void(0)">
-                                <img src="{% static 'assets/img/social-media/instagram.svg' %}" alt="link to instagram">
-                            </a>
-                            <a href="javascript:void(0)">
-                                <img src="{% static 'assets/img/social-media/facebook.svg' %}" alt="link to facebook">
-                            </a>
-                            <a href="javascript:void(0)">
-                                <img src="{% static 'assets/img/social-media/whatsup.svg' %}" alt="link to whatsup">
-                            </a>
-                            <a href="javascript:void(0)">
-                                <img src="{% static 'assets/img/social-media/twitter.svg' %}" alt="link to twitter">
-                            </a>
-                            <a href="javascript:void(0)">
-                                <img src="{% static 'assets/img/social-media/skype.svg' %}" alt="link to skype">
-                            </a>
-                        </div>
-                        <div class="contact-us">
-                            <span>اتصل بنا</span>
-                            <span>معلومات عنا</span>
-                            <span role="button">عربي</span>
+                        <div class="sites">
+                            <div class="right">
+                                <ul class="title">
+                                    مواقع معهد البيت
+                                    <li>معرض الصور</li>
+                                    <li>مجلة تراثنا</li>
+                                    <li>موسوعة الطفل</li>
+                                    <li>مفاتيح الجنان</li>
+                                    <li>كتب معهد البيت</li>
+                                </ul>
+                            </div>
+                            <div class="left">
+                                <ul class="title">
+                                    وصلات أخرى لشبكة رافد
+                                    <li>سايت الشيعة</li>
+                                    <li>سايت امام مهدي</li>
+                                    <li>سايت أيت اللة سيستاني</li>
+                                    <li>سايت عقائدي</li>
+                                    <li>سايت فلكي نجومي</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                     <div class="copyright">

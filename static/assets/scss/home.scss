@@ -1,3 +1,6 @@
+@import "utils";
+@import "media_query";
+
 // header
 header {
     
@@ -126,7 +129,7 @@ header {
                     .show {
                         overflow: hidden;
                         height: 0;
-                        transition: height 300ms;
+                        transition: height 700ms;
                     }
                     
                     &__body {
@@ -265,7 +268,6 @@ header {
                                 }
                             }
                         }
-                        
                     }
                 }
             }
@@ -284,50 +286,206 @@ footer {
     width: unset;
     height: unset;
     
-    .description {
-        background-color: #043124;
-        display: flex;
-        flex-flow: column;
-        justify-content: center;
-        align-items: center;
-        min-height: 200px;
-        padding: 30px;
-        
-        .rafed-container {
-            width: 100%;
-            margin-bottom: 30px;
+    @include mobile {
+        .sites {
+            display: none;
         }
         
-        .social-media {
+        .description {
+            background-color: #043124;
             display: flex;
-            justify-content: space-around;
+            flex-flow: column;
+            justify-content: center;
             align-items: center;
-            width: 100%;
+            min-height: 200px;
+            padding: 30px;
             
-            img {
-                display: block;
-                height: 50.5px;
-                width: 50.5px;
+            .rafed-container {
+                width: 100%;
+                margin-bottom: 30px;
+            }
+            
+            .social-media {
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                width: 100%;
+                
+                img {
+                    display: block;
+                    height: 40.5px;
+                    width: 40.5px;
+                }
+            }
+            
+            .contact-us {
+                display: flex;
+                width: 100%;
+                justify-content: space-between;
+                align-items: center;
+                margin: 40px 0;
+                padding: 20px 4.5%;
+                
+                a {
+                    text-decoration: none;
+                    font-family: "vazirmatn", sans-serif;
+                    font-size: 1.5rem;
+                    letter-spacing: -1px;
+                    color: $sura-carousel-color-sepia;
+                }
+                
+            }
+            
+        }
+    }
+    
+    @include tablet {
+        .description {
+            
+            .social-media {
+                img {
+                    height: 55.5px;
+                    width: 55.5px;
+                }
             }
         }
-        
-        .contact-us {
+    }
+    
+    @include laptop {
+        & > div {
+            background-color: #043124;
             display: flex;
-            width: 100%;
+        }
+        
+        .sites {
+            padding: 30px;
+            width: 50%;
+            display: flex;
             justify-content: space-between;
-            align-items: center;
-            margin: 40px 0;
-            padding: 20px 4.5%;
+            height: 100px;
             
-            span {
-                font-family: "vazirmatn", sans-serif;
-                font-size: 1.5rem;
-                letter-spacing: -1px;
-                color: $sura-carousel-color-sepia;
+            .right, .left {
+                margin-left: 10px;
+                
+                * {
+                    font-family: "vazirmatn", sans-serif;
+                }
+                
+                
+                .title {
+                    font-size: 1.2em;
+                    color: $sura-carousel-color-sepia;
+                    letter-spacing: -1px;
+                    list-style: none;
+                    padding: 0;
+                    
+                    li {
+                        
+                        &:first-child {
+                            margin-top: 15px;
+                        }
+                        
+                        font-size: 1rem;
+                        padding-right: 10px;
+                        line-height: 300%;
+                    }
+                }
+            }
+            
+            .left {
+                margin-left: 0;
+                margin-right: 10px;
+            }
+        }
+        
+        .description {
+            width: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 200px;
+            padding: 30px 30px 30px 0;
+            
+            .rafed-container {
+                width: 100%;
+                margin-bottom: 30px;
+            }
+            
+            .social-media {
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                width: 100%;
+                
+                img {
+                    display: block;
+                    height: 40.5px;
+                    width: 40.5px;
+                }
+            }
+            
+            .contact-us {
+                display: flex;
+                width: 100%;
+                justify-content: space-between;
+                align-items: center;
+                margin: 40px 0;
+                padding: 20px 4.5%;
+                
+                a {
+                    text-decoration: none;
+                    font-family: "vazirmatn", sans-serif;
+                    font-size: 1.5rem;
+                    letter-spacing: -1px;
+                    color: $sura-carousel-color-sepia;
+                }
+                
             }
             
         }
+    }
+    
+    @include monitor {
+        .sites {
+            padding: 30px;
+            width: 50%;
+            display: flex;
+            justify-content: space-between;
+            height: 100px;
         
+            .right, .left {
+                margin-left: 10px;
+            
+                * {
+                    font-family: "vazirmatn", sans-serif;
+                }
+            
+            
+                .title {
+                    font-size: 1.6em;
+                    color: $sura-carousel-color-sepia;
+                    letter-spacing: -1px;
+                    list-style: none;
+                    padding: 0;
+                
+                    li {
+                    
+                        &:first-child {
+                            margin-top: 15px;
+                        }
+                    
+                        font-size: 1.2rem;
+                        padding-right: 10px;
+                        line-height: 250%;
+                    }
+                }
+            }
+        
+            .left {
+                margin-left: 0;
+                margin-right: 10px;
+            }
+        }
     }
     
     .copyright {
@@ -346,6 +504,7 @@ footer {
             user-select: text;
             cursor: text;
             padding: 0 10%;
+            margin: 10px;
             line-height: 2.4rem;
         }
     }
