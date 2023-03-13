@@ -266,6 +266,12 @@ header .header__language path {
   margin-top: 20px;
   padding: 15px 20px;
   color: #72603F;
+  text-align: center;
+}
+@media (min-width: 300px) {
+  .main .container-fluid .main__content .sura_list__title {
+    text-align: start;
+  }
 }
 .main .container-fluid .main__content .sura_list .show {
   height: 0;
@@ -273,16 +279,40 @@ header .header__language path {
 }
 .main .container-fluid .main__content .sura_list__content__title {
   display: grid;
-  grid-template-columns: auto auto auto;
+  grid-template-columns: auto;
+}
+@media (min-width: 300px) {
+  .main .container-fluid .main__content .sura_list__content__title {
+    grid-template-columns: auto auto;
+  }
+}
+@media (min-width: 576px) {
+  .main .container-fluid .main__content .sura_list__content__title {
+    grid-template-columns: auto auto auto;
+  }
+}
+@media (min-width: 768px) {
+  .main .container-fluid .main__content .sura_list__content__title {
+    grid-template-columns: auto auto auto auto;
+  }
+}
+@media (min-width: 992px) {
+  .main .container-fluid .main__content .sura_list__content__title {
+    grid-template-columns: auto auto auto auto auto auto;
+  }
 }
 .main .container-fluid .main__content .sura_list__content__title .sura-name {
   display: flex;
   flex-direction: row;
-  justify-content: start;
-  padding: 5px 17% 20px 0;
+  justify-content: center;
   height: 100px;
   text-decoration: none;
   margin: 5px 0;
+}
+@media (min-width: 300px) {
+  .main .container-fluid .main__content .sura_list__content__title .sura-name {
+    padding: 5px 7% 20px 0;
+  }
 }
 .main .container-fluid .main__content .sura_list__content__title .sura-name__number {
   width: 55px;
@@ -299,6 +329,7 @@ header .header__language path {
   font-family: KFG, sans-serif;
 }
 .main .container-fluid .main__content .sura_list__content__title .sura-name__name {
+  width: 82px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -312,17 +343,40 @@ header .header__language path {
 }
 .main .container-fluid .main__content .sura_list__content .show .content {
   display: grid;
-  grid-template-columns: auto auto auto;
-  overflow: hidden;
+  grid-template-columns: auto;
+}
+@media (min-width: 300px) {
+  .main .container-fluid .main__content .sura_list__content .show .content {
+    grid-template-columns: auto auto;
+  }
+}
+@media (min-width: 576px) {
+  .main .container-fluid .main__content .sura_list__content .show .content {
+    grid-template-columns: auto auto auto;
+  }
+}
+@media (min-width: 768px) {
+  .main .container-fluid .main__content .sura_list__content .show .content {
+    grid-template-columns: auto auto auto auto;
+  }
+}
+@media (min-width: 992px) {
+  .main .container-fluid .main__content .sura_list__content .show .content {
+    grid-template-columns: auto auto auto auto auto auto;
+  }
 }
 .main .container-fluid .main__content .sura_list__content .show .content .sura-name {
   display: flex;
   flex-direction: row;
-  justify-content: start;
-  padding: 5px 17% 20px 0;
+  justify-content: center;
   height: 100px;
   text-decoration: none;
   margin: 5px 0;
+}
+@media (min-width: 300px) {
+  .main .container-fluid .main__content .sura_list__content .show .content .sura-name {
+    padding: 5px 7% 20px 0;
+  }
 }
 .main .container-fluid .main__content .sura_list__content .show .content .sura-name__number {
   width: 55px;
@@ -339,6 +393,7 @@ header .header__language path {
   font-family: KFG, sans-serif;
 }
 .main .container-fluid .main__content .sura_list__content .show .content .sura-name__name {
+  width: 82px;
   display: flex;
   justify-content: center;
   align-items: center;

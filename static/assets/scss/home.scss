@@ -178,6 +178,11 @@ header {
                     margin-top: 20px;
                     padding: 15px 20px;
                     color: #72603F;
+                    text-align: center;
+                    
+                    @include mobile {
+                        text-align: start;
+                    }
                 }
                 
                 .show {
@@ -189,13 +194,35 @@ header {
                     
                     &__title {
                         display: grid;
-                        grid-template-columns: auto auto auto;
+                        grid-template-columns: auto;
+                        
+                        @include mobile {
+                            grid-template-columns: auto auto;
+                        }
+                        
+                        @include tablet {
+                            grid-template-columns: auto auto auto;
+                        }
+                        
+                        @include laptop {
+                            grid-template-columns: auto auto auto auto;
+                        }
+                        
+                        @include monitor {
+                            grid-template-columns: auto auto auto auto auto auto;
+                        }
                         
                         .sura-name {
                             display: flex;
                             flex-direction: row;
-                            justify-content: start;
-                            padding: 5px 17% 20px 0;
+                            justify-content: center;
+                            //padding: 5px 17% 20px 0;
+                            
+                            @include mobile {
+                                padding: 5px 7% 20px 0;
+                            }
+                            
+                            
                             height: 100px;
                             text-decoration: none;
                             margin: 5px 0;
@@ -216,6 +243,7 @@ header {
                             }
                             
                             &__name {
+                                width: 82px;
                                 display: flex;
                                 justify-content: center;
                                 align-items: center;
@@ -232,14 +260,35 @@ header {
                         
                         .content {
                             display: grid;
-                            grid-template-columns: auto auto auto;
-                            overflow: hidden;
+                            grid-template-columns: auto;
+                            
+                            @include mobile {
+                                grid-template-columns: auto auto;
+                            }
+                            
+                            @include tablet {
+                                grid-template-columns: auto auto auto;
+                            }
+                            
+                            @include laptop {
+                                grid-template-columns: auto auto auto auto;
+                            }
+                            
+                            @include monitor {
+                                grid-template-columns: auto auto auto auto auto auto;
+                            }
                             
                             .sura-name {
                                 display: flex;
                                 flex-direction: row;
-                                justify-content: start;
-                                padding: 5px 17% 20px 0;
+                                justify-content: center;
+                                //padding: 5px 17% 20px 0;
+                                
+                                @include mobile {
+                                    padding: 5px 7% 20px 0;
+                                }
+                                
+                                
                                 height: 100px;
                                 text-decoration: none;
                                 margin: 5px 0;
@@ -260,6 +309,7 @@ header {
                                 }
                                 
                                 &__name {
+                                    width: 82px;
                                     display: flex;
                                     justify-content: center;
                                     align-items: center;
