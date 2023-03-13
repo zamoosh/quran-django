@@ -105,12 +105,9 @@ header {
                 &__content {
                     
                     .juz-name {
-                        font-size: 1.5rem;
                         text-decoration: none;
                         font-weight: bold;
-                        //background-size: contain;
                         background-image: url("../img/sepia/juz-name-container-sepia.svg");
-                        padding: 35px 0 30px;
                         display: flex;
                         justify-content: center;
                         align-items: center;
@@ -118,29 +115,99 @@ header {
                         background-position: center;
                         background-size: 100% 100%;
                         background-repeat: no-repeat;
+                        letter-spacing: -1px;
+                        font-size: 1.6rem;
+                        padding: 10px 0;
+                        word-spacing: -4px;
+                        
+                        @include mobile {
+                            font-size: 4.5vw;
+                            padding: 25px 1px;
+                            width: 28vw;
+                        }
+                        
+                        @include tablet {
+                            font-size: 4vw;
+                            padding: 30px 0;
+                            width: 25vw;
+                        }
+                        
+                        @include laptop {
+                            font-size: 2rem;
+                        }
+                        
+                        
                     }
                     
                     &__title {
                         display: grid;
-                        grid-template-columns: auto auto auto;
-                        margin-bottom: 25px;
+                        grid-template-columns: auto;
+                        gap: 5%;
+                        
+                        @include mobile {
+                            grid-template-columns: auto auto auto;
+                            gap: 1%;
+                        }
+                        
+                        @include tablet {
+                            grid-template-columns: auto auto auto;
+                            gap: 10%;
+                        }
                     }
                     
                     .show {
                         overflow: hidden;
                         height: 0;
                         transition: height 700ms;
+                        margin-top: 50px;
                     }
                     
                     &__body {
                         display: grid;
-                        grid-template-columns: auto auto;
-                        padding-top: 25px;
+                        grid-template-columns: auto;
                         row-gap: 40px;
+    
+                        @include mobile {
+                            grid-template-columns: auto auto auto;
+                            //gap: 1%;
+                        }
+    
+                        @include tablet {
+                            grid-template-columns: auto auto auto;
+                            column-gap: 10%;
+                        }
                         
                         .juz-name {
-                            padding: 55px 10px 50px 10px;
-                            margin: 0 10px 0 0;
+                            text-decoration: none;
+                            font-weight: bold;
+                            background-image: url("../img/sepia/juz-name-container-sepia.svg");
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            color: $sura-carousel-color-sepia;
+                            background-position: center;
+                            background-size: 100% 100%;
+                            background-repeat: no-repeat;
+                            letter-spacing: -1px;
+                            font-size: 1.6rem;
+                            padding: 10px 0;
+                            word-spacing: -4px;
+    
+                            @include mobile {
+                                font-size: 4.5vw;
+                                padding: 25px 1px;
+                                width: 28vw;
+                            }
+    
+                            @include tablet {
+                                font-size: 4vw;
+                                padding: 30px 0;
+                                width: 25vw;
+                            }
+                            
+                            @include laptop {
+                                font-size: 2rem;
+                            }
                         }
                     }
                 }

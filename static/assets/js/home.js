@@ -91,8 +91,8 @@ export class Home {
     }
 
     expand_juz_list() {
-        let h = this.juz_list_body.getBoundingClientRect().height;
         this.expand_button_juz.addEventListener("click", function () {
+            let h = this.juz_list_body.getBoundingClientRect().height;
             this.juz_list_body_collapse.classList.toggle("expanded");
             if (this.juz_list_body_collapse.classList.contains("expanded")) {
                 this.expand_button_juz.innerHTML = "الكم";
