@@ -7,4 +7,4 @@ source activate
 
 cd ../../
 cd static/assets/scss/
-sass -w main.scss:main.css
+sass -w home.scss:home.css

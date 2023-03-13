@@ -30,6 +30,13 @@ $sura-carousel-color-sepia: #FAEBD4;
 // number color for end of each aya
 $number-color: #2b712b;
 
+// screen sizes
+$xs-screen: 300px;
+$sm-screen: 576px;
+$md-screen: 768px;
+$lg-screen: 992px;
+$xl-screen: 1200px;
+
 *[role='button'] {
     cursor: pointer;
 }

@@ -1,8 +1,32 @@
-@media screen and (min-width: 400px) {
+@import "utils";
 
+
+@mixin mobile {
+    @media (min-width: $xs-screen) {
+        @content;
+    }
 }
 
+@mixin tablet {
+    @media (min-width: $sm-screen) {
+        @content;
+    }
+}
 
-@media screen and (min-width: 768px) {
+//@mixin tablet {
+//    @media (min-width: $md-screen) {
+//        @content;
+//    }
+//}
 
+@mixin laptop {
+    @media (min-width: $md-screen) {
+        @content;
+    }
+}
+
+@mixin monitor {
+    @media (min-width: $lg-screen) {
+        @content;
+    }
 }
