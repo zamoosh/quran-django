@@ -122,6 +122,10 @@
     max-width: 1320px;
   }
 }
+* {
+  font-weight: normal;
+}
+
 header .header__logo {
   display: flex;
   flex-flow: column;
@@ -143,7 +147,6 @@ header .header__language path {
   background-image: url("../img/sepia/pattern-sepia.svg");
   background-position: center top;
   margin-top: 65px;
-  width: 100vw;
   position: relative;
   display: flex;
   justify-content: center;
@@ -165,7 +168,6 @@ header .header__language path {
   padding: 65px 0 0 0;
 }
 .main .container-fluid .main__content .sura_list_carousel__title {
-  font-weight: bold;
   font-size: 1.4rem;
   letter-spacing: -1px;
   font-family: vazirmatn, sans-serif;
@@ -178,7 +180,6 @@ header .header__language path {
 .main .container-fluid .main__content .sura_list_carousel__content .sura-name {
   font-size: 2rem;
   text-decoration: none;
-  font-weight: bold;
   background-size: contain;
   background-image: url("../img/sepia/sura-name-container-sepia.svg");
   padding: 15px 0 20px;
@@ -196,7 +197,6 @@ header .header__language path {
 }
 .main .container-fluid .main__content .juz_list__title {
   color: #A99374;
-  font-weight: bold;
   font-size: 1.3rem;
   letter-spacing: -1px;
   font-family: vazirmatn, sans-serif;
@@ -204,7 +204,6 @@ header .header__language path {
 }
 .main .container-fluid .main__content .juz_list__content .juz-name {
   text-decoration: none;
-  font-weight: bold;
   background-image: url("../img/sepia/juz-name-container-sepia.svg");
   display: flex;
   justify-content: center;
@@ -215,7 +214,7 @@ header .header__language path {
   background-repeat: no-repeat;
   letter-spacing: -1px;
   font-size: 1.6rem;
-  padding: 10px 0;
+  padding: 24px 0;
   word-spacing: -4px;
 }
 @media (min-width: 300px) {
@@ -241,6 +240,7 @@ header .header__language path {
   display: grid;
   grid-template-columns: auto;
   gap: 5%;
+  row-gap: 40px;
 }
 @media (min-width: 300px) {
   .main .container-fluid .main__content .juz_list__content__title {
@@ -278,7 +278,6 @@ header .header__language path {
 }
 .main .container-fluid .main__content .juz_list__content__body .juz-name {
   text-decoration: none;
-  font-weight: bold;
   background-image: url("../img/sepia/juz-name-container-sepia.svg");
   display: flex;
   justify-content: center;
@@ -289,7 +288,7 @@ header .header__language path {
   background-repeat: no-repeat;
   letter-spacing: -1px;
   font-size: 1.6rem;
-  padding: 10px 0;
+  padding: 20px 0;
   word-spacing: -4px;
 }
 @media (min-width: 300px) {
@@ -334,7 +333,6 @@ header .header__language path {
   padding: 60px 20px 30px;
 }
 .main .container-fluid .main__content .sura_list__title {
-  font-weight: bold;
   font-size: 1.4rem;
   letter-spacing: -1px;
   font-family: vazirmatn, sans-serif;
@@ -547,49 +545,47 @@ footer {
   width: unset;
   height: unset;
 }
-@media (min-width: 300px) {
-  footer .sites {
-    display: none;
-  }
-  footer .description {
-    background-color: #043124;
-    display: flex;
-    flex-flow: column;
-    justify-content: center;
-    align-items: center;
-    min-height: 200px;
-    padding: 30px;
-  }
-  footer .description .rafed-container {
-    width: 100%;
-    margin-bottom: 30px;
-  }
-  footer .description .social-media {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    width: 100%;
-  }
-  footer .description .social-media img {
-    display: block;
-    height: 40.5px;
-    width: 40.5px;
-  }
-  footer .description .contact-us {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-    align-items: center;
-    margin: 40px 0;
-    padding: 20px 4.5%;
-  }
-  footer .description .contact-us a {
-    text-decoration: none;
-    font-family: "vazirmatn", sans-serif;
-    font-size: 1.5rem;
-    letter-spacing: -1px;
-    color: #FAEBD4;
-  }
+footer .sites {
+  display: none;
+}
+footer .description {
+  background-color: #043124;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  padding: 30px;
+}
+footer .description .rafed-container {
+  width: 100%;
+  margin-bottom: 30px;
+}
+footer .description .social-media {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+}
+footer .description .social-media img {
+  display: block;
+  height: 40.5px;
+  width: 40.5px;
+}
+footer .description .contact-us {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  margin: 40px 0;
+  padding: 20px 4.5%;
+}
+footer .description .contact-us a {
+  text-decoration: none;
+  font-family: "vazirmatn", sans-serif;
+  font-size: 1.5rem;
+  letter-spacing: -1px;
+  color: #FAEBD4;
 }
 @media (min-width: 768px) {
   footer > div {
@@ -686,6 +682,7 @@ footer {
     font-size: 1.6em;
     color: #FAEBD4;
     letter-spacing: -1px;
+    word-spacing: -1px;
     list-style: none;
     padding: 0;
   }

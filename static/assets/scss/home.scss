@@ -2,6 +2,11 @@
 @import "media_query";
 
 // header
+
+* {
+    font-weight: normal;
+}
+
 header {
     
     & .header {
@@ -34,7 +39,6 @@ header {
         background-image: url("../img/sepia/pattern-sepia.svg");
         background-position: center top;
         margin-top: 65px;
-        width: 100vw;
         position: relative;
         display: flex;
         justify-content: center;
@@ -60,7 +64,6 @@ header {
             .sura_list_carousel {
                 
                 &__title {
-                    font-weight: bold;
                     font-size: 1.4rem;
                     letter-spacing: -1px;
                     font-family: vazirmatn, sans-serif;
@@ -74,7 +77,6 @@ header {
                     .sura-name {
                         font-size: 2rem;
                         text-decoration: none;
-                        font-weight: bold;
                         background-size: contain;
                         background-image: url("../img/sepia/sura-name-container-sepia.svg");
                         padding: 15px 0 20px;
@@ -95,7 +97,6 @@ header {
                 
                 &__title {
                     color: $icon-color-sepia;
-                    font-weight: bold;
                     font-size: 1.3rem;
                     letter-spacing: -1px;
                     font-family: vazirmatn, sans-serif;
@@ -106,7 +107,6 @@ header {
                     
                     .juz-name {
                         text-decoration: none;
-                        font-weight: bold;
                         background-image: url("../img/sepia/juz-name-container-sepia.svg");
                         display: flex;
                         justify-content: center;
@@ -117,7 +117,7 @@ header {
                         background-repeat: no-repeat;
                         letter-spacing: -1px;
                         font-size: 1.6rem;
-                        padding: 10px 0;
+                        padding: 24px 0;
                         word-spacing: -4px;
                         
                         @include mobile {
@@ -143,6 +143,7 @@ header {
                         display: grid;
                         grid-template-columns: auto;
                         gap: 5%;
+                        row-gap: 40px;
                         
                         @include mobile {
                             grid-template-columns: auto auto auto;
@@ -179,7 +180,6 @@ header {
                         
                         .juz-name {
                             text-decoration: none;
-                            font-weight: bold;
                             background-image: url("../img/sepia/juz-name-container-sepia.svg");
                             display: flex;
                             justify-content: center;
@@ -190,7 +190,7 @@ header {
                             background-repeat: no-repeat;
                             letter-spacing: -1px;
                             font-size: 1.6rem;
-                            padding: 10px 0;
+                            padding: 20px 0;
                             word-spacing: -4px;
                             
                             @include mobile {
@@ -238,7 +238,6 @@ header {
                 padding: 60px 20px 30px;
                 
                 &__title {
-                    font-weight: bold;
                     font-size: 1.4rem;
                     letter-spacing: -1px;
                     font-family: vazirmatn, sans-serif;
@@ -453,57 +452,55 @@ footer {
     width: unset;
     height: unset;
     
-    @include mobile {
-        .sites {
-            display: none;
+    .sites {
+        display: none;
+    }
+    
+    .description {
+        background-color: #043124;
+        display: flex;
+        flex-flow: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 200px;
+        padding: 30px;
+        
+        .rafed-container {
+            width: 100%;
+            margin-bottom: 30px;
         }
         
-        .description {
-            background-color: #043124;
+        .social-media {
             display: flex;
-            flex-flow: column;
-            justify-content: center;
+            justify-content: space-around;
             align-items: center;
-            min-height: 200px;
-            padding: 30px;
+            width: 100%;
             
-            .rafed-container {
-                width: 100%;
-                margin-bottom: 30px;
+            img {
+                display: block;
+                height: 40.5px;
+                width: 40.5px;
             }
+        }
+        
+        .contact-us {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            align-items: center;
+            margin: 40px 0;
+            padding: 20px 4.5%;
             
-            .social-media {
-                display: flex;
-                justify-content: space-around;
-                align-items: center;
-                width: 100%;
-                
-                img {
-                    display: block;
-                    height: 40.5px;
-                    width: 40.5px;
-                }
-            }
-            
-            .contact-us {
-                display: flex;
-                width: 100%;
-                justify-content: space-between;
-                align-items: center;
-                margin: 40px 0;
-                padding: 20px 4.5%;
-                
-                a {
-                    text-decoration: none;
-                    font-family: "vazirmatn", sans-serif;
-                    font-size: 1.5rem;
-                    letter-spacing: -1px;
-                    color: $sura-carousel-color-sepia;
-                }
-                
+            a {
+                text-decoration: none;
+                font-family: "vazirmatn", sans-serif;
+                font-size: 1.5rem;
+                letter-spacing: -1px;
+                color: $sura-carousel-color-sepia;
             }
             
         }
+        
     }
     
     @include laptop {
@@ -622,6 +619,7 @@ footer {
                     font-size: 1.6em;
                     color: $sura-carousel-color-sepia;
                     letter-spacing: -1px;
+                    word-spacing: -1px;
                     list-style: none;
                     padding: 0;
                     
