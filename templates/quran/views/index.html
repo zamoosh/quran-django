@@ -9,10 +9,11 @@
             <div role="button" class="header__menu-btn">
                 <span class="header__menu-btn__burger"></span>
             </div>
+            <div class="page-details" id="juz_number"></div>
             <div role="button" class="header__surah">
-                <span>سورَة</span>
-                <span id="page_number">صَفحَة</span>
+                <span class="header__surah__name">سورَة</span>
             </div>
+            <div class="page-details" id="page_number"></div>
             <a href="{% url 'quran:home' %}" role="button" class="header__back">
                 <span class="header__back__icon"></span>
             </a>
@@ -219,6 +220,9 @@
                 // update the sura name at top of the page
                 Content.update_page_sura(sura_name);
                 Content.update_page_number(event.item.index + 1);
+
+                let current_juz = document.getElementsByClassName(`item ${event.item.index + 1}`)[0].firstElementChild.dataset.juz;
+                Content.update_juz_number(current_juz);
                 prev_id = event.item.index;
             });
 

@@ -73,6 +73,18 @@ header {
             }
             
         }
+    
+        .page-details {
+            background-image: url("../img/sepia/number-header-sepia.svg");
+            background-position: center;
+            background-size: 100% 100%;
+            //font-family: "uthmani", sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80%;
+            width: 50px;
+        }
         
         &__surah {
             font-weight: bold;
@@ -81,9 +93,23 @@ header {
             flex-flow: column;
             align-items: center;
             justify-content: center;
-
-            :last-child {
-                font-size: .75rem;
+            height: 100%;
+            
+            &__name {
+                background-image: url("../img/sepia/sura-name-header-sipia.svg");
+                background-position: center;
+                font-family: "uthmani", sans-serif;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 80%;
+                background-size: 100% 100%;
+                padding: 0 10px 8px;
+                width: 180px;
+            }
+            
+            #page_number {
+                display: none;
             }
         }
         
@@ -125,7 +151,6 @@ header {
                     //bottom: 16px;
                     //left: 0;
                 }
-                
                 
                 
             }

@@ -48,9 +48,11 @@ export class History {
         let page_number = aya.parentElement.parentElement.parentElement.classList[1];
         let sura_id = aya.parentElement.parentElement.classList[1];
         let aya_id = aya.firstElementChild.id;
+        let juz_number = aya.parentElement.parentElement.dataset.juz;
         this.set_item("page", page_number);
         this.set_item("sura", sura_id);
         this.set_item("aya", aya_id);
+        this.set_item("juz", aya_id);
         this.save();
 
         Path.get_instance().save_url();

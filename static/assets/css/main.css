@@ -127,6 +127,16 @@ header .header__menu-btn__burger::after {
   background: #3e6856;
   transition: all 200ms ease-in-out;
 }
+header .header .page-details {
+  background-image: url("../img/sepia/number-header-sepia.svg");
+  background-position: center;
+  background-size: 100% 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80%;
+  width: 50px;
+}
 header .header__surah {
   font-weight: bold;
   font-size: 1.75rem;
@@ -134,9 +144,22 @@ header .header__surah {
   flex-flow: column;
   align-items: center;
   justify-content: center;
+  height: 100%;
 }
-header .header__surah :last-child {
-  font-size: 0.75rem;
+header .header__surah__name {
+  background-image: url("../img/sepia/sura-name-header-sipia.svg");
+  background-position: center;
+  font-family: "uthmani", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80%;
+  background-size: 100% 100%;
+  padding: 0 10px 8px;
+  width: 180px;
+}
+header .header__surah #page_number {
+  display: none;
 }
 header .header__back {
   font-size: 1.5rem;
@@ -676,6 +699,10 @@ body.sepia .side-menu__tab-content__tab.active *:hover {
   .container-xxl, .container-xl, .container-lg, .container-md, .container-sm, .container {
     max-width: 1320px;
   }
+}
+@font-face {
+  font-family: "uthmani-hafs";
+  src: url("../fonts/uthmani-hafs/hafs.woff2");
 }
 @font-face {
   font-family: "KFG";

@@ -7,7 +7,8 @@ export class Content {
     static carousel = $(".owl-carousel");
     static pages = {};
     static pages_added = [];
-    static page_number = document.querySelector("span#page_number");
+    static page_number = document.querySelector("div#page_number");
+    static juz_number = document.querySelector("div#juz_number");
     static page_sura = document.querySelector(".header__surah > span");
     static page_updated = false;
     static url = "https://tanzil.net/res/audio/afasy/";
@@ -141,6 +142,7 @@ export class Content {
 
                     let sura = text.parentElement.parentElement.parentElement;
                     Content.update_page_sura(sura.dataset.sura);
+                    Content.update_juz_number(sura.dataset.juz);
 
 
                     if (navigator.userAgent.indexOf("Chrome") !== -1 || navigator.userAgent.indexOf("Edge") !== -1) {
@@ -187,6 +189,13 @@ export class Content {
         }
     }
 
+    static update_juz_number(juz_number) {
+        if (!isNaN(juz_number)) {
+            Content.juz_number.innerHTML = toArabicNumber(juz_number);
+            Content.juz_number.dataset.number = Number(juz_number);
+        }
+    }
+
     static update_page_sura(sura_name) {
         if (sura_name !== undefined)
             Content.page_sura.innerHTML = sura_name;
@@ -220,6 +229,10 @@ export class Content {
 
         // check if next and prev page is empty or not
         page_number = Number(page_number);
+        let current_juz = document.getElementsByClassName(`item ${page_number}`)[0].firstElementChild.dataset.juz;
+        Content.update_juz_number(current_juz);
+
+
         let next_page = document.getElementsByClassName(`item ${page_number + 1}`)[0];
         let prev_page = document.getElementsByClassName(`item ${page_number - 1}`)[0];
         if (next_page && next_page.innerHTML === "") {
@@ -258,6 +271,9 @@ export class Content {
         let page = document.getElementsByClassName(`owl-item active`)[0].firstElementChild;
         let sura = page.getElementsByClassName(`sura ${sura_id}`)[0];
         let text = sura.getElementsByClassName(`text ${aya_id}`)[0];
+
+        let current_juz = sura.dataset.juz;
+        Content.update_juz_number(current_juz);
 
         document.querySelectorAll("span.text").forEach(function (item) {
             item.parentElement.classList.remove("selected");
