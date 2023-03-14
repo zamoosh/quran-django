@@ -34,11 +34,24 @@ export class Tab {
         tabPanel.classList.toggle("show");
         tabPanel.classList.toggle("active");
         let row = tabPanel.getElementsByClassName("selected")[0];
-        if (row)
-            row.scrollIntoView({
-                behavior: "auto",
-                block: "center"
-            });
+        if (row) {
+            if (navigator.userAgent.indexOf("Chrome") !== -1 || navigator.userAgent.indexOf("Edge") !== -1) {
+                console.log("using chromium");
+                row.scrollIntoView({
+                    block: "center"
+                });
+            } else {
+                console.log("MDB");
+                row.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center"
+                });
+            }
+        }
+            // row.scrollIntoView({
+            //     behavior: "auto",
+            //     block: "center"
+            // });
     }
 
     sura_juz_page_list() {
@@ -342,10 +355,24 @@ export class Tab {
 
         let row = rows[sura_id - 1];
         row.classList.add("selected");
-        row.scrollIntoView({
-            behavior: "smooth",
-            block: "center"
-        });
+
+        if (navigator.userAgent.indexOf("Chrome") !== -1 || navigator.userAgent.indexOf("Edge") !== -1) {
+            console.log("using chromium");
+            row.scrollIntoView({
+                block: "center"
+            });
+        } else {
+            console.log("MDB");
+            row.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+        }
+
+        // row.scrollIntoView({
+        //     behavior: "smooth",
+        //     block: "center"
+        // });
     }
 
     static update_page_list(page_number) {
@@ -358,10 +385,24 @@ export class Tab {
         let page_index = document.getElementsByClassName(`item ${page_number}`)[0].classList[1];
         let row = rows[page_index - 1];
         row.classList.add("selected");
-        row.scrollIntoView({
-            behavior: "smooth",
-            block: "center"
-        });
+
+        if (navigator.userAgent.indexOf("Chrome") !== -1 || navigator.userAgent.indexOf("Edge") !== -1) {
+            console.log("using chromium");
+            row.scrollIntoView({
+                block: "center"
+            });
+        } else {
+            console.log("MDB");
+            row.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+        }
+
+        // row.scrollIntoView({
+        //     behavior: "smooth",
+        //     block: "center"
+        // });
     }
 
     static update_juz_list(page_number) {
@@ -375,9 +416,24 @@ export class Tab {
         let juz_number = page.firstElementChild.dataset.juz;
         let row = rows[juz_number - 1];
         row.classList.add("selected");
-        row.scrollIntoView({
-            behavior: "smooth",
-            block: "center"
-        });
+
+        if (navigator.userAgent.indexOf("Chrome") !== -1 || navigator.userAgent.indexOf("Edge") !== -1) {
+            console.log("using chromium");
+            const row_jq = $(row);
+            row.scrollIntoView({
+                block: "center"
+            });
+        } else {
+            console.log("MDB");
+            row.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+        }
+
+        // row.scrollIntoView({
+        //     behavior: "smooth",
+        //     block: "center"
+        // });
     }
 }

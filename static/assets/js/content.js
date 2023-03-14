@@ -142,10 +142,25 @@ export class Content {
                     let sura = text.parentElement.parentElement.parentElement;
                     Content.update_page_sura(sura.dataset.sura);
 
-                    text.parentElement.scrollIntoView({
-                        behavior: "smooth",
-                        block: "center",
-                    });
+
+                    if (navigator.userAgent.indexOf("Chrome") !== -1 || navigator.userAgent.indexOf("Edge") !== -1) {
+                        console.log("using chromium");
+                        const first_aya_jq = $(text.parentElement);
+                        $([document.documentElement, document.body]).animate({
+                            scrollTop: first_aya_jq.offset().top - 2 * first_aya_jq.outerHeight()
+                        }, 300);
+                    } else {
+                        console.log("MDB");
+                        text.parentElement.scrollIntoView({
+                            behavior: "smooth",
+                            block: "center"
+                        });
+                    }
+
+                    // text.parentElement.scrollIntoView({
+                    //     behavior: "smooth",
+                    //     block: "center",
+                    // });
 
                     // let url = Content.url.concat(sura_id + text_id, ".mp3");
                     Player.restart_progressbar();
@@ -248,10 +263,25 @@ export class Content {
             item.parentElement.classList.remove("selected");
         });
         text.parentElement.classList.add("selected");
-        text.parentElement.scrollIntoView({
-            behavior: "smooth",
-            block: "center"
-        });
+
+        if (navigator.userAgent.indexOf("Chrome") !== -1 || navigator.userAgent.indexOf("Edge") !== -1) {
+            console.log("using chromium");
+            const first_aya_jq = $(text.parentElement);
+            $([document.documentElement, document.body]).animate({
+                scrollTop: first_aya_jq.offset().top - 2 * first_aya_jq.outerHeight()
+            }, 300);
+        } else {
+            console.log("MDB");
+            text.parentElement.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+        }
+
+        // text.parentElement.scrollIntoView({
+        //     behavior: "smooth",
+        //     block: "center"
+        // });
         Player.update_src(text);
         if (Player.playing) {
             Player.play_audio();

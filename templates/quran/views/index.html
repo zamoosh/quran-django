@@ -235,10 +235,23 @@
                     });
                     let first_aya = current_page.querySelector("span.aya > span.text");
                     first_aya.parentElement.classList.add("selected");
-                    first_aya.scrollIntoView({
-                        behavior: "smooth",
-                        block: "center"
-                    });
+                    if (navigator.userAgent.indexOf("Chrome") !== -1 || navigator.userAgent.indexOf("Edge") !== -1) {
+                        console.log("using chromium");
+                        const first_aya_jq = $(first_aya);
+                        $([document.documentElement, document.body]).animate({
+                            scrollTop: first_aya_jq.offset().top - 2 * first_aya_jq.outerHeight()
+                        }, 300);
+                    } else {
+                        console.log("MDB");
+                        first_aya.scrollIntoView({
+                            behavior: "smooth",
+                            block: "center"
+                        });
+                    }
+                    // first_aya.scrollIntoView({
+                    //     behavior: "smooth",
+                    //     block: "center"
+                    // });
 
                     let sura = first_aya.parentElement.parentElement.parentElement;
                     Content.update_page_sura(sura.dataset.sura);

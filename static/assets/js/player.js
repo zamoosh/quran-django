@@ -120,10 +120,25 @@ export class Player {
 
         Player.audio.addEventListener("play", function () {
             let current_aya = document.querySelector("span.aya.selected");
-            current_aya.scrollIntoView({
-                behavior: "smooth",
-                block: "center"
-            });
+
+            if (navigator.userAgent.indexOf("Chrome") !== -1 || navigator.userAgent.indexOf("Edge") !== -1) {
+                console.log("using chromium");
+                const current_aya_jq = $(current_aya);
+                $([document.documentElement, document.body]).animate({
+                    scrollTop: current_aya_jq.offset().top - 2 * current_aya_jq.outerHeight()
+                }, 300);
+            } else {
+                console.log("MDB");
+                current_aya.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center"
+                });
+            }
+
+            // current_aya.scrollIntoView({
+            //     behavior: "smooth",
+            //     block: "center"
+            // });
 
             let next_aya = current_aya.nextElementSibling;
             let owl_item = document.querySelector(".owl-item.active");
@@ -268,10 +283,25 @@ export class Player {
                 let current_aya_text = current_aya.firstElementChild;
                 Player.update_src(current_aya_text);
                 Player.is_play_besm = false;
-                current_aya_text.scrollIntoView({
-                    block: "center",
-                    behavior: "smooth"
-                });
+
+                if (navigator.userAgent.indexOf("Chrome") !== -1 || navigator.userAgent.indexOf("Edge") !== -1) {
+                    console.log("using chromium");
+                    const current_aya_text_jq = $(current_aya_text);
+                    $([document.documentElement, document.body]).animate({
+                        scrollTop: current_aya_text_jq.offset().top - 2 * current_aya_text_jq.outerHeight()
+                    }, 300);
+                } else {
+                    console.log("MDB");
+                    current_aya.scrollIntoView({
+                        behavior: "smooth",
+                        block: "center"
+                    });
+                }
+
+                // current_aya_text.scrollIntoView({
+                //     block: "center",
+                //     behavior: "smooth"
+                // });
                 Player.play_audio();
                 Player.first_aya_played = true;
 
@@ -288,10 +318,25 @@ export class Player {
                 Player.update_src(next_aya_text);
 
                 // we should scroll into the next aya
-                next_aya_text.scrollIntoView({
-                    block: "center",
-                    behavior: "smooth"
-                });
+
+                if (navigator.userAgent.indexOf("Chrome") !== -1 || navigator.userAgent.indexOf("Edge") !== -1) {
+                    console.log("using chromium");
+                    const next_aya_text_jq = $(next_aya_text);
+                    $([document.documentElement, document.body]).animate({
+                        scrollTop: next_aya_text_jq.offset().top - 2 * next_aya_text_jq.outerHeight()
+                    }, 300);
+                } else {
+                    console.log("MDB");
+                    next_aya_text.scrollIntoView({
+                        behavior: "smooth",
+                        block: "center"
+                    });
+                }
+
+                // next_aya_text.scrollIntoView({
+                //     block: "center",
+                //     behavior: "smooth"
+                // });
                 Player.play_audio();
                 history.save_position(next_aya);
             }
@@ -359,10 +404,25 @@ export class Player {
                 Player.update_src(next_aya_text);
 
                 // we should scroll into the next aya
-                next_aya_text.scrollIntoView({
-                    block: "center",
-                    behavior: "smooth"
-                });
+
+                if (navigator.userAgent.indexOf("Chrome") !== -1 || navigator.userAgent.indexOf("Edge") !== -1) {
+                    console.log("using chromium");
+                    const next_aya_text_jq = $(next_aya_text);
+                    $([document.documentElement, document.body]).animate({
+                        scrollTop: next_aya_text_jq.offset().top - 2 * next_aya_text_jq.outerHeight()
+                    }, 300);
+                } else {
+                    console.log("MDB");
+                    next_aya_text.scrollIntoView({
+                        behavior: "smooth",
+                        block: "center"
+                    });
+                }
+
+                // next_aya_text.scrollIntoView({
+                //     block: "center",
+                //     behavior: "smooth"
+                // });
 
                 Player.play_audio();
 
